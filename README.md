@@ -1,4 +1,4 @@
-# NumberFactory
+# Number Factory
 
 **Work in Progress... No ETA yet.**
 
