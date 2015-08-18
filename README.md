@@ -10,7 +10,7 @@ Examples include:
  - Factorial and Binomial Coefficient
  - Square Root
  - Logarithms
- - e - Binary Splitting exp(1).
+ - e - Binary Splitting of exp(1).
  - Pi - Chudnovsky, Ramanujan, AGM, Machin-like formulas.
  - Catalan's Constant - Lupas, Huvent formulas
  - Zeta(3), Zeta(5) - various formulas
@@ -31,7 +31,7 @@ Number Factory uses the YMP library which is an experimental public interface to
 **Performance:**
 
 Number Factory has access to parallel large arithmetic whereas most other programs do not.
-For this reason alone, Number Factory is often faster than other programs by sheer force of parallelization.
+For this reason alone, it is often faster than other programs by sheer force of parallelization.
 
 As far as sequential performance goes, Number Factory sits somewhere between Mini-Pi and y-cruncher.
 y-cruncher is still faster since is better optimized and has access to functionality that is
