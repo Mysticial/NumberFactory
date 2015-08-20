@@ -46,8 +46,7 @@ not exposed through the YMP interface.
 Compilation:
  - Visual Studio 2015
 
-A Visual Studio project has been provided. It is completely setup with options to compile and run for both Sandy Bridge
-and Haswell through the IDE.
+A Visual Studio project has been provided with various configurations that target different processors. It should be fairly straight-forward to compile and run the app through the IDE. (Though it will be faster to run from outside the IDE since it bypasses the debug heap.)
 
 The DLL interface with the YMP library is "supposed to" be portable across different compilers. But this is untested.
 Number Factory is the first program to *dynamically* link with YMP. (y-cruncher *statically* links.)
@@ -55,11 +54,33 @@ Number Factory is the first program to *dynamically* link with YMP. (y-cruncher 
 
 Run-Time:
  - 64-bit Windows 7 SP1 or later
- - A Sandy Bridge processor or later with AVX. (Users with AVX2 will get a significant performance boost.)
+ - A processor with AVX.
 
-Number Factory itself can be compiled for a broader range of targets.
-But the YMP library is currently only available as a 64-bit Windows binary with AVX or AVX2.
+Number Factory itself can be compiled for older processors. But for all practical purposes, the underlying YMP library needs a *minimum* of AVX to avoid embarrassing itself. For that matter, you *really* want to use XOP or AVX2.
 
+There is currently no support for Linux yet. The Number Factory/YMP project is still experimental and will be tested in Windows first. Only if it is massively successful will a Linux version be considered.
+
+-----
+
+**Configurations:**
+
+Number Factory currently supports the following build configurations:
+
+|Configuration |Target Processor  |YMP Binary|Cilk Plus Support|Notes                      |
+|--------------|------------------|----------|-----------------|---------------------------|
+|Debug         |                  |AVX       |Yes              |No Optimizations           |
+|Release       |                  |AVX       |Yes              |Same as "11-SandyBridge"   |
+|11-SandyBridge|Intel Sandy Bridge|AVX       |Yes              |                           |
+|11-Bulldozer  |AMD Bulldozer     |FMA4/XOP  |No*              |                           |
+|13-Haswell    |Intel Haswell     |FMA3/AVX2 |Yes              |                           |
+
+Upon building a configuration through the IDE, the appropriate DLLs are copied into the same directory as the output binary. They will be needed to run the binary.
+
+All `ymp.dll` binaries of the same YMP release will have the same ABI. So any Number Factory binary (or any other client app) will be able to link with any of them. This may make it slightly easier to do CPU dispatching.
+
+However, `ymp.dll` binaries from *different* releases are not guaranteed to be compatible. Backwards incompatible changes may require recompilation of the client app. Maintaining a static ABI is currently not a feasible commitment.
+
+*Different versions of YMP are compiled with different compilers. Not all of them support Cilk Plus. Those without Cilk Plus will use the Windows Thread Pool instead which is still very efficient.
 
 -----
 
