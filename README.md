@@ -2,6 +2,18 @@
 
 **Work in Progress... No ETA yet.**
 
+To-Do List:
+ 1. Clean up and upload `PublicLibs` directory.
+ 2. Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.
+ 3. Finalize YMP v1.0 functionality.
+ 4. Clean up and upload the `NumberFactory` app/directory.
+ 5. Pre-release testing of everything.
+ 6. Run lots of benchmarks.
+ 7. Upload YMP binaries.
+ 8. Finish and release YMP documentation.
+
+-----
+
 Number Factory is a collection of mini-programs that can compute various numbers to extremely large sizes.<br>
 It's essentially a souped up version of [Mini-Pi](https://github.com/Mysticial/Mini-Pi) that is powered by the same backend as [y-cruncher](http://www.numberworld.org/y-cruncher/).
 
