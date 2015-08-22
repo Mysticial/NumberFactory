@@ -3,7 +3,7 @@
 **Work in Progress... No ETA yet.**
 
 To-Do List:
- 1. Clean up and upload `PublicLibs` directory.
+ 1. ~~Clean up and upload `PublicLibs` directory.~~
  2. Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.
  3. Finalize YMP v1.0 functionality.
  4. Clean up and upload the `NumberFactory` app/directory.
