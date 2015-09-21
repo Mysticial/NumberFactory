@@ -4,7 +4,7 @@
 
 To-Do List:
  1. ~~Clean up and upload `PublicLibs` directory.~~
- 2. Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.
+ 2. ~~Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.~~
  3. Finalize YMP v1.0 functionality.
  4. Clean up and upload the `NumberFactory` app/directory.
  5. Pre-release testing of everything.
@@ -78,21 +78,19 @@ There is currently no support for Linux yet. The Number Factory/YMP project is s
 
 Number Factory currently supports the following build configurations:
 
-|Configuration |Target Processor  |YMP Binary|Cilk Plus Support|Notes                      |
-|--------------|------------------|----------|-----------------|---------------------------|
-|Debug         |                  |AVX       |Yes              |No Optimizations           |
-|Release       |                  |AVX       |Yes              |Same as "11-SandyBridge"   |
-|11-SandyBridge|Intel Sandy Bridge|AVX       |Yes              |                           |
-|11-Bulldozer  |AMD Bulldozer     |FMA4/XOP  |No*              |                           |
-|13-Haswell    |Intel Haswell     |FMA3/AVX2 |Yes              |                           |
+|Configuration |Target Processor  |YMP Binary|Notes                      |
+|--------------|------------------|----------|---------------------------|
+|Debug         |                  |AVX       |No Optimizations           |
+|Release       |                  |AVX       |Same as "11-SandyBridge"   |
+|11-SandyBridge|Intel Sandy Bridge|AVX       |                           |
+|11-Bulldozer  |AMD Bulldozer     |FMA4/XOP  |                           |
+|13-Haswell    |Intel Haswell     |FMA3/AVX2 |                           |
 
 Upon building a configuration through the IDE, the appropriate DLLs are copied into the same directory as the output binary. They will be needed to run the binary.
 
 All `ymp.dll` binaries of the same YMP release will have the same ABI. So any Number Factory binary (or any other client app) will be able to link with any of them. This may make it slightly easier to do CPU dispatching.
 
 However, `ymp.dll` binaries from *different* releases are not guaranteed to be compatible. Backwards incompatible changes may require recompilation of the client app. Maintaining a static ABI is currently not a feasible commitment.
-
-*Different versions of YMP are compiled with different compilers. Not all of them support Cilk Plus. Those without Cilk Plus will use the Windows Thread Pool instead which is still very efficient.
 
 -----
 
