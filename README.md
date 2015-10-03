@@ -5,7 +5,7 @@
 To-Do List:
  1. ~~Clean up and upload `PublicLibs` directory.~~
  2. ~~Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.~~
- 3. Finalize YMP v1.0 functionality.
+ 3. ~~Finalize YMP v1.0 functionality.~~
  4. Clean up and upload the `NumberFactory` app/directory.
  5. Pre-release testing of everything.
  6. Run lots of benchmarks.
@@ -45,9 +45,9 @@ Number Factory uses the YMP library which is an experimental public interface to
 Number Factory has access to parallel large arithmetic whereas most other programs do not.
 For this reason alone, it is often faster than other programs by sheer force of parallelization.
 
-As far as sequential performance goes, Number Factory sits somewhere between Mini-Pi and y-cruncher.
-y-cruncher is still faster since it is better optimized and has access to internal functionality that is
-not exposed through the YMP interface.
+For most constants, the overall performance comes within a factor of 2 of y-cruncher. This is actually pretty good considering that most of Number Factory's implementations are relatively unoptimized.
+
+That said, squeezing out the remaining factor of 2 will probably be difficult. y-cruncher does some pretty crazy things to get to where it is now. And it uses internal functionality that isn't exposed through the YMP interface.
 
 
 -----
@@ -65,10 +65,10 @@ Number Factory is the first program to *dynamically* link with YMP. (y-cruncher 
 
 
 Run-Time:
- - 64-bit Windows 7 SP1 or later
- - A processor with AVX.
+ - 64-bit Windows Vista or later. (Windows 7 SP1 required for AVX)
+ - A processor with SSE4.1. (Intel Penryn or later. Or AMD Bulldozer or later.)
 
-Number Factory itself can be compiled for older processors. But for all practical purposes, the underlying YMP library needs a *minimum* of AVX to avoid embarrassing itself. For that matter, you *really* want to use XOP or AVX2.
+Number Factory itself can be compiled for older processors. But for all practical purposes, the underlying YMP library needs a *minimum* of SSE4.1 to be competitive with existing libraries. That said, the *real* performance gains will require AVX2.
 
 There is currently no support for Linux yet. The Number Factory/YMP project is still experimental and will be tested in Windows first. Only if it is massively successful will a Linux version be considered.
 
@@ -76,12 +76,13 @@ There is currently no support for Linux yet. The Number Factory/YMP project is s
 
 **Configurations:**
 
-Number Factory currently supports the following build configurations:
+The Visual Studio project currently supports the following build configurations:
 
 |Configuration |Target Processor  |YMP Binary|Notes                      |
 |--------------|------------------|----------|---------------------------|
-|Debug         |                  |AVX       |No Optimizations           |
-|Release       |                  |AVX       |Same as "11-SandyBridge"   |
+|Debug         |                  |SSE4.1    |No Optimizations           |
+|Release       |                  |SSE4.1    |Same as "08-Nehalem"       |
+|08-Nehalem    |Intel Nehalem     |SSE4.1    |                           |
 |11-SandyBridge|Intel Sandy Bridge|AVX       |                           |
 |11-Bulldozer  |AMD Bulldozer     |FMA4/XOP  |                           |
 |13-Haswell    |Intel Haswell     |FMA3/AVX2 |                           |
