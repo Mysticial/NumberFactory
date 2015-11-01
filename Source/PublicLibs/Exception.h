@@ -2,7 +2,7 @@
  * 
  * Author           : Alexander J. Yee
  * Date Created     : 07/13/2013
- * Last Modified    : 08/17/2013
+ * Last Modified    : 09/20/2015
  * 
  *      This current exception system is a rats nest and needs to be completely
  *  redone in a better way. But for now, it's better than nothing.
@@ -34,6 +34,7 @@
 #include <string>
 #include <memory>
 #include <exception>
+#include "CompilerSettings.h"
 #include "ConsoleIO/Label.h"
 //#include "ErrorHandling.h"
 namespace ymp{
@@ -64,7 +65,7 @@ public:
     //    , name(x.name)
     //{}
     //ym_exception& operator=(ym_exception&& x);
-    virtual ~ym_exception() throw (){}
+    virtual ~ym_exception() noexcept{}
 
     ym_exception(int code_, const char* str_ = NULL)
         : code(code_)
@@ -124,7 +125,7 @@ public:
         Console::SetColor('w');
     }
 
-    virtual const char* what() const throw () override{
+    virtual const char* what() const noexcept override{
         if (str != nullptr)
             return str;
         return astr.c_str();
@@ -176,14 +177,14 @@ public:
 
 private:
     //  This object is movable, but not copyable.
-//    ym_error(const ym_error&)
-//    ym_error& operator=(const ym_error&);
+//    ym_error(const ym_error&) = delete;
+//    ym_error& operator=(const ym_error&) = delete;
 public:
-    ym_error(ym_error &&x)
-        : e(std::move(x.e))
-    {}
-    ym_error& operator=(ym_error &&x);
-    virtual ~ym_error() throw (){}
+//    ym_error(ym_error&& x)
+//        : e(std::move(x.e))
+//    {}
+//    ym_error& operator=(ym_error&& x);
+    virtual ~ym_error() noexcept{}
 
     void print() const{
         Console::SetColor('R');

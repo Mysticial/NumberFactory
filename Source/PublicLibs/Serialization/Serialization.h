@@ -17,6 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <string>
+#include "../CompilerSettings.h"
 #include "../Types.h"
 namespace ymp{
 namespace Serialization{
@@ -24,17 +25,17 @@ namespace Serialization{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-void            write_line  (std::wstring& stream);
-void            parse_line  (const wchar_t*& stream);
+YM_NO_INLINE    void            write_line  (std::wstring& stream);
+YM_NO_INLINE    void            parse_line  (const wchar_t*& stream);
 ////////////////////////////////////////////////////////////////////////////////
-void            write_siL   (std::wstring& stream, const std::wstring& label, siL_t x);
-siL_t           parse_siL   (const wchar_t*& stream);
+YM_NO_INLINE    void            write_siL   (std::wstring& stream, const std::wstring& label, siL_t x);
+YM_NO_INLINE    siL_t           parse_siL   (const wchar_t*& stream);
 ////////////////////////////////////////////////////////////////////////////////
-void            write_float (std::wstring& stream, const std::wstring& label, double x);
-double          parse_float (const wchar_t*& stream);
+YM_NO_INLINE    void            write_float (std::wstring& stream, const std::wstring& label, double x);
+YM_NO_INLINE    double          parse_float (const wchar_t*& stream);
 ////////////////////////////////////////////////////////////////////////////////
-void            write_str   (std::wstring& stream, const std::wstring& label, const std::wstring& x);
-std::wstring    parse_str   (const wchar_t*& stream);
+YM_NO_INLINE    void            write_str   (std::wstring& stream, const std::wstring& label, const std::wstring& x);
+YM_NO_INLINE    std::wstring    parse_str   (const wchar_t*& stream);
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

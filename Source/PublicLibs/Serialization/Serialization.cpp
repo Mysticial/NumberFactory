@@ -27,7 +27,7 @@ const ParseException INVALID_DIGIT("Unexpected end of string.");
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-void parse_to_tab(const wchar_t*& str){
+YM_NO_INLINE void parse_to_tab(const wchar_t*& str){
     wchar_t ch;
     do{
         ch = *str++;
@@ -38,10 +38,10 @@ void parse_to_tab(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Line
-void write_line(std::wstring& stream){
+YM_NO_INLINE void write_line(std::wstring& stream){
     stream += L"\r\n";
 }
-void parse_line(const wchar_t*& str){
+YM_NO_INLINE void parse_line(const wchar_t*& str){
     wchar_t ch;
     do{
         ch = *str++;
@@ -51,13 +51,13 @@ void parse_line(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Integer
-void write_siL(std::wstring& stream, const std::wstring& label, siL_t x){
+YM_NO_INLINE void write_siL(std::wstring& stream, const std::wstring& label, siL_t x){
     stream += label;
     stream += L"\t";
     stream += std::to_wstring(x);
     write_line(stream);
 }
-siL_t parse_siL(const wchar_t*& str){
+YM_NO_INLINE siL_t parse_siL(const wchar_t*& str){
     //  Skip until after the first tab.
     parse_to_tab(str);
 
@@ -89,7 +89,7 @@ siL_t parse_siL(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Floating-Point
-void write_float(std::wstring& stream, const std::wstring& label, double x){
+YM_NO_INLINE void write_float(std::wstring& stream, const std::wstring& label, double x){
     union{
         double f;
         u64_t i;
@@ -98,7 +98,7 @@ void write_float(std::wstring& stream, const std::wstring& label, double x){
 
     write_siL(stream, label, i);
 }
-double parse_float(const wchar_t*& str){
+YM_NO_INLINE double parse_float(const wchar_t*& str){
     union{
         double f;
         u64_t i;
@@ -109,13 +109,13 @@ double parse_float(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  String
-void write_str(std::wstring& stream, const std::wstring& label, const std::wstring& x){
+YM_NO_INLINE void write_str(std::wstring& stream, const std::wstring& label, const std::wstring& x){
     stream += label;
     stream += L"\t";
     stream += x;
     write_line(stream);
 }
-std::wstring parse_str(const wchar_t*& str){
+YM_NO_INLINE std::wstring parse_str(const wchar_t*& str){
     //  Skip until after the first tab.
     parse_to_tab(str);
 
