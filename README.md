@@ -6,11 +6,12 @@ To-Do List:
  1. ~~Clean up and upload `PublicLibs` directory.~~
  2. ~~Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.~~
  3. ~~Finalize YMP v1.0 functionality.~~
- 4. Clean up and upload the `NumberFactory` app/directory.
+ 4. ~~Clean up and upload the `NumberFactory` app/directory.~~
  5. Pre-release testing of everything.
- 6. Run lots of benchmarks.
- 7. Upload YMP binaries.
- 8. Finish and release YMP documentation.
+ 6. ~~Run lots of benchmarks.~~
+ 7. Clean up and upload the YMP headers.
+ 8. Upload YMP binaries.
+ 9. Finish and release YMP documentation.
 
 -----
 
