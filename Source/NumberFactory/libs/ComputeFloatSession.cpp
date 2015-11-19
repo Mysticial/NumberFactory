@@ -11,11 +11,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "../../PublicLibs/StringTools/ToString.h"
-#include "../../PublicLibs/ConsoleIO/BasicIO.h"
-#include "../../PublicLibs/ConsoleIO/Label.h"
-#include "../../PublicLibs/Environment/Environment.h"
-#include "../../ymp/Parallelism.h"
+#include "PublicLibs/StringTools/ToString.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "PublicLibs/Environment/Environment.h"
+#include "ymp/Parallelism.h"
 #include "Utils.h"
 #include "ComputeFloatSession.h"
 namespace NumberFactory{

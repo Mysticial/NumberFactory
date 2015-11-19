@@ -19,8 +19,8 @@
 #endif
 
 #include <unistd.h>
-#include "../ConsoleIO/BasicIO.h"
-#include "../Time/Time.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/Time/Time.h"
 #include "Environment.h"
 namespace ymp{
 namespace Environment{

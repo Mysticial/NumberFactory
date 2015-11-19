@@ -13,7 +13,7 @@
 //  Dependencies
 #include <time.h>
 #include <Windows.h>
-#include "../ConsoleIO/Label.h"
+#include "PublicLibs/ConsoleIO/Label.h"
 #include "Time_Windows.h"
 namespace ymp{
 namespace Time{

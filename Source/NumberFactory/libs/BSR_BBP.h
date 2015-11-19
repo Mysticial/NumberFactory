@@ -22,11 +22,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "../../PublicLibs/ConsoleIO/BasicIO.h"
-#include "../../PublicLibs/ConsoleIO/Margin.h"
-#include "../../PublicLibs/Time/Time.h"
-#include "../../ymp/Parallelism.h"
-#include "../../ymp/BigFloatO.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/Margin.h"
+#include "PublicLibs/Time/Time.h"
+#include "ymp/Parallelism.h"
+#include "ymp/BigFloatO.h"
 namespace NumberFactory{
     using namespace ymp;
 ////////////////////////////////////////////////////////////////////////////////

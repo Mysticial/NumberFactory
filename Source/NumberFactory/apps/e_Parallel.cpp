@@ -8,9 +8,9 @@
  * 
  */
 
-#include "../../ymp/Parallelism.h"
-#include "../libs/Utils.h"
-#include "../libs/ComputeFloatSession.h"
+#include "ymp/Parallelism.h"
+#include "NumberFactory/libs/Utils.h"
+#include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
 using namespace ymp;

@@ -16,8 +16,10 @@
  * 
  */
 
-#include "../../PublicLibs/ConsoleIO/Margin.h"
-#include "../libs/ComputeFloatSession.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/Margin.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
 using namespace ymp;
@@ -163,7 +165,6 @@ public:
         Pi_AGM(P, Q, p, tds);
         Time::WallClock time1 = Time::WallClock::Now();
 
-    
         Console::println("Finishing...");
         BigFloatO<wtype> T;
         T = div(P, Q, p, tds);

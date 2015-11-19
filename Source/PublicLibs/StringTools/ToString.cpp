@@ -12,8 +12,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include <sstream>
 #include <iomanip>
-#include "../CompilerSettings.h"
-#include "../ConsoleIO/Label.h"
+#include "PublicLibs/CompilerSettings.h"
+#include "PublicLibs/ConsoleIO/Label.h"
 #include "ToString.h"
 namespace ymp{
 namespace StringTools{

@@ -8,8 +8,8 @@
  * 
  */
 
-#include "../libs/BSR_Type0.h"
-#include "../libs/ComputeFloatSession.h"
+#include "NumberFactory/libs/BSR_Type0.h"
+#include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
 typedef u64_t wtype;

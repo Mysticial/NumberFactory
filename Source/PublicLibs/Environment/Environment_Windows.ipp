@@ -12,7 +12,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <Windows.h>
-#include "../ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/Label.h"
 #include "Environment.h"
 namespace ymp{
 namespace Environment{

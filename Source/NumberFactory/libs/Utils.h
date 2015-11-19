@@ -16,12 +16,13 @@
 //  Dependencies
 #include <string>
 #include <vector>
-#include "../../PublicLibs/Types.h"
-#include "../../PublicLibs/ConsoleIO/BasicIO.h"
-#include "../../PublicLibs/Time/Time.h"
-#include "../../PublicLibs/Time/StopWatch.h"
-#include "../../PublicLibs/FileIO/FileIO.h"
-#include "../../ymp/BigFloatO.h"
+#include "PublicLibs/Types.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/Time/Time.h"
+#include "PublicLibs/Time/StopWatch.h"
+#include "PublicLibs/FileIO/FileIO.h"
+#include "ymp/BigIntO.h"
+#include "ymp/BigFloatO.h"
 namespace ymp{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

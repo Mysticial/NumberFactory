@@ -8,8 +8,9 @@
  * 
  */
 
-#include "../libs/PartialFactorial.h"
-#include "../libs/ComputeIntSession.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "NumberFactory/libs/PartialFactorial.h"
+#include "NumberFactory/libs/ComputeIntSession.h"
 
 namespace NumberFactory{
 using namespace ymp;

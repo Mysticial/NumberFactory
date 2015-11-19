@@ -11,9 +11,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "../ConsoleIO/BasicIO.h"
-#include "../Serialization/Serialization.h"
-#include "../Environment/Environment.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/Serialization/Serialization.h"
+#include "PublicLibs/Environment/Environment.h"
 #include "StopWatch.h"
 namespace ymp{
 namespace Time{

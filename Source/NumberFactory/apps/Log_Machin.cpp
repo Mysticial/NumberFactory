@@ -8,7 +8,7 @@
  * 
  */
 
-#include "../libs/ArcCot.h"
+#include "NumberFactory/libs/ArcCot.h"
 
 namespace NumberFactory{
 typedef u64_t wtype;

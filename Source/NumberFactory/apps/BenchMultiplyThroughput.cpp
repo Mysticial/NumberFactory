@@ -20,13 +20,13 @@
 
 #include <vector>
 
-#include "../../PublicLibs/ConsoleIO/Margin.h"
-#include "../../PublicLibs/ConsoleIO/Label.h"
-#include "../../PublicLibs/Time/Benchmark.h"
-#include "../../PublicLibs/Environment/Environment.h"
-#include "../../PublicLibs/AlignedMalloc.h"
-#include "../../ymp/Parallelism.h"
-#include "../../ymp/LowLevel.h"
+#include "PublicLibs/ConsoleIO/Margin.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "PublicLibs/Time/Benchmark.h"
+#include "PublicLibs/Environment/Environment.h"
+#include "PublicLibs/AlignedMalloc.h"
+#include "ymp/Parallelism.h"
+#include "ymp/LowLevel.h"
 
 namespace NumberFactory{
 using namespace ymp;

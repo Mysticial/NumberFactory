@@ -8,7 +8,8 @@
  * 
  */
 
-#include "../libs/ComputeIntSession.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "NumberFactory/libs/ComputeIntSession.h"
 
 namespace NumberFactory{
 using namespace ymp;

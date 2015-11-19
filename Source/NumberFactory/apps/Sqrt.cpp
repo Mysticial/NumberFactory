@@ -8,7 +8,9 @@
 
 #include <string>
 
-#include "../libs/ComputeFloatSession.h"
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
 using namespace ymp;

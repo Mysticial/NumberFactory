@@ -19,10 +19,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <string>
-#include "../../PublicLibs/Types.h"
-#include "../../PublicLibs/Time/Time.h"
-#include "../../PublicLibs/Time/StopWatch.h"
-#include "../../ymp/BigFloatO.h"
+#include "PublicLibs/Types.h"
+#include "PublicLibs/Time/Time.h"
+#include "PublicLibs/Time/StopWatch.h"
+#include "ymp/BigFloatO.h"
 namespace NumberFactory{
     using namespace ymp;
 ////////////////////////////////////////////////////////////////////////////////

@@ -12,8 +12,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <cmath>
-#include "../CompilerSettings.h"
-#include "../StringTools/ToString.h"
+#include "PublicLibs/CompilerSettings.h"
+#include "PublicLibs/StringTools/ToString.h"
 #include "BasicIO.h"
 ////////////////////////////////////////////////////////////////////////////////
 #ifdef _WIN32

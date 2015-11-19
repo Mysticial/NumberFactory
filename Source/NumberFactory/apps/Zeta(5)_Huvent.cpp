@@ -8,8 +8,8 @@
  * 
  */
 
-#include "../libs/BSR_BBP.h"
-#include "../libs/ComputeFloatSession.h"
+#include "NumberFactory/libs/BSR_BBP.h"
+#include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
 using namespace ymp;

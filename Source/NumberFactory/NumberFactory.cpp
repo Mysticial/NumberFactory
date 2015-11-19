@@ -12,10 +12,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <vector>
-#include "../PublicLibs/ConsoleIO/Label.h"
-#include "../PublicLibs/ConsoleIO/Margin.h"
-#include "../ymp/LowLevel_dll.h"
-#include "../ymp/Functions_dll.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "PublicLibs/ConsoleIO/Margin.h"
+#include "ymp/LowLevel_dll.h"
+#include "ymp/Functions_dll.h"
 namespace NumberFactory{
     using namespace ymp;
 ////////////////////////////////////////////////////////////////////////////////
