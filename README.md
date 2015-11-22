@@ -9,7 +9,7 @@ To-Do List:
  4. ~~Clean up and upload the `NumberFactory` app/directory.~~
  5. Pre-release testing of everything.
  6. ~~Run lots of benchmarks.~~
- 7. Clean up and upload the YMP headers.
+ 7. ~~Clean up and upload the YMP headers.~~
  8. Upload YMP binaries.
  9. Finish and release YMP documentation.
 
