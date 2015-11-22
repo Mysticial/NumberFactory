@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="08-Nehalem|x64">
+      <Configuration>08-Nehalem</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="11-Bulldozer|x64">
+      <Configuration>11-Bulldozer</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="11-SandyBridge|x64">
+      <Configuration>11-SandyBridge</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="13-Haswell|x64">
+      <Configuration>13-Haswell</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E18A71D2-E45F-48B7-A852-4E8C8D99FBDA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>NumberFactory</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\11-SandyBridge;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\08-Nehalem\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\11-SandyBridge;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\08-Nehalem\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\ArcCot.h" />
+    <ClInclude Include="..\..\Source\NumberFactory\libs\BSR_BBP.h" />
+    <ClInclude Include="..\..\Source\NumberFactory\libs\BSR_Type0.h" />
+    <ClInclude Include="..\..\Source\NumberFactory\libs\ComputeFloatSession.h" />
+    <ClInclude Include="..\..\Source\NumberFactory\libs\ComputeIntSession.h" />
+    <ClInclude Include="..\..\Source\NumberFactory\libs\PartialFactorial.h" />
+    <ClInclude Include="..\..\Source\NumberFactory\libs\Utils.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\AlignedMalloc.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\CompilerSettings.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Array.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\BasicIO.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Label.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Margin.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Environment\Environment.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Exception.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\FileIO\FileIO.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Serialization\ParseException.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Serialization\Serialization.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\StringTools\ToString.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\TemplateTools.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Time\Benchmark.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Time\StopWatch.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Time\Time.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Types.h" />
+    <ClInclude Include="..\..\Source\ymp\BigFloatO.h" />
+    <ClInclude Include="..\..\Source\ymp\BigFloatR.h" />
+    <ClInclude Include="..\..\Source\ymp\BigIntO.h" />
+    <ClInclude Include="..\..\Source\ymp\BigIntR.h" />
+    <ClInclude Include="..\..\Source\ymp\LowLevel.h" />
+    <ClInclude Include="..\..\Source\ymp\Parallelism.h" />
+    <ClInclude Include="..\..\Source\ymp\ymp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\BenchMultiplyLatency.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\BenchMultiplyThroughput.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\BinomialCoefficient.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Catalan_Huvent.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Catalan_Lupas.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\e_Basic.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\e_Parallel.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Factorial.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\IntegerPower.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Log_Machin.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Mersenne.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_AGM.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_Chudnovsky.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_Machin.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_Ramanujan.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Sqrt.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(3)_AZ1.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(3)_AZ2.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(5)_Broadhurst.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(5)_Huvent.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\libs\ComputeFloatSession.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\libs\ComputeIntSession.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\Main.cpp" />
+    <ClCompile Include="..\..\Source\NumberFactory\NumberFactory.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\CompileOptions_PublicLibs.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Array.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\BasicIO.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Label.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Margin.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\Environment\Environment.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\FileIO\FileIO.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\Serialization\Serialization.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\StringTools\ToString.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\Time\StopWatch.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\Time\Time.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

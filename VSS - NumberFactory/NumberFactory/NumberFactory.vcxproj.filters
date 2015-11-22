@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{fd84ec7e-1681-45e5-8418-58a6f92e608c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\NumberFactory">
+      <UniqueIdentifier>{76018f27-365f-4692-b81b-45b4695175d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\NumberFactory\apps">
+      <UniqueIdentifier>{63de9dbd-a46d-4bda-9bc7-89c634369404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\NumberFactory\libs">
+      <UniqueIdentifier>{0751cbf3-3687-4b97-8145-42583ef55f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs">
+      <UniqueIdentifier>{4c83e447-84e7-49d2-a027-adfab5680376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs\ConsoleIO">
+      <UniqueIdentifier>{c3ae2254-6d52-4afe-afff-dbd45575804d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs\Time">
+      <UniqueIdentifier>{2b0ec0e9-7918-4fb6-83b2-d5b736857d66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs\StringTools">
+      <UniqueIdentifier>{fc5a4f4c-e6ce-4f52-9994-00b747ab4d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs\Serialization">
+      <UniqueIdentifier>{d88974af-b926-4691-999e-af308f504420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs\Environment">
+      <UniqueIdentifier>{eb78b7d1-28f9-4e03-8607-1ae1ac4d36ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\PublicLibs\FileIO">
+      <UniqueIdentifier>{ee16d302-f185-4ad5-b88f-bfd92f79c4fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ymp">
+      <UniqueIdentifier>{d73df58c-ec8e-4d1a-84ae-5f5ea40cc6dd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\PublicLibs\AlignedMalloc.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\CompilerSettings.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\TemplateTools.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Types.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\BigFloatO.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\BigFloatR.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\LowLevel.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\Parallelism.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\ArcCot.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\BSR_BBP.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\BSR_Type0.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\ComputeFloatSession.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Array.h">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\BasicIO.h">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Label.h">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Margin.h">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Time\Time.h">
+      <Filter>Source\PublicLibs\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Time\StopWatch.h">
+      <Filter>Source\PublicLibs\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\StringTools\ToString.h">
+      <Filter>Source\PublicLibs\StringTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Serialization\Serialization.h">
+      <Filter>Source\PublicLibs\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Serialization\ParseException.h">
+      <Filter>Source\PublicLibs\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Environment\Environment.h">
+      <Filter>Source\PublicLibs\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\FileIO\FileIO.h">
+      <Filter>Source\PublicLibs\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\ComputeIntSession.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\BigIntO.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\BigIntR.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\PartialFactorial.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Exception.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Time\Benchmark.h">
+      <Filter>Source\PublicLibs\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ymp\ymp.h">
+      <Filter>Source\ymp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NumberFactory\libs\Utils.h">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\NumberFactory\libs\ComputeFloatSession.cpp">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\libs\ComputeIntSession.cpp">
+      <Filter>Source\NumberFactory\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Catalan_Huvent.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Catalan_Lupas.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\e_Basic.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\e_Parallel.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Factorial.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\IntegerPower.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Log_Machin.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Mersenne.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_AGM.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_Chudnovsky.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_Machin.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Pi_Ramanujan.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Sqrt.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(3)_AZ1.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(3)_AZ2.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(5)_Broadhurst.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\Zeta(5)_Huvent.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\BinomialCoefficient.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\Main.cpp">
+      <Filter>Source\NumberFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\NumberFactory.cpp">
+      <Filter>Source\NumberFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Array.cpp">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\BasicIO.cpp">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\Environment\Environment.cpp">
+      <Filter>Source\PublicLibs\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\FileIO\FileIO.cpp">
+      <Filter>Source\PublicLibs\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Label.cpp">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Margin.cpp">
+      <Filter>Source\PublicLibs\ConsoleIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\Serialization\Serialization.cpp">
+      <Filter>Source\PublicLibs\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\Time\StopWatch.cpp">
+      <Filter>Source\PublicLibs\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\Time\Time.cpp">
+      <Filter>Source\PublicLibs\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\StringTools\ToString.cpp">
+      <Filter>Source\PublicLibs\StringTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\CompileOptions_PublicLibs.cpp">
+      <Filter>Source\PublicLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\BenchMultiplyLatency.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NumberFactory\apps\BenchMultiplyThroughput.cpp">
+      <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
