@@ -2,6 +2,10 @@
 
 **Work in Progress... No ETA yet.**
 
+The stuff that's been uploaded here is basically complete. All that's missing are the `ymp.dll` binaries which I'm still testing. So you will be able to compile and link. But you won't be able to run yet.
+
+If you're interested in testing this and I know you personally, shoot me an email or drop me a message in Lounge\<C++\>. I'll send you the `ymp.dll` binaries to play with.
+
 To-Do List:
  1. ~~Clean up and upload `PublicLibs` directory.~~
  2. ~~Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.~~
@@ -93,6 +97,15 @@ Upon building a configuration through the IDE, the appropriate DLLs are copied i
 All `ymp.dll` binaries of the same YMP release will have the same ABI. So any Number Factory binary (or any other client app) will be able to link with any of them. This may make it slightly easier to do CPU dispatching.
 
 However, `ymp.dll` binaries from *different* releases are not guaranteed to be compatible. Backwards incompatible changes may require recompilation of the client app. Maintaining a static ABI is currently not a feasible commitment.
+
+-----
+
+**Source Directories:**
+
+ - `NumberFactory/` - The main Number Factory directory.
+ - `ymp/` - Headers for the YMP library.
+ - `PublicLibs/` - Public shared libraries. Also used by the [Digit Viewer](https://github.com/Mysticial/DigitViewer).
+ - `PrivateLibs/`, `Objects/`, and `Modules/` - Internal components. Don't use directly.
 
 -----
 
