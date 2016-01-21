@@ -11,7 +11,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "PublicLibs/StringTools/ToString.h"
 #include "PublicLibs/ConsoleIO/BasicIO.h"
 #include "PublicLibs/ConsoleIO/Label.h"
 #include "PublicLibs/Environment/Environment.h"
@@ -110,8 +109,8 @@ void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const st
         }
     }
 
-    to_file_dec(x, StringTools::a_to_w_direct(dec_name).c_str(), dec_digits, tds, &watch);
-    to_file_hex(x, StringTools::a_to_w_direct(hex_name).c_str(), hex_digits);
+    to_file_dec(x, dec_name, dec_digits, tds, &watch);
+    to_file_hex(x, hex_name, hex_digits);
     Console::println();
 }
 template <typename wtype>

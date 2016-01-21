@@ -305,10 +305,12 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClInclude Include="..\..\Source\PublicLibs\Environment\Environment.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Exception.h" />
     <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\FileIO\BasicFile.h" />
     <ClInclude Include="..\..\Source\PublicLibs\FileIO\FileIO.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Serialization\ParseException.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Serialization\Serialization.h" />
     <ClInclude Include="..\..\Source\PublicLibs\StringTools\ToString.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\StringTools\Unicode.h" />
     <ClInclude Include="..\..\Source\PublicLibs\TemplateTools.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Time\Benchmark.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Time\StopWatch.h" />
@@ -353,9 +355,11 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Label.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\ConsoleIO\Margin.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\Environment\Environment.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\FileIO\BasicFile.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\FileIO\FileIO.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\Serialization\Serialization.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\StringTools\ToString.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\StringTools\Unicode.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\Time\StopWatch.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\Time\Time.cpp" />
   </ItemGroup>

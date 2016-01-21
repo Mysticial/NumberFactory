@@ -4,6 +4,7 @@ GNU C run-time Library: LGPL v2
 
     Linux:    libc.so.6 -> libc-2.19.so
               libm.so.6 -> libm-2.19.so
+              libpthread.so.0 -> libpthread-2.19.so
 
 
 These binaries is distributed unmodified under LGPLv2.
@@ -19,6 +20,27 @@ GNU C++ run-time Library: LGPL v3
 
 This binary is distributed unmodified under LGPLv3.
 Source can be obtained from: http://packages.ubuntu.com/vivid/gcc-snapshot
+
+
+================================================================================
+
+GCC run-time Library: GPL v3 with Runtime Library Exception
+
+    Linux:    libgcc_s.so.1
+
+
+This binary is distributed unmodified under LGPLv3.
+Source can be obtained from: https://gcc.gnu.org/
+
+
+================================================================================
+
+Dynamic Loader
+
+    Linux:    libdl.so.2
+
+
+Apache License 2.0: http://www.apache.org/licenses/LICENSE-2.0
 
 
 ================================================================================

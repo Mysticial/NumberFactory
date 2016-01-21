@@ -146,7 +146,7 @@ void bench_parallel_multiply_throughput(){
     Console::println("Enter a memory limit: (e.g. 768MB, 2.5GB, etc...)");
     upL_t bytes = (upL_t)Console::scan_label_bytes();
 
-    Environment::LockToCore0();
+    Environment::LockToCore();
     Console::println();
     Console::println("Benchmarking: L x L -> 2L  (64-bit word multiply)");
     Console::println();

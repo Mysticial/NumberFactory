@@ -48,6 +48,13 @@ double StopWatch::GetWallTime() const{
     }
     return out_wall;
 }
+double StopWatch::GetCpuTime() const{
+    double out_cpu = total_cpu_time;
+    if (is_running){
+        out_cpu += CPUClock() - cpu_clock;
+    }
+    return out_cpu;
+}
 double StopWatch::GetCpuUtilization() const{
     double wall, cpu;
     wall = GetTimes(cpu);
@@ -82,13 +89,13 @@ void StopWatch::PrintCpuUtilization() const{
     Console::println("\n", 'w');
 }
 ////////////////////////////////////////////////////////////////////////////////
-void StopWatch::Serialize(std::wstring& stream) const{
+void StopWatch::Serialize(std::string& stream) const{
     double wall, cpu;
     wall = GetTimes(cpu);
-    Serialization::write_float(stream, L"total_wall_time   :", wall);
-    Serialization::write_float(stream, L"total_cpu_time    :", cpu);
+    Serialization::write_float(stream, "total_wall_time   :", wall);
+    Serialization::write_float(stream, "total_cpu_time    :", cpu);
 }
-void StopWatch::Deserialize(const wchar_t*& stream){
+void StopWatch::Deserialize(const char*& stream){
     total_wall_time = Serialization::parse_float(stream);
     total_cpu_time = Serialization::parse_float(stream);
 }

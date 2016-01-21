@@ -4,6 +4,8 @@
  * Date Created     : 07/09/2015
  * Last Modified    : 07/11/2015
  * 
+ *      All filepaths are assumed to be UTF-8.
+ * 
  */
 
 #pragma once
@@ -20,7 +22,7 @@
 #include "PublicLibs/ConsoleIO/BasicIO.h"
 #include "PublicLibs/Time/Time.h"
 #include "PublicLibs/Time/StopWatch.h"
-#include "PublicLibs/FileIO/FileIO.h"
+#include "PublicLibs/FileIO/BasicFile.h"
 #include "ymp/BigIntO.h"
 #include "ymp/BigFloatO.h"
 namespace ymp{
@@ -45,14 +47,14 @@ inline double logf_approx(double x){
 ////////////////////////////////////////////////////////////////////////////////
 //  Dump a BigInt directly to disk.
 template <typename wtype>
-void to_file_hex(const BigInt<wtype>& x, const wchar_t* name){
+void to_file_hex(const BigInt<wtype>& x, const std::string& path){
     Console::println("Writing Hexadecimal Digits...");
-    FileIO::BasicFile file(0, name);
+    FileIO::BasicFile file(0, path);
     auto str = to_string_hex(x);
-    file.write(str.c_str(), str.size());
+    file.write(str);
 }
 template <typename wtype>
-void to_file_dec(const BigInt<wtype>& x, const wchar_t* name, upL_t tds = 1, Time::StopWatch* watch = nullptr){
+void to_file_dec(const BigInt<wtype>& x, const std::string& path, upL_t tds = 1, Time::StopWatch* watch = nullptr){
     //  The time spent in the base conversion will be added to the specified stopwatch.
 
     Console::println("Base Converting:");
@@ -70,20 +72,20 @@ void to_file_dec(const BigInt<wtype>& x, const wchar_t* name, upL_t tds = 1, Tim
         watch->Stop();
 
     Console::println("Writing Decimal Digits...");
-    FileIO::BasicFile file(0, name);
-    file.write(str.c_str(), str.size());
+    FileIO::BasicFile file(0, path);
+    file.write(str);
 }
 ////////////////////////////////////////////////////////////////////////////////
 //  Dump a BigFloat directly to disk.
 template <typename wtype>
-void to_file_hex(const BigFloat<wtype>& x, const wchar_t* name, upL_t digits){
+void to_file_hex(const BigFloat<wtype>& x, const std::string& path, upL_t digits){
     Console::println("Writing Hexadecimal Digits...");
-    FileIO::BasicFile file(0, name);
+    FileIO::BasicFile file(0, path);
     auto str = to_string_hex(x, digits);
-    file.write(str.c_str(), str.size());
+    file.write(str);
 }
 template <typename wtype>
-void to_file_dec(const BigFloat<wtype>& x, const wchar_t* name, upL_t digits, upL_t tds = 1, Time::StopWatch* watch = nullptr){
+void to_file_dec(const BigFloat<wtype>& x, const std::string& path, upL_t digits, upL_t tds = 1, Time::StopWatch* watch = nullptr){
     //  The time spent in the base conversion will be added to the specified stopwatch.
 
     Console::println("Base Converting:");
@@ -101,8 +103,8 @@ void to_file_dec(const BigFloat<wtype>& x, const wchar_t* name, upL_t digits, up
         watch->Stop();
 
     Console::println("Writing Decimal Digits...");
-    FileIO::BasicFile file(0, name);
-    file.write(str.c_str(), str.size());
+    FileIO::BasicFile file(0, path);
+    file.write(str);
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

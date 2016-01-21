@@ -27,8 +27,9 @@ const ParseException INVALID_DIGIT("Unexpected end of string.");
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-YM_NO_INLINE void parse_to_tab(const wchar_t*& str){
-    wchar_t ch;
+template <typename ctype> YM_NO_INLINE
+void parse_to_tab(const ctype*& str){
+    ctype ch;
     do{
         ch = *str++;
         if (ch == '\0') UNEXPECTED_END_OF_STRING.fire();
@@ -38,11 +39,11 @@ YM_NO_INLINE void parse_to_tab(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Line
-YM_NO_INLINE void write_line(std::wstring& stream){
-    stream += L"\r\n";
+YM_NO_INLINE void write_line(std::string& stream){
+    stream += "\r\n";
 }
-YM_NO_INLINE void parse_line(const wchar_t*& str){
-    wchar_t ch;
+YM_NO_INLINE void parse_line(const char*& str){
+    char ch;
     do{
         ch = *str++;
         if (ch == '\0') UNEXPECTED_END_OF_STRING.fire();
@@ -51,13 +52,13 @@ YM_NO_INLINE void parse_line(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Integer
-YM_NO_INLINE void write_siL(std::wstring& stream, const std::wstring& label, siL_t x){
+YM_NO_INLINE void write_siL(std::string& stream, const std::string& label, siL_t x){
     stream += label;
-    stream += L"\t";
-    stream += std::to_wstring(x);
+    stream += '\t';
+    stream += std::to_string(x);
     write_line(stream);
 }
-YM_NO_INLINE siL_t parse_siL(const wchar_t*& str){
+YM_NO_INLINE siL_t parse_siL(const char*& str){
     //  Skip until after the first tab.
     parse_to_tab(str);
 
@@ -71,7 +72,7 @@ YM_NO_INLINE siL_t parse_siL(const wchar_t*& str){
 
     //  Parse number
     while (1){
-        wchar_t ch = *str++;
+        char ch = *str++;
         if (ch == '\0') UNEXPECTED_END_OF_STRING.fire();
         if (ch == '\r') continue;
         if (ch == '\n') break;
@@ -89,7 +90,7 @@ YM_NO_INLINE siL_t parse_siL(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Floating-Point
-YM_NO_INLINE void write_float(std::wstring& stream, const std::wstring& label, double x){
+YM_NO_INLINE void write_float(std::string& stream, const std::string& label, double x){
     union{
         double f;
         u64_t i;
@@ -98,7 +99,7 @@ YM_NO_INLINE void write_float(std::wstring& stream, const std::wstring& label, d
 
     write_siL(stream, label, i);
 }
-YM_NO_INLINE double parse_float(const wchar_t*& str){
+YM_NO_INLINE double parse_float(const char*& str){
     union{
         double f;
         u64_t i;
@@ -109,19 +110,19 @@ YM_NO_INLINE double parse_float(const wchar_t*& str){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  String
-YM_NO_INLINE void write_str(std::wstring& stream, const std::wstring& label, const std::wstring& x){
+YM_NO_INLINE void write_str(std::string& stream, const std::string& label, const std::string& x){
     stream += label;
-    stream += L"\t";
+    stream += '\t';
     stream += x;
     write_line(stream);
 }
-YM_NO_INLINE std::wstring parse_str(const wchar_t*& str){
+YM_NO_INLINE std::string parse_str(const char*& str){
     //  Skip until after the first tab.
     parse_to_tab(str);
 
-    std::wstring x;
+    std::string x;
     while (1){
-        wchar_t ch = *str++;
+        char ch = *str++;
         if (ch == '*') return x;
         if (ch == '\r') continue;
         if (ch == '\n') break;

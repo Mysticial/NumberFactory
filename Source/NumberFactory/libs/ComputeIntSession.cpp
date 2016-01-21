@@ -11,7 +11,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "PublicLibs/StringTools/ToString.h"
 #include "PublicLibs/ConsoleIO/BasicIO.h"
 #include "PublicLibs/ConsoleIO/Label.h"
 #include "PublicLibs/Environment/Environment.h"
@@ -88,8 +87,8 @@ void ComputeIntSession<wtype>::write_digits(const BigInt<wtype>& x, const std::s
         hex_name = name + " - Hex - " + algorithm + ".txt";
     }
 
-    to_file_dec(x, StringTools::a_to_w_direct(dec_name).c_str(), tds, &watch);
-    to_file_hex(x, StringTools::a_to_w_direct(hex_name).c_str());
+    to_file_dec(x, dec_name, tds, &watch);
+    to_file_hex(x, hex_name);
     Console::println();
 }
 template <typename wtype>

@@ -36,9 +36,6 @@ namespace NumberFactory{
 using namespace NumberFactory;
 
 
-
-
-
 int main(){
     //  Use Cilk Plus instead of Windows Thread Pools.
     //  Only available for AVX and AVX2.

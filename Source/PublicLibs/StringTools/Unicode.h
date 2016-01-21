@@ -1,14 +1,14 @@
-/* ToString.h - Conversions to Strings
+/* Unicode.h
  * 
  * Author           : Alexander J. Yee
- * Date Created     : 07/07/2013
- * Last Modified    : 08/24/2014
+ * Date Created     : 12/29/2015
+ * Last Modified    : 12/29/2015
  * 
  */
 
 #pragma once
-#ifndef _ymp_ToString_H
-#define _ymp_ToString_H
+#ifndef _ymp_Unicode_H
+#define _ymp_Unicode_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,35 +16,36 @@
 //  Dependencies
 #include <string>
 #include "PublicLibs/CompilerSettings.h"
-#include "PublicLibs/Types.h"
 namespace ymp{
 namespace StringTools{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-enum NumberFormat{
-    NORMAL = 0,
-    COMMAS = 1,
-    BYTES = 2,
-    BYTES_EXPANDED = 3
-};
+const char      BYTE_ORDER_MARK_UTF8[]  = "\xef\xbb\xbf";
+const char16_t  BYTE_ORDER_MARK_UTF16   = 0xfeff;
+const char16_t  BYTE_ORDER_MARK_UTF16be = 0xfffe;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-//  Integer
-YM_NO_INLINE    std::string tostr       (uiL_t x, NumberFormat format = NORMAL);
-YM_NO_INLINE    std::string tostr       (siL_t x, NumberFormat format = NORMAL);
-YM_NO_INLINE    std::string tostrln     (uiL_t x, NumberFormat format = NORMAL);
-YM_NO_INLINE    std::string tostrln     (siL_t x, NumberFormat format = NORMAL);
-static          std::string tostrln     (u32_t x, NumberFormat format = NORMAL){ return tostrln((uiL_t)x, format); }
-static          std::string tostrln     (s32_t x, NumberFormat format = NORMAL){ return tostrln((siL_t)x, format); }
+//  UTF-8 <-> UTF-16
+std::u16string  utf8_to_utf16   (const std::string& str);
+std::string     utf16_to_utf8   (const std::u16string& str);
 ////////////////////////////////////////////////////////////////////////////////
+//  UTF-8 <-> UTF-32
+std::u32string  utf8_to_utf32   (const std::string& str);
+std::string     utf32_to_utf8   (const std::u32string& str);
 ////////////////////////////////////////////////////////////////////////////////
-//  Float
-YM_NO_INLINE    std::string tostr_float     (double x, int precision = 0);
-YM_NO_INLINE    std::string tostrln_float   (double x, int precision = 0);
-YM_NO_INLINE    std::string tostr_fixed     (double x, int precision = 3);
-YM_NO_INLINE    std::string tostrln_fixed   (double x, int precision = 3);
+//  UTF-16 <-> UTF-32
+std::u32string  utf16_to_utf32  (const std::u16string& str);
+std::u16string  utf32_to_utf16  (const std::u32string& str);
+////////////////////////////////////////////////////////////////////////////////
+//  wchar_t <-> UTF-8
+std::wstring    utf8_to_wstr    (const std::string& str);
+std::string     wstr_to_utf8    (const std::wstring& str);
+////////////////////////////////////////////////////////////////////////////////
+//  wchar_t <-> UTF-16
+std::wstring    utf16_to_wstr   (const std::u16string& str);
+std::u16string  wstr_to_utf16   (const std::wstring& str);
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

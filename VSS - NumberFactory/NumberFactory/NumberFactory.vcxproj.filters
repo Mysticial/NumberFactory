@@ -135,6 +135,12 @@
     <ClInclude Include="..\..\Source\NumberFactory\libs\Utils.h">
       <Filter>Source\NumberFactory\libs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\FileIO\BasicFile.h">
+      <Filter>Source\PublicLibs\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\StringTools\Unicode.h">
+      <Filter>Source\PublicLibs\StringTools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\NumberFactory\libs\ComputeFloatSession.cpp">
@@ -241,6 +247,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\NumberFactory\apps\BenchMultiplyThroughput.cpp">
       <Filter>Source\NumberFactory\apps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\FileIO\BasicFile.cpp">
+      <Filter>Source\PublicLibs\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\StringTools\Unicode.cpp">
+      <Filter>Source\PublicLibs\StringTools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

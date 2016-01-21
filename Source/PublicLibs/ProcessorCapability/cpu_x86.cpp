@@ -175,7 +175,7 @@ void cpu_x86::print() const{
     Console::print("    RDRAND      = "); print_bool(HW_RDRAND);
     Console::print("    BMI1        = "); print_bool(HW_BMI1);
     Console::print("  * BMI2        = "); print_bool(HW_BMI2);
-    Console::print("    ADX         = "); print_bool(HW_ADX);
+    Console::print("  * ADX         = "); print_bool(HW_ADX);
     Console::print("    MPX         = "); print_bool(HW_MPX);
     Console::print("    PREFETCHWT1 = "); print_bool(HW_PREFETCHWT1);
     Console::println();

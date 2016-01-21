@@ -1,60 +1,67 @@
-/* StopWatch.h
+/* BaseFile_Windows.h
  * 
  * Author           : Alexander J. Yee
- * Date Created     : 02/12/2015
- * Last Modified    : 02/12/2015
- * 
- *      A stopwatch that tracks both wall time and CPU time. This is used for
- *  generating CPU utilization and efficiency profiles.
- * 
- *  Like any other stopwatch, it can be stopped and resumed so that you time
- *  only stuff that you care about it.
+ * Date Created     : 12/30/2015
+ * Last Modified    : 12/30/2015
  * 
  */
 
 #pragma once
-#ifndef _ymp_StopWatch_H
-#define _ymp_StopWatch_H
+#ifndef _ymp_FileIO_BaseFile_Windows_H
+#define _ymp_FileIO_BaseFile_Windows_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <string>
-#include "Time.h"
+#include "PublicLibs/Types.h"
 namespace ymp{
-namespace Time{
+namespace FileIO{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-class StopWatch{
-    WallClock wall_clock;       //  Wall clock of the last stopwatch start
-    double cpu_clock;           //  CPU clock of the last stopwatch start
-
-    double total_wall_time;     //  Total accumulated wall time
-    double total_cpu_time;      //  Total accumulated CPU time
-    bool is_running;
+class BaseFile{
+    std::string path;
+    void* filehandle;
 
 public:
-    StopWatch(){ Reset(); }
-
-    void Reset();
-    void Start();
-    void Stop();
+    BaseFile(const BaseFile&) = delete;
+    void operator=(const BaseFile&) = delete;
+    BaseFile::BaseFile(BaseFile&& x)
+        : path(std::move(x.path))
+        , filehandle(std::move(x.filehandle))
+    {
+        x.path.clear();
+    }
+    void BaseFile::operator=(BaseFile&& x){
+        path = std::move(x.path);
+        filehandle = std::move(x.filehandle);
+        x.path.clear();
+    }
 
 public:
-    double GetWallTime() const;
-    double GetCpuTime() const;
-    double GetCpuUtilization() const;
-    double GetTimes(double& cpu_time) const;
+    BaseFile(){};
+    virtual ~BaseFile(){ close(); }
 
-    void PrintCpuUtilization() const;
+    bool is_open() const{
+        return !path.empty();
+    }
+    const std::string& GetPath() const{
+        return path;
+    }
 
 public:
-    //  Serialization
-    void Serialize(std::string& stream) const;
-    void Deserialize(const char*& stream);
+    bool open(std::string path);
+    bool create(std::string path, ufL_t bytes = 0);
+    void close(bool delete_file = false);
+
+public:
+    bool set_ptr(ufL_t offset);
+    void flush();
+    upL_t read(void* T, upL_t bytes);
+    upL_t write(const void* T, upL_t bytes);
 };
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

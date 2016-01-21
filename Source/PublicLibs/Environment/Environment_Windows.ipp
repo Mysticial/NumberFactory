@@ -21,24 +21,38 @@ namespace Environment{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-void LockToCore0(){
-    HANDLE process = GetCurrentProcess();
-    HANDLE thread = GetCurrentThread();
-
-    DWORD_PTR before_mask;
-    DWORD_PTR t;
-    GetProcessAffinityMask(process, &before_mask, &t);
-
-    t = 1;
-    while ((t & before_mask) == 0)
-        t <<= 1;
-
-    if (SetThreadAffinityMask(thread, t) == 0){
-        Console::Warning("Unable to set thread affinity.\n");
-    }
-}
 void LowerProcessPriority(){
     SetPriorityClass(GetCurrentProcess(), BELOW_NORMAL_PRIORITY_CLASS);
+}
+bool LockToCore(upL_t core){
+    DWORD_PTR mask = 0;
+
+    if (core == (upL_t)0 - 1){
+        DWORD_PTR before_mask;
+        GetProcessAffinityMask(GetCurrentProcess(), &before_mask, &mask);
+
+        //  Select largest core #.
+#if _WIN64
+        mask = 0x8000000000000000;
+#else
+        mask = 0x80000000;
+#endif
+        while ((mask & before_mask) == 0)
+            mask >>= 1;
+
+    }else if (core >= 64){
+        Console::Warning("Unable to set thread affinity.\n");
+        return false;
+
+    }else{
+        mask = (DWORD_PTR)1 << core;
+    }
+
+    if (SetThreadAffinityMask(GetCurrentThread(), mask) == 0){
+        Console::Warning("Unable to set thread affinity.\n");
+        return false;
+    }
+    return true;
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
