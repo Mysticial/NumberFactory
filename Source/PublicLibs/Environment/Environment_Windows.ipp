@@ -63,7 +63,7 @@ upL_t GetLogicalProcessorsLegacy(){
 }
 #if _WIN32_WINNT >= 0x0601
 upL_t GetLogicalProcessorsWin7(){
-    upL_t out = GetMaximumProcessorCount(ALL_PROCESSOR_GROUPS);
+    upL_t out = GetActiveProcessorCount(ALL_PROCESSOR_GROUPS);
     return out == 0 ? 1 : out;
 }
 #endif
