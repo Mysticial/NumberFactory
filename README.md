@@ -1,6 +1,6 @@
 # Number Factory
 
-**Work in Progress... No ETA yet.**
+**Work in Progress... ETA: Pi Day (March 14)**
 
 The stuff that's been uploaded here is basically complete. All that's missing are the `ymp.dll` binaries which I'm still testing. So you will be able to compile and link. But you won't be able to run yet.
 
@@ -11,11 +11,11 @@ To-Do List:
  2. ~~Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.~~
  3. ~~Finalize YMP v1.0 functionality.~~
  4. ~~Clean up and upload the `NumberFactory` app/directory.~~
- 5. Pre-release testing of everything.
+ 5. ~~Pre-release testing of everything.~~
  6. ~~Run lots of benchmarks.~~
  7. ~~Clean up and upload the YMP headers.~~
  8. Upload YMP binaries.
- 9. Finish and release YMP documentation.
+ 9. ~~Finish and release YMP documentation.~~
 
 -----
 
@@ -106,6 +106,11 @@ However, `ymp.dll` binaries from *different* releases are not guaranteed to be c
  - `ymp/` - Headers for the YMP library.
  - `PublicLibs/` - Public shared libraries. Also used by the [Digit Viewer](https://github.com/Mysticial/DigitViewer).
  - `PrivateLibs/`, `Objects/`, and `Modules/` - Internal components. Don't use directly.
+
+-----
+
+**Documentation:**
+ - YMP Library (v1.0): http://www.numberworld.org/ymp/v1.0/
 
 -----
 
