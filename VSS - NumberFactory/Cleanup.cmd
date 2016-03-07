@@ -1,6 +1,6 @@
 del "NumberFactory.sdf"
 
-rd /s /q "libs\"
+::rd /s /q "libs\"
 rd /s /q "Source Files\"
 
 rd /s /q "ipch\"
