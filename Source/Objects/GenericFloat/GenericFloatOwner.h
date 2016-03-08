@@ -20,7 +20,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "Modules/Parameters/LookupTables.h"
+#include "Modules/Parameters/GlobalLookupTable.h"
+#include "Modules/Parameters/BasicParametersOwner.h"
 #ifndef YMP_IMPORT
 #include "Objects/ExactFloat/ExactFloat.h"
 #endif
@@ -290,7 +291,7 @@ public:
             resize_and_zero(AL);
         }
         upL_t ML = (upL_t)BigFloat<wtype>::mul_Psize(A.L, A.L, p, tds);
-        BasicParametersO mp(get_global_table(), ML, tds);
+        BasicParametersO mp(LookupTables::get_global_table<wtype>(A.L + A.L), tds, ML);
         BigFloat<wtype>::set_sqr(mp, A, p);
     }
     void set_mul(const BigFloat<wtype>& A, const BigFloat<wtype>& B, upL_t p, upL_t tds = 0){
@@ -299,7 +300,7 @@ public:
             resize_and_zero(AL);
         }
         upL_t ML = (upL_t)BigFloat<wtype>::mul_Psize(A.L, B.L, p, tds);
-        BasicParametersO mp(get_global_table(), ML, tds);
+        BasicParametersO mp(LookupTables::get_global_table<wtype>(A.L + B.L), tds, ML);
         BigFloat<wtype>::set_mul(mp, A, B, p);
     }
 

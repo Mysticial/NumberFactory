@@ -59,7 +59,7 @@ template <bool alternate>
 void e_Taylor_BSR(BigIntO<wtype>& P, BigIntO<wtype>& Q, upL_t a, upL_t b, upL_t tds);
 
 template <bool alternate>
-class e_Taylor_BSR_Action : public Threads::BasicAction{
+class e_Taylor_BSR_Action : public BasicAction{
     BigIntO<wtype>& P;
     BigIntO<wtype>& Q;
     upL_t a;
@@ -103,7 +103,7 @@ void e_Taylor_BSR(BigIntO<wtype>& P, BigIntO<wtype>& Q, upL_t a, upL_t b, upL_t 
         upL_t tds1 = tds - tds0;
         e_Taylor_BSR_Action<alternate> tp0(P0, Q0, a, m, tds0);
         e_Taylor_BSR_Action<alternate> tp1(P1, Q1, m, b, tds1);
-        Threads::RunInParallel(tp0, tp1);
+        Parallelism::run_in_parallel(tp0, tp1);
     }
 
     //  P = P0*Q1 + P1

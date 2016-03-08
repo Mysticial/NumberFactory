@@ -2,7 +2,7 @@
  * 
  * Author           : Alexander J. Yee
  * Date Created     : 09/16/2014
- * Last Modified    : 09/16/2014
+ * Last Modified    : 03/07/2016
  * 
  */
 
@@ -31,6 +31,26 @@ public:
         return Now() - *this;
     }
 };
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+struct PerformanceTimeDuration;
+struct PerformanceTimeStamp{
+    WallClock wall_clock;
+    double user_clock;
+    double kernel_clock;
+
+    static PerformanceTimeStamp now();
+};
+struct PerformanceTimeDuration{
+    double wall_time = 0;
+    double user_time = 0;
+    double kernel_time = 0;
+
+    void reset();
+    static PerformanceTimeDuration time_since(const PerformanceTimeStamp& timestamp);
+    void operator+=(const PerformanceTimeDuration& duration);
+};
+PerformanceTimeDuration operator-(const PerformanceTimeStamp& end, const PerformanceTimeStamp& start);
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

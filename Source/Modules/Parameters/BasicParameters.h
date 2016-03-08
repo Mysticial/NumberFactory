@@ -20,62 +20,63 @@
 //  Dependencies
 #include "PublicLibs/CompilerSettings.h"
 #include "PublicLibs/Types.h"
-#include "PublicLibs/AlignedMalloc.h"
 namespace ymp{
     class LookupTable;
+    class Parallelizer;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 struct BasicParameters{
-    const LookupTable* tw;  //  Twiddle-Factor Tables
-    void* M;                //  Scratch Memory
-    upL_t ML;               //  Scratch Memory size (in bytes)
-    upL_t tds;              //  Task Decomposition
+    //  Statics
+    const LookupTable& tw;
+    Parallelizer& parallelizer;
 
-    BasicParameters(){}
-    BasicParameters(const LookupTable* tw, upL_t tds = 1)
+    upL_t tds = 1;      //  Task Decomposition
+    void* M = nullptr;  //  Scratch Memory
+    upL_t ML = 0;       //  Scratch Memory (Size in bytes)
+
+    BasicParameters(
+        const LookupTable& tw,
+        Parallelizer& parallelizer,
+        upL_t tds
+    )
         : tw(tw)
+        , parallelizer(parallelizer)
+        , tds(tds)
         , M(nullptr)
         , ML((upL_t)0 - 1)
-        , tds(tds)
     {}
-    BasicParameters(const LookupTable* tw, void* M, upL_t ML, upL_t tds = 1)
+    BasicParameters(
+        const LookupTable& tw,
+        Parallelizer& parallelizer,
+        upL_t tds,
+        void* M, upL_t ML
+    )
         : tw(tw)
+        , parallelizer(parallelizer)
+        , tds(tds)
         , M(M)
         , ML(ML)
-        , tds(tds)
     {}
 
     BasicParameters edit_tds(upL_t tds) const{
-        return BasicParameters(tw, M, ML, tds);
+        BasicParameters out = *this;
+        out.tds = tds;
+        return out;
+    }
+    BasicParameters edit_mem(void* M, upL_t ML) const{
+        BasicParameters out = *this;
+        out.M = M;
+        out.ML = ML;
+        return out;
     }
 
     //  Splits this set of parameters into two roughly equal parts.
     //  This is useful for recursive thread-splitting.
     void split(BasicParameters& A, BasicParameters& B) const;
-};
-class BasicParametersO : public BasicParameters{
-    //  Small Buffer optimization.
-    static const upL_t SMALL_BUFFER_SIZE = 256;
-    YM_ALIGN(64) char small_buffer[256];
 
-    //  Smart pointer for larger buffers.
-    SmartPointer<>::type uptr;
-
-public:
-    BasicParametersO(const LookupTable* tw, upL_t ML, upL_t tds = 1)
-        : BasicParameters(tw, nullptr, ML, tds)
-    {
-        if (ML <= SMALL_BUFFER_SIZE){
-            M = small_buffer;
-        }else{
-            uptr = SmartPointer<>::malloc_uptr(ML, DEFAULT_ALIGNMENT);
-            M = uptr.get();
-            if (M == nullptr)
-                throw std::bad_alloc();
-        }
-    }
+    void operator=(const BasicParameters&) = delete;
 };
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

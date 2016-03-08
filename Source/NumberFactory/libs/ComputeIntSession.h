@@ -43,7 +43,7 @@ protected:
     //      useful for algorithms that suffer from load-imbalance.
     ukL_t over_decompose = 1;
 
-    uiL_t table_cwordlen = (uiL_t)0 - 1;
+    uiL_t table_cwordlen = 0;
     upL_t tds;
 
     Time::StopWatch watch;

@@ -2,7 +2,7 @@
  * 
  * Author           : Alexander J. Yee
  * Date Created     : 09/17/2014
- * Last Modified    : 09/17/2014
+ * Last Modified    : 03/07/2016
  * 
  */
 
@@ -12,6 +12,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
 #include <time.h>
+#include <unistd.h>
+#include <sys/times.h>
 #include "PublicLibs/ConsoleIO/Label.h"
 #include "Time_Posix.h"
 namespace ymp{
@@ -27,14 +29,9 @@ void CompileOptions(){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-WallClock WallClock::Now(){
+YM_NO_INLINE WallClock WallClock::Now(){
     WallClock out;
     if (gettimeofday(&out.time, NULL)){
-        //TimeException(
-        //    errno,
-        //    "gettimeofday()",
-        //    "Unable to access gettimeofday()."
-        //).fire();
         Console::Warning("Unable to access gettimeofday().");
         Console::Quit(1);
     }
@@ -53,11 +50,52 @@ double WallClock::operator-(const WallClock& x) const{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-double CPUClock(){
-    return clock() * ((double)1. / CLOCKS_PER_SEC);
+PerformanceTimeStamp PerformanceTimeStamp::now(){
+    PerformanceTimeStamp out;
+    out.wall_clock = WallClock::Now();
+
+    static double ratio = 1. / sysconf(_SC_CLK_TCK);
+
+    struct tms timers;
+    if (times(&timers) == (clock_t)-1){
+        out.user_clock = 0;
+        out.kernel_clock = 0;
+    }else{
+        out.user_clock   = timers.tms_utime * ratio;
+        out.kernel_clock = timers.tms_stime * ratio;
+    }
+    return out;
 }
-std::string tostr_now(){
-    time_t rawtime = time(NULL);
+void PerformanceTimeDuration::reset(){
+    wall_time = 0;
+    user_time = 0;
+    kernel_time = 0;
+}
+PerformanceTimeDuration PerformanceTimeDuration::time_since(const PerformanceTimeStamp& timestamp){
+    return PerformanceTimeStamp::now() - timestamp;
+}
+void PerformanceTimeDuration::operator+=(const PerformanceTimeDuration& duration){
+    wall_time += duration.wall_time;
+    user_time += duration.user_time;
+    kernel_time += duration.kernel_time;
+}
+PerformanceTimeDuration operator-(const PerformanceTimeStamp& end, const PerformanceTimeStamp& start){
+    PerformanceTimeDuration out;
+    out.wall_time = end.wall_clock - start.wall_clock;
+    out.user_time = end.user_clock - start.user_clock;
+    out.kernel_time = end.kernel_clock - start.kernel_clock;
+    return out;
+}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+YM_NO_INLINE void get_process_times(double& user, double& kernel){
+    user = 0;
+    kernel = 0;
+}
+YM_NO_INLINE std::string tostr_now(){
+    time_t rawtime = time(nullptr);
 
     char buffer[32];
 

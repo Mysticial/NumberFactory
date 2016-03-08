@@ -37,15 +37,15 @@
     <Filter Include="Source\ymp">
       <UniqueIdentifier>{d73df58c-ec8e-4d1a-84ae-5f5ea40cc6dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\PublicLibs\ExportSafeLibs">
+      <UniqueIdentifier>{95a97c6c-82ae-459a-9ba5-0e2c1c64c1cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\PublicLibs\AlignedMalloc.h">
       <Filter>Source\PublicLibs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PublicLibs\CompilerSettings.h">
-      <Filter>Source\PublicLibs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs.h">
       <Filter>Source\PublicLibs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PublicLibs\TemplateTools.h">
@@ -140,6 +140,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\PublicLibs\StringTools\Unicode.h">
       <Filter>Source\PublicLibs\StringTools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Action.h">
+      <Filter>Source\PublicLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Action.h">
+      <Filter>Source\PublicLibs\ExportSafeLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Array.h">
+      <Filter>Source\PublicLibs\ExportSafeLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Exceptions.h">
+      <Filter>Source\PublicLibs\ExportSafeLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Pointer.h">
+      <Filter>Source\PublicLibs\ExportSafeLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\String.h">
+      <Filter>Source\PublicLibs\ExportSafeLibs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

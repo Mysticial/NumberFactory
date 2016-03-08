@@ -6,7 +6,7 @@
  * 
  *      The main header for the entire YMP library.
  * 
- *  This header pulls in everything that most apps will ever need from ymp.
+ *  This header pulls in everything that most apps will ever need from YMP.
  *  If you don't want to do that, feel free include these headers individually.
  * 
  */

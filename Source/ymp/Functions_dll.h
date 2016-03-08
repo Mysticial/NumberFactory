@@ -18,7 +18,7 @@
 //  Dependencies
 #include "PublicLibs/CompilerSettings.h"
 #include "PublicLibs/Types.h"
-#include "PublicLibs/ExportSafeLibs.h"
+#include "PublicLibs/ExportSafeLibs/Exceptions.h"
 #include "Objects/GenericInt/GenericIntRaw.h"
 #include "Objects/GenericFloat/GenericFloatRaw.h"
 namespace ymp{

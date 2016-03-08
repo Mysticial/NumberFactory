@@ -42,7 +42,12 @@ inline std::string to_string_dec(const BigFloat<wtype>& x, upL_t digits, upL_t t
     auto buffer = SmartPointer<char>::malloc_uptr(Bsize, DEFAULT_ALIGNMENT);
     const char* str;
     {
-        BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+        //  Log(10)/Log(2)
+        const fiL_t RATIO = 3.3219280948873623478703194294893901758648313930246 / WordTraits<wtype>::BITS;
+        uiL_t BL = (uiL_t)((fiL_t)digits * RATIO + 2);
+
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(2*BL);
+        BasicParametersO mp(tw, tds, (upL_t)Msize);
         str = to_string_dec(mp, buffer.get(), x, digits);
     }
     return str;
@@ -89,7 +94,9 @@ BigFloatO<wtype> rcp(
 
     auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
     auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
-    BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+
+    const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
+    BasicParametersO mp(tw, tds, (upL_t)Msize);
 
     BigFloatR<wtype> tmp(T.get(), (upL_t)Tsize);
     rcp(mp, tmp, A, p, P.get(), (upL_t)Psize, spp);
@@ -116,8 +123,8 @@ void div(
     auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
 
     BigFloatR<wtype> tmp(T.get_baseptr(), (upL_t)Tsize);
-    div(mp, tmp, N, D, p, P.get(), (upL_t)Psize, spp
-    );T.consume_meta(tmp);
+    div(mp, tmp, N, D, p, P.get(), (upL_t)Psize, spp);
+    T.consume_meta(tmp);
 }
 template <typename wtype>
 BigFloatO<wtype> div(
@@ -132,7 +139,9 @@ BigFloatO<wtype> div(
 
     auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
     auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
-    BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+
+    const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
+    BasicParametersO mp(tw, tds, (upL_t)Msize);
 
     BigFloatR<wtype> tmp(T.get(), (upL_t)Tsize);
     div(mp, tmp, N, D, p, P.get(), (upL_t)Psize, spp);
@@ -172,7 +181,9 @@ BigFloatO<wtype> invsqrt_uW(
 
     auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
     auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
-    BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+
+    const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
+    BasicParametersO mp(tw, tds, (upL_t)Msize);
 
     BigFloatR<wtype> tmp(T.get(), (upL_t)Tsize);
     invsqrt_uW(mp, tmp, x, p, P.get(), (upL_t)Psize, spp);
@@ -285,7 +296,9 @@ BigFloatO<wtype> pow_sL(
         pow_uL_sizes<wtype>(Tsize, Msize, p, tds);
 
         auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
-        BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
+        BasicParametersO mp(tw, tds, (upL_t)Msize);
 
         BigFloatR<wtype> tmp(T.get(), (upL_t)Tsize);
         pow_uL(mp, tmp, x, pow, p, spp);
@@ -297,7 +310,9 @@ BigFloatO<wtype> pow_sL(
 
         auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
         auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
-        BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
+        BasicParametersO mp(tw, tds, (upL_t)Msize);
 
         BigFloatR<wtype> tmp(T.get(), (upL_t)Tsize);
         pow_sL(mp, tmp, x, pow, p, P.get(), (upL_t)Psize, spp);

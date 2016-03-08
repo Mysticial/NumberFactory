@@ -46,7 +46,7 @@ void ComputeFloatSession<wtype>::run(){
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::setup(){
-    dec = Console::scan_label_upL_range("Decimal Digits: ");
+    dec = Console::scan_label_upL_suffix_range("Decimal Digits: ");
     hex = (upL_t)(dec * 0.83048202372184058696757985737234754396620784825615) + 1;
     p = get_p<wtype>(dec);
 
@@ -73,7 +73,7 @@ void ComputeFloatSession<wtype>::print_header() const{
     Console::println_labelm_commas(30, "Target Precision (digits):", dec, 'G');
     Console::println_labelm_commas(30, "Working Precision (words):", p, 'G');
     Console::print_labelm(30, "Threading Mode:", "");
-    Threads::PrintFrameworkDetails(Threads::GetParallelFramework(), tds);
+    Parallelism::framework_print_details(Parallelism::get_global_framework(), tds);
 //    Console::println_labelm_commas(30, "Parallel Task Decomposition:", tds, 'G');
     Console::println();
 }
@@ -81,7 +81,7 @@ template <typename wtype>
 void ComputeFloatSession<wtype>::ensure_tables(){
     Console::println("Constructing Twiddle Tables...");
     Console::println();
-    ensure_global_table<wtype>(2*p);
+    LookupTables::get_global_table<wtype>(2*p);
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const std::string& name, const std::string& algorithm){
@@ -116,11 +116,11 @@ void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const st
 template <typename wtype>
 void ComputeFloatSession<wtype>::print_stats() const{
     Time::WallClock end_time = Time::WallClock::Now();
-    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.GetWallTime(), 'G');
+    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.get_wall_time(), 'G');
     Console::print("Total Time:    "); Time::println_secs_hrs(end_time - start_time, 'G');
     Console::println();
 
-    watch.PrintCpuUtilization();
+    watch.print();
     Console::println();
 }
 ////////////////////////////////////////////////////////////////////////////////

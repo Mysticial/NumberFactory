@@ -42,7 +42,8 @@ inline std::string to_string_dec(const BigInt<wtype>& x, upL_t tds = 1){
     auto buffer = SmartPointer<char>::malloc_uptr(Bsize, DEFAULT_ALIGNMENT);
     const char* str;
     {
-        BasicParametersO mp(get_global_table(), (upL_t)Msize, tds);
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(x.get_L() * 2);
+        BasicParametersO mp(tw, tds, (upL_t)Msize);
         str = to_string_dec(mp, buffer.get(), x);
     }
     return str;

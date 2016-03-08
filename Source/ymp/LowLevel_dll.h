@@ -16,7 +16,7 @@
 //  Dependencies
 #include "PublicLibs/CompilerSettings.h"
 #include "PublicLibs/Types.h"
-#include "PublicLibs/ExportSafeLibs.h"
+#include "PublicLibs/ExportSafeLibs/Exceptions.h"
 namespace ymp{
     class LookupTable;
     struct BasicParameters;

@@ -17,6 +17,16 @@ namespace ymp{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+#if (defined _MSC_VER) && (_MSC_VER < 1900)
+#error "MSVC++ 14.0 or later is required."
+#endif 
+#if (defined __INTEL_COMPILER) && (__INTEL_COMPILER < 1600)
+#error "ICC16 or later is required."
+#endif
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 #define YM_NO_INLINE        __declspec(noinline)
 #define YM_FORCE_INLINE     inline __forceinline
 #define YM_ALIGN(x)         __declspec(align(x))
@@ -62,8 +72,10 @@ template <typename type> using c_ref = type const&__restrict;
 #if defined __INTEL_COMPILER
 #pragma warning disable 186     //  Unsigned comparison with zero
 #pragma warning disable 532     //  No Definition for Template Instantiation
+#pragma warning disable 803     //  Multiple template instantiations (COMPILER-BUG-ICC: https://software.intel.com/en-us/articles/compiler-reports-error-803-when-compiling-chromium-os-code/)
 #pragma warning disable 1125    //  Virtual function hiding
 #pragma warning disable 3280    //  Member hiding
+#pragma warning disable 2553    //  wmain()
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

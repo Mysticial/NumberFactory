@@ -20,7 +20,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "Modules/Parameters/LookupTables.h"
+#include "Modules/Parameters/GlobalLookupTable.h"
+#include "Modules/Parameters/BasicParametersOwner.h"
 #include "GenericInt.h"
 //#include "GenericIntRaw.h"
 namespace ymp{
@@ -263,7 +264,8 @@ public:
             resize_and_zero(TL);
         }
         upL_t ML = (upL_t)BigInt<wtype>::mul_Psize(A.L, A.L, tds);
-        BasicParametersO mp(get_global_table(), ML, tds);
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(A.L + A.L);
+        BasicParametersO mp(tw, tds, ML);
         BigInt<wtype>::set_sqr(mp, A);
     }
     void set_mul(const BigInt<wtype>& A, const BigInt<wtype>& B, upL_t tds = 1){
@@ -272,7 +274,8 @@ public:
             resize_and_zero(TL);
         }
         upL_t ML = (upL_t)BigInt<wtype>::mul_Psize(A.L, B.L, tds);
-        BasicParametersO mp(get_global_table(), ML, tds);
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(A.L + B.L);
+        BasicParametersO mp(tw, tds, ML);
         BigInt<wtype>::set_mul(mp, A, B);
     }
 

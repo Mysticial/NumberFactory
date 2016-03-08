@@ -15,6 +15,7 @@
 #include "PublicLibs/Environment/Environment.h"
 #include "PublicLibs/AlignedMalloc.h"
 #include "ymp/LowLevel.h"
+#include "ymp/Parallelism.h"
 
 namespace NumberFactory{
 using namespace ymp;
@@ -43,8 +44,10 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds = 1){
     memset(C, 0, 2*L * sizeof(wtype));
 
     //  Prepare Multiply Parameters
-    ensure_global_table<wtype>(2*L);
-    BasicParametersO mp(get_global_table(), (upL_t)ML, tds);
+    BasicParametersO mp(
+        LookupTables::get_global_table<wtype>(2*L),
+        tds, (upL_t)ML
+    );
     memset(mp.M, 0, (upL_t)ML); //  Force commit memory
 
     Console::print("L = ");

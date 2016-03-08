@@ -2,7 +2,7 @@
  * 
  * Author           : Alexander J. Yee
  * Date Created     : 09/17/2014
- * Last Modified    : 09/17/2014
+ * Last Modified    : 03/07/2016
  * 
  */
 
@@ -28,14 +28,9 @@ void CompileOptions(){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-WallClock WallClock::Now(){
+YM_NO_INLINE WallClock WallClock::Now(){
     LARGE_INTEGER x;
     if (!QueryPerformanceCounter(&x)){
-        //TimeException(
-        //    GetLastError(),
-        //    "QueryPerformanceCounter()",
-        //    "Unable to access performance counter."
-        //).fire();
         Console::Warning("Unable to access performance counter.");
         Console::Quit(1);
     }
@@ -43,14 +38,9 @@ WallClock WallClock::Now(){
     out.ticks = x.QuadPart;
     return out;
 }
-double WallClock::operator-(const WallClock& x) const{
+YM_NO_INLINE double WallClock::operator-(const WallClock& x) const{
     LARGE_INTEGER freqency;
     if (!QueryPerformanceFrequency(&freqency)){
-        //TimeException(
-        //    GetLastError(),
-        //    "QueryPerformanceFrequency()",
-        //    "Unable to access performance counter."
-        //).fire();
         Console::Warning("Unable to access performance counter.");
         Console::Quit(1);
     }
@@ -60,20 +50,46 @@ double WallClock::operator-(const WallClock& x) const{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-double CPUClock(){
+PerformanceTimeStamp PerformanceTimeStamp::now(){
+    PerformanceTimeStamp out;
+    out.wall_clock = WallClock::Now();
+
     FILETIME a, b, c, d;
     if (GetProcessTimes(GetCurrentProcess(), &a, &b, &c, &d) == 0){
-        //TimeException(
-        //    GetLastError(),
-        //    "CPUClock()",
-        //    "Unable to get CPU Clock."
-        //).fire();
         Console::Warning("Unable to get CPU Clock.");
         Console::Quit(1);
     }
-    return (double)(d.dwLowDateTime | ((u64_t)d.dwHighDateTime << 32)) * 0.0000001;
+
+    out.kernel_clock = (double)(c.dwLowDateTime | ((u64_t)c.dwHighDateTime << 32)) * 0.0000001;
+    out.user_clock   = (double)(d.dwLowDateTime | ((u64_t)d.dwHighDateTime << 32)) * 0.0000001;
+
+    return out;
 }
-std::string tostr_now(){
+void PerformanceTimeDuration::reset(){
+    wall_time = 0;
+    user_time = 0;
+    kernel_time = 0;
+}
+PerformanceTimeDuration PerformanceTimeDuration::time_since(const PerformanceTimeStamp& timestamp){
+    return PerformanceTimeStamp::now() - timestamp;
+}
+void PerformanceTimeDuration::operator+=(const PerformanceTimeDuration& duration){
+    wall_time += duration.wall_time;
+    user_time += duration.user_time;
+    kernel_time += duration.kernel_time;
+}
+PerformanceTimeDuration operator-(const PerformanceTimeStamp& end, const PerformanceTimeStamp& start){
+    PerformanceTimeDuration out;
+    out.wall_time = end.wall_clock - start.wall_clock;
+    out.user_time = end.user_clock - start.user_clock;
+    out.kernel_time = end.kernel_clock - start.kernel_clock;
+    return out;
+}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+YM_NO_INLINE std::string tostr_now(){
     struct tm newtime;
     __time32_t aclock;
 

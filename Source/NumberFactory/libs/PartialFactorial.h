@@ -29,7 +29,7 @@ template <typename wtype>
 BigIntO<wtype> Factorial_BSR(wtype a, wtype b, upL_t tds);
 
 template <typename wtype>
-class Factorial_Action : public Threads::BasicAction{
+class Factorial_Action : public BasicAction{
     BigIntO<wtype>& P;
     wtype a;
     wtype b;
@@ -63,7 +63,7 @@ BigIntO<wtype> Factorial_BSR(wtype a, wtype b, upL_t tds){
         upL_t tds1 = tds - tds0;
         Factorial_Action<wtype> tp0(P0, a, m, tds0);
         Factorial_Action<wtype> tp1(P1, m, b, tds1);
-        Threads::RunInParallel(tp0, tp1);
+        Parallelism::run_in_parallel(tp0, tp1);
     }
 
     return mul(P0, P1, tds);

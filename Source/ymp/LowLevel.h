@@ -18,8 +18,9 @@
 //  Dependencies
 #include "PublicLibs/CompilerSettings.h"
 #include "PublicLibs/Types.h"
-#include "Modules/Parameters/LookupTables.h"
+#include "Modules/Parameters/GlobalLookupTable.h"
 #include "Modules/Parameters/BasicParameters.h"
+#include "Modules/Parameters/BasicParametersOwner.h"
 #include "LowLevel_dll.h"
 namespace ymp{
     class LookupTable;

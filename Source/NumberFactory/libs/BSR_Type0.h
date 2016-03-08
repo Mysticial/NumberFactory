@@ -70,7 +70,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 //  Parallel Helper Object
 template <typename wtype>
-class BSR_Type0_Action : public Threads::BasicAction{
+class BSR_Type0_Action : public BasicAction{
     const BSR_Type0<wtype>& BSR;
     BigFloatO<wtype>& P;
     BigFloatO<wtype>& Q;
@@ -139,7 +139,7 @@ void BSR_Type0<wtype>::BSR(
         upL_t tds1 = tds - tds0;
         BSR_Type0_Action<wtype> tp0(*this, P0, Q0, &R0, a, m, recursion_depth, p, tds0);
         BSR_Type0_Action<wtype> tp1(*this, P1, Q1, &R1, m, b, recursion_depth, p, tds1);
-        Threads::RunInParallel(tp0, tp1);
+        Parallelism::run_in_parallel(tp0, tp1);
     }
 
     //  Combine

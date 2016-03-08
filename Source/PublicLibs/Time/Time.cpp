@@ -23,7 +23,7 @@ namespace Time{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-void print_secs_hrs(double seconds, char color){
+YM_NO_INLINE void print_secs_hrs(double seconds, char color){
     Console::SetColor(color);
     Console::print_fixed(seconds);
     Console::print(" seconds  ( ");
@@ -32,7 +32,7 @@ void print_secs_hrs(double seconds, char color){
     if (color != ' ')
         Console::SetColor('w');
 }
-void println_secs_hrs(double seconds, char color){
+YM_NO_INLINE void println_secs_hrs(double seconds, char color){
     Console::SetColor(color);
     Console::print_fixed(seconds);
     Console::print(" seconds  ( ");

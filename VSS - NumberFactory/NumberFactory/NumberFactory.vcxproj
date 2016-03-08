@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="04-SSE3|x64">
+      <Configuration>04-SSE3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="07-Penryn|x64">
+      <Configuration>07-Penryn</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="08-Nehalem|x64">
       <Configuration>08-Nehalem</Configuration>
       <Platform>x64</Platform>
@@ -15,6 +23,10 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="13-Haswell|x64">
       <Configuration>13-Haswell</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="14-Broadwell|x64">
+      <Configuration>14-Broadwell</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
@@ -52,6 +64,13 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='14-Broadwell|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -60,6 +79,20 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='07-Penryn|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='04-SSE3|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
@@ -85,10 +118,19 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='14-Broadwell|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='07-Penryn|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='04-SSE3|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'" Label="PropertySheets">
@@ -104,10 +146,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='14-Broadwell|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-SandyBridge|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='08-Nehalem|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='07-Penryn|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='04-SSE3|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'">
@@ -136,7 +187,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
-xcopy "$(SolutionDir)libs\08-Nehalem\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+xcopy "$(SolutionDir)libs\04-SSE3\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,10 +216,40 @@ xcopy "$(SolutionDir)libs\08-Nehalem\*.dll" "$(SolutionDir)$(Platform)\$(Configu
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
-xcopy "$(SolutionDir)libs\08-Nehalem\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+xcopy "$(SolutionDir)libs\04-SSE3\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='13-Haswell|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='14-Broadwell|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>
@@ -258,6 +339,66 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
 xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='07-Penryn|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='04-SSE3|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Source</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ymp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y
+xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(Configuration)\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='11-Bulldozer|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -296,6 +437,7 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClInclude Include="..\..\Source\NumberFactory\libs\ComputeIntSession.h" />
     <ClInclude Include="..\..\Source\NumberFactory\libs\PartialFactorial.h" />
     <ClInclude Include="..\..\Source\NumberFactory\libs\Utils.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Action.h" />
     <ClInclude Include="..\..\Source\PublicLibs\AlignedMalloc.h" />
     <ClInclude Include="..\..\Source\PublicLibs\CompilerSettings.h" />
     <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Array.h" />
@@ -304,7 +446,11 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Margin.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Environment\Environment.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Exception.h" />
-    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Action.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Array.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Exceptions.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\Pointer.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\String.h" />
     <ClInclude Include="..\..\Source\PublicLibs\FileIO\BasicFile.h" />
     <ClInclude Include="..\..\Source\PublicLibs\FileIO\FileIO.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Serialization\ParseException.h" />

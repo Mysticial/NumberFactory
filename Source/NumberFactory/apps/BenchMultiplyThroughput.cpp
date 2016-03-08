@@ -31,7 +31,7 @@
 namespace NumberFactory{
 using namespace ymp;
 template <typename wtype>
-class BenchAction : public Threads::IndexAction{
+class BenchAction : public IndexAction{
     const wtype* A;
     const wtype* B;
     wtype* C;
@@ -63,7 +63,11 @@ public:
         wtype* current_C = C + CL * index;
         void* current_M = (char*)M + ML * index;
 
-        BasicParameters mp(get_global_table(), current_M, ML, tds);
+        BasicParameters mp(
+            LookupTables::get_global_table<wtype>(CL),
+            (Parallelizer&)Parallelism::get_global_framework(), tds,
+            current_M, ML
+        );
 
         Time::IterationBenchmark bench;
         do{
@@ -107,7 +111,7 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds, upL_t instances){
     memset(C, 0, CL * instances * sizeof(wtype));
 
     //  Prepare Multiply Parameters
-    ensure_global_table<wtype>(2*L);
+    LookupTables::get_global_table<wtype>(2*L);
     auto M_uptr = SmartPointer<>::malloc_uptr((upL_t)ML * instances, DEFAULT_ALIGNMENT);
     void* M = M_uptr.get();
     memset(M, 0, (upL_t)ML * instances);    //  Force commit memory
@@ -124,7 +128,7 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds, upL_t instances){
     std::vector<uiL_t> iterations(instances);
 
     BenchAction<wtype> action(wall_time, iterations, A, B, C, L, CL, M, (upL_t)ML, tds);
-    Threads::RunInParallel(action, 0, instances);
+    Parallelism::run_in_parallel(action, 0, instances);
 
     double total_wall_time = 0;
     for (double time : wall_time){

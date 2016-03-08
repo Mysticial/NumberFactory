@@ -23,13 +23,6 @@ using std::endl;
 using namespace ymp;
 typedef u64_t wtype;
 
-#include "libs/BSR_Type0.h"
-#include "libs/BSR_BBP.h"
-
-#include "libs/ArcCot.h"
-#include "libs/PartialFactorial.h"
-#include "libs/ComputeIntSession.h"
-
 namespace NumberFactory{
     void MainMenu();
 }
@@ -39,14 +32,11 @@ using namespace NumberFactory;
 int main(){
     //  Use Cilk Plus instead of Windows Thread Pools.
     //  Only available for AVX and AVX2.
-//    Threads::SetFrameworkByName("cilk");
+//    auto framework = Parallelism::make_framework_by_name("cilk");
+//    Parallelism::set_global_framework(*framework);
 
     //  Run the main Number Factory app.
     NumberFactory::MainMenu();
-
-    //  Sandbox: Force twiddle tables to their maximum sizes.
-//    ensure_global_table_bits();
-
 
 
     system("pause");

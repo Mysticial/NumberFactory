@@ -25,7 +25,7 @@
 //  Dependencies
 #include "PublicLibs/CompilerSettings.h"
 #include "PublicLibs/TemplateTools.h"
-#include "PublicLibs/ExportSafeLibs.h"
+#include "PublicLibs/ExportSafeLibs/Exceptions.h"
 #include "Modules/Parameters/BasicParameters.h"
 #include "Objects/ObjectGlobals.h"
 namespace ymp{
