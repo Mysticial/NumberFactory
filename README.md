@@ -1,21 +1,8 @@
 # Number Factory
 
-**Work in Progress... ETA: Pi Day (March 14)**
+**This is the development branch which uses YMP 1.1.**
 
-The stuff that's been uploaded here is basically complete. All that's missing are the `ymp.dll` binaries which I'm still testing. So you will be able to compile and link. But you won't be able to run yet.
-
-If you're interested in testing this and I know you personally, shoot me an email or drop me a message in Lounge\<C++\>. I'll send you the `ymp.dll` binaries to play with.
-
-To-Do List:
- 1. ~~Clean up and upload `PublicLibs` directory.~~
- 2. ~~Minimize dependencies on the internal `PrivateLibs` and `Modules` directories.~~
- 3. ~~Finalize YMP v1.0 functionality.~~
- 4. ~~Clean up and upload the `NumberFactory` app/directory.~~
- 5. ~~Pre-release testing of everything.~~
- 6. ~~Run lots of benchmarks.~~
- 7. ~~Clean up and upload the YMP headers.~~
- 8. Upload YMP binaries.
- 9. ~~Finish and release YMP documentation.~~
+YMP 1.1 is neither binary, nor source compatible with YMP 1.0. Therefore you will not be able to run this branch without the latest binaries.
 
 -----
 
@@ -71,9 +58,7 @@ Number Factory is the first program to *dynamically* link with YMP. (y-cruncher 
 
 Run-Time:
  - 64-bit Windows Vista or later. (Windows 7 SP1 required for AVX)
- - A processor with SSE4.1. (Intel Penryn or later. Or AMD Bulldozer or later.)
-
-Number Factory itself can be compiled for older processors. But for all practical purposes, the underlying YMP library needs a *minimum* of SSE4.1 to be competitive with existing libraries. That said, the *real* performance gains will require AVX2.
+ - A processor with SSE3. (Pretty much everything since 2005 has SSE3. So this shouldn't be a problem.)
 
 There is currently no support for Linux yet. The Number Factory/YMP project is still experimental and will be tested in Windows first. Only if it is massively successful will a Linux version be considered.
 
@@ -83,14 +68,17 @@ There is currently no support for Linux yet. The Number Factory/YMP project is s
 
 The Visual Studio project currently supports the following build configurations:
 
-|Configuration |Target Processor  |YMP Binary|Notes                      |
-|--------------|------------------|----------|---------------------------|
-|Debug         |                  |SSE4.1    |No Optimizations           |
-|Release       |                  |SSE4.1    |Same as "08-Nehalem"       |
-|08-Nehalem    |Intel Nehalem     |SSE4.1    |                           |
-|11-SandyBridge|Intel Sandy Bridge|AVX       |                           |
-|11-Bulldozer  |AMD Bulldozer     |FMA4/XOP  |                           |
-|13-Haswell    |Intel Haswell     |FMA3/AVX2 |                           |
+|Configuration |Target Processor  |Instruction Set|Notes                      |
+|--------------|------------------|---------------|---------------------------|
+|Debug         |                  |SSE3           |No Optimizations           |
+|Release       |                  |SSE3           |Same as "04-SSE3"          |
+|04-SSE3       |AMD K10 + Core 2  |SSE3           |                           |
+|07-Penryn     |Intel Penryn      |SSE4.1         |                           |
+|08-Nehalem    |Intel Nehalem     |SSE4.1         |                           |
+|11-SandyBridge|Intel Sandy Bridge|AVX            |                           |
+|11-Bulldozer  |AMD Bulldozer     |FMA4/XOP       |                           |
+|13-Haswell    |Intel Haswell     |FMA3/AVX2      |                           |
+|14-Broadwell  |Intel Broadwell   |FMA3/AVX2/ADX  |                           |
 
 Upon building a configuration through the IDE, the appropriate DLLs are copied into the same directory as the output binary. They will be needed to run the binary.
 
@@ -105,12 +93,25 @@ However, `ymp.dll` binaries from *different* releases are not guaranteed to be c
  - `NumberFactory/` - The main Number Factory directory.
  - `ymp/` - Headers for the YMP library.
  - `PublicLibs/` - Public shared libraries. Also used by the [Digit Viewer](https://github.com/Mysticial/DigitViewer).
- - `PrivateLibs/`, `Objects/`, and `Modules/` - Internal components. Don't use directly.
+ - `Objects/` and `Modules/` - Internal components. Don't use directly.
 
 -----
 
 **Documentation:**
- - YMP Library (v1.0): http://www.numberworld.org/ymp/v1.0/
+ - YMP Library (trunk): http://www.numberworld.org/ymp/trunk/
+
+-----
+
+**YMP 1.1 changes from 1.0:**
+
+Breaking Changes from YMP v1.0:
+ - A new field has been added to the large multiply parameters.
+ - The parallelism interface has been revamped.
+ - The lookup table interface has been revamped. Lookup table resizing is now done automatically in a thread-safe manner.
+
+Other changes from v1.0:
+ - Processor-specific binaries have been added for SSE3, Intel Core 2 Penryn, and Intel Broadwell.
+ - Performance improvements for mid-sized large multiplications.
 
 -----
 
