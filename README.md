@@ -30,6 +30,10 @@ Number Factory's current goals are:
 Number Factory uses the YMP library which is an experimental public interface to y-cruncher's internals.
 
 
+
+![](/Screenshots/2016-3-14-pi-agm.png?raw=true "100 million digits of Pi via AGM")
+
+
 -----
 
 **Performance:**
