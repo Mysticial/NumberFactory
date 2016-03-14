@@ -46,7 +46,7 @@ void ComputeFloatSession<wtype>::run(){
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::setup(){
-    dec = Console::scan_label_upL_range("Decimal Digits: ");
+    dec = Console::scan_label_upL_suffix_range("Decimal Digits: ");
     hex = (upL_t)(dec * 0.83048202372184058696757985737234754396620784825615) + 1;
     p = get_p<wtype>(dec);
 
@@ -116,11 +116,11 @@ void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const st
 template <typename wtype>
 void ComputeFloatSession<wtype>::print_stats() const{
     Time::WallClock end_time = Time::WallClock::Now();
-    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.GetWallTime(), 'G');
+    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.get_wall_time(), 'G');
     Console::print("Total Time:    "); Time::println_secs_hrs(end_time - start_time, 'G');
     Console::println();
 
-    watch.PrintCpuUtilization();
+    watch.print();
     Console::println();
 }
 ////////////////////////////////////////////////////////////////////////////////

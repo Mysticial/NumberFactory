@@ -28,7 +28,7 @@ upL_t e_Basic_get_terms(upL_t p){
 
     //  The taylor series converges to log(x!) / log(10) decimal digits after
     //  x terms. So to find the number of terms needed to reach a precision of p
-    //  we need to solve this question for x:
+    //  we need to solve this equation for x:
     //      p = log(x!) / log(2^64)
 
     //  This function solves this equation via binary search.

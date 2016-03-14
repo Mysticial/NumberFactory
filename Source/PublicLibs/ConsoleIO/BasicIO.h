@@ -7,8 +7,8 @@
  */
 
 #pragma once
-#ifndef _ymp_Console_BasicIO_H
-#define _ymp_Console_BasicIO_H
+#ifndef ymp_Console_BasicIO_H
+#define ymp_Console_BasicIO_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +79,7 @@ YM_NO_INLINE    upL_t   println_bytes   (uiL_t x, char color = ' ');
 YM_NO_INLINE    upL_t   print_ebytes    (uiL_t x, char color = ' ');
 YM_NO_INLINE    upL_t   println_ebytes  (uiL_t x, char color = ' ');
 YM_NO_INLINE    siL_t   scan_siL        (char color = 'T');
+YM_NO_INLINE    siL_t   scan_siL_suffix (char color = 'T');
 YM_NO_INLINE    uiL_t   scan_bytes      (char color = 'T');
 ////////////////////////////////////////////////////////////////////////////////
 //  Floating Point

@@ -94,11 +94,11 @@ void ComputeIntSession<wtype>::write_digits(const BigInt<wtype>& x, const std::s
 template <typename wtype>
 void ComputeIntSession<wtype>::print_stats() const{
     Time::WallClock end_time = Time::WallClock::Now();
-    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.GetWallTime(), 'G');
+    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.get_wall_time(), 'G');
     Console::print("Total Time:    "); Time::println_secs_hrs(end_time - start_time, 'G');
     Console::println();
 
-    watch.PrintCpuUtilization();
+    watch.print();
     Console::println();
 }
 ////////////////////////////////////////////////////////////////////////////////
