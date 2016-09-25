@@ -66,8 +66,8 @@ void ComputeIntSession<wtype>::print_header() const{
     Console::println_labelc("Algorithm", algorithm_long, 'Y');
     Console::println();
 
+    Console::print_labelm(30, "Threading Mode:", "");
     Threads::PrintFrameworkDetails(Threads::GetParallelFramework(), tds);
-//    Console::println_labelm_commas(30, "Parallel Task Decomposition:", tds, 'G');
     Console::println();
 }
 template <typename wtype>
