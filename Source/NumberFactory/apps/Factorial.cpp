@@ -14,14 +14,14 @@
 
 namespace NumberFactory{
 using namespace ymp;
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class Factorial_Session : public ComputeIntSession<wtype>{
-    wtype x;
+    wtype m_x;
 
 public:
     Factorial_Session(wtype x)
-        : x(x)
+        : m_x(x)
     {
         this->name_short = std::to_string(x) + "!";
         this->algorithm_long = "Binary Splitting";
@@ -38,10 +38,10 @@ public:
         Time::WallClock time0 = Time::WallClock::Now();
 
         Console::println("Computing...");
-        BigIntO<wtype> T = PartialFactorial<wtype>(0, x, tds);
+        BigIntO<wtype> T = PartialFactorial<wtype>(0, m_x, tds);
 
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         return T;
     }

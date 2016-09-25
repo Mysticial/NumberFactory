@@ -9,8 +9,8 @@
  */
 
 #pragma once
-#ifndef _ymp_BigFloatO_H
-#define _ymp_BigFloatO_H
+#ifndef ymp_BigFloatO_H
+#define ymp_BigFloatO_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@
 #include <string>
 #include <ostream>
 #include "PublicLibs/Exception.h"
-#include "PublicLibs/AlignedMalloc.h"
+#include "PublicLibs/Memory/SmartBuffer.h"
 #include "Objects/GenericFloat/GenericFloatOwner.h"
 #include "Functions_dll.h"
 #include "BigFloatR.h"
@@ -32,14 +32,14 @@ namespace ymp{
 template <typename wtype>
 inline std::string to_string_hex(const BigFloat<wtype>& x, upL_t digits){
     upL_t Bsize = (upL_t)BigFloat_to_string_hex_sizes<wtype>(digits);
-    auto buffer = SmartPointer<char>::malloc_uptr(Bsize, DEFAULT_ALIGNMENT);
+    auto buffer = make_trivial_array<char, DEFAULT_ALIGNMENT>(Bsize);
     return to_string_hex(buffer.get(), x, digits);
 }
 template <typename wtype>
 inline std::string to_string_dec(const BigFloat<wtype>& x, upL_t digits, upL_t tds = 1){
     uiL_t Msize;
     upL_t Bsize = (upL_t)BigFloat_to_string_dec_sizes<wtype>(Msize, digits, tds);
-    auto buffer = SmartPointer<char>::malloc_uptr(Bsize, DEFAULT_ALIGNMENT);
+    auto buffer = make_trivial_array<char, DEFAULT_ALIGNMENT>(Bsize);
     const char* str;
     {
         //  Log(10)/Log(2)
@@ -71,12 +71,12 @@ void rcp(
     StatusStack* spp = nullptr
 ){
     uiL_t Tsize, Psize, Msize;
-    rcp_sizes<wtype>(Tsize, Psize, Msize, p, mp.tds);
+    rcp_sizes<wtype>(Tsize, Psize, Msize, p, mp.m_tds);
     if (T.get_buffersize() < Tsize){
         T.resize_and_zero((upL_t)Tsize);
     }
 
-    auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+    auto P = make_trivial_array<wtype>((upL_t)Psize);
 
     BigFloatR<wtype> tmp(T.get_baseptr(), (upL_t)Tsize);
     rcp(mp, tmp, A, p, P.get(), (upL_t)Psize, spp);
@@ -93,7 +93,7 @@ BigFloatO<wtype> rcp(
     rcp_sizes<wtype>(Tsize, Psize, Msize, p, tds);
 
     auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
-    auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+    auto P = make_trivial_array<wtype>((upL_t)Psize);
 
     const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
     BasicParametersO mp(tw, tds, (upL_t)Msize);
@@ -115,12 +115,12 @@ void div(
     StatusStack* spp = nullptr
 ){
     uiL_t Tsize, Psize, Msize;
-    div_sizes<wtype>(Tsize, Psize, Msize, p, mp.tds);
+    div_sizes<wtype>(Tsize, Psize, Msize, p, mp.m_tds);
     if (T.get_buffersize() < Tsize){
         T.resize_and_zero((upL_t)Tsize);
     }
 
-    auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+    auto P = make_trivial_array<wtype>((upL_t)Psize);
 
     BigFloatR<wtype> tmp(T.get_baseptr(), (upL_t)Tsize);
     div(mp, tmp, N, D, p, P.get(), (upL_t)Psize, spp);
@@ -138,7 +138,7 @@ BigFloatO<wtype> div(
     div_sizes<wtype>(Tsize, Psize, Msize, p, tds);
 
     auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
-    auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+    auto P = make_trivial_array<wtype>((upL_t)Psize);
 
     const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
     BasicParametersO mp(tw, tds, (upL_t)Msize);
@@ -158,12 +158,12 @@ void invsqrt_uW(
     StatusStack* spp = nullptr
 ){
     uiL_t Tsize, Psize, Msize;
-    invsqrt_uW_sizes<wtype>(Tsize, Psize, Msize, p, mp.tds);
+    invsqrt_uW_sizes<wtype>(Tsize, Psize, Msize, p, mp.m_tds);
     if (T.get_buffersize() < Tsize){
         T.resize_and_zero((upL_t)Tsize);
     }
 
-    auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+    auto P = make_trivial_array<wtype>((upL_t)Psize);
 
     BigFloatR<wtype> tmp(T.get_baseptr(), (upL_t)Tsize);
     invsqrt_uW(mp, tmp, x, p, P.get(), (upL_t)Psize, spp);
@@ -180,7 +180,7 @@ BigFloatO<wtype> invsqrt_uW(
     invsqrt_uW_sizes<wtype>(Tsize, Psize, Msize, p, tds);
 
     auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
-    auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+    auto P = make_trivial_array<wtype>((upL_t)Psize);
 
     const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
     BasicParametersO mp(tw, tds, (upL_t)Msize);
@@ -257,7 +257,7 @@ void pow_sL(
 
     }else if (pow > 0){
         uiL_t Tsize, Msize;
-        pow_uL_sizes<wtype>(Tsize, Msize, p, mp.tds);
+        pow_uL_sizes<wtype>(Tsize, Msize, p, mp.m_tds);
         if (T.get_buffersize() < Tsize){
             T.resize_and_zero((upL_t)Tsize);
         }
@@ -268,12 +268,12 @@ void pow_sL(
 
     }else{
         uiL_t Tsize, Psize, Msize;
-        pow_sL_sizes<wtype>(Tsize, Psize, Msize, p, mp.tds);
+        pow_sL_sizes<wtype>(Tsize, Psize, Msize, p, mp.m_tds);
         if (T.get_buffersize() < Tsize){
             T.resize_and_zero((upL_t)Tsize);
         }
 
-        auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+        auto P = make_trivial_array<wtype>((upL_t)Psize);
 
         BigFloatR<wtype> tmp(T.get_baseptr(), (upL_t)Tsize);
         pow_sL(mp, tmp, x, pow, p, P.get(), (upL_t)Psize, spp);
@@ -309,7 +309,7 @@ BigFloatO<wtype> pow_sL(
         pow_sL_sizes<wtype>(Tsize, Psize, Msize, p, tds);
 
         auto T = std::unique_ptr<wtype[]>(new wtype[(upL_t)Tsize]);
-        auto P = SmartPointer<wtype>::malloc_uptr((upL_t)Psize, sizeof(wtype));
+        auto P = make_trivial_array<wtype>((upL_t)Psize);
 
         const LookupTable& tw = LookupTables::get_global_table<wtype>(2*p);
         BasicParametersO mp(tw, tds, (upL_t)Msize);

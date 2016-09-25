@@ -12,7 +12,7 @@
 #include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class Pi_Ramanujan_BSR final : public BSR_Type0<wtype>{
 public:
@@ -45,45 +45,47 @@ public:
 class Pi_Ramanujan_Session : public ComputeFloatSession<wtype>{
 public:
     Pi_Ramanujan_Session(){
-        this->name_short = "Pi";
-        this->algorithm_short = "Ramanujan";
-        this->algorithm_long = "Ramanujan's Formula";
-        this->over_decompose = 2;
+        m_name_short = "Pi";
+        m_algorithm_short = "Ramanujan";
+        m_algorithm_long = "Ramanujan's Formula";
+        m_over_decompose = 2;
     }
     virtual BigFloatO<wtype> compute() override{
         Time::WallClock time0 = Time::WallClock::Now();
         const double LOG_RATIO = 0.037711056563288531764530841789572309442247749126585;   //  log(2)/log(96059301)
         const double TERM_RATIO = LOG_RATIO * CHAR_BIT * sizeof(wtype);
+
+        upL_t p = m_precision;
         upL_t terms = (upL_t)((double)p * TERM_RATIO + 1);
 
         Console::print("Summing Series...  ");
         Console::print_commas(terms);
         Console::println(" terms");
         BigFloatO<wtype> P, Q, tmp;
-        Pi_Ramanujan_BSR().run(P, Q, terms, p, tds);
+        Pi_Ramanujan_BSR().run(P, Q, terms, p, m_tds);
 
         tmp = Q;
         tmp *= 1103;
         P = add(P, tmp, p);
         Q *= 9801;
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         Console::println("Division...");
-        P = div(Q, P, p, tds);
+        P = div(Q, P, p, m_tds);
         Time::WallClock time2 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time2 - time1, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time2 - time1, 'T');
 
         Console::println("InvSqrt...");
-        Q = invsqrt_uW<wtype>(8, p, tds);
+        Q = invsqrt_uW<wtype>(8, p, m_tds);
         Time::WallClock time3 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time3 - time2, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time3 - time2, 'T');
 
         Console::println("Final Multiply...");
-        P = mul(P, Q, p, tds);
+        P = mul(P, Q, p, m_tds);
         Q.clear();
         Time::WallClock time4 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time4 - time3, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time4 - time3, 'T');
 
         return P;
     }

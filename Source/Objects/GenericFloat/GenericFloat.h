@@ -16,8 +16,8 @@
  */
 
 #pragma once
-#ifndef _ymp_GenericFloat_H
-#define _ymp_GenericFloat_H
+#ifndef ymp_GenericFloat_H
+#define ymp_GenericFloat_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -110,13 +110,13 @@ class BigFloat{
 protected:
     static const ukL_t WORD_BITS = WordTraits<wtype>::BITS;
 
-    wtype* T;   //  Logical Pointer
-    upL_t L;    //  Length
-    siL_t exp;  //  Exponent
-    bool sign;  //  Sign: true = positive or zero, false = negative
+    wtype*  m_ptr;      //  Logical Pointer
+    upL_t   m_len;      //  Length
+    siL_t   m_exp;      //  Exponent
+    bool    m_sign;     //  Sign: true = positive or zero, false = negative
 
-    wtype* base_ptr;
-    upL_t buffer_size;
+    wtype*  m_base_ptr;
+    upL_t   m_buffer_size;
 
     template <typename> friend class BigFloatR;
     template <typename> friend class BigFloatO;
@@ -125,7 +125,7 @@ protected:
 //  Rule of 5
 protected:
     //  Prevent this class from being directly used.
-    BigFloat(){}
+    BigFloat() = default;
     ~BigFloat(){}
     YM_FORCE_INLINE BigFloat(const BigFloat& x) = default;
     YM_FORCE_INLINE BigFloat& operator=(const BigFloat& x) = default;
@@ -133,41 +133,42 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////
 //  Constructors
 protected:
-    BigFloat(upL_t buffer_size) : buffer_size(buffer_size) {}
+    BigFloat(upL_t buffer_size) : m_buffer_size(buffer_size) {}
     YM_FORCE_INLINE BigFloat(const BigFloat& x, upL_t L){
         //  Create BigFloat using the bottom part of an existing BigFloat.
-        base_ptr = x.T;
-        T = base_ptr;
-        buffer_size = L;
+        m_base_ptr = x.m_base_ptr;
+        m_ptr = m_base_ptr;
+        m_buffer_size = L;
     }
     YM_FORCE_INLINE BigFloat(const BigFloat& x, upL_t s, upL_t L){
         //  Create BigFloat using the range [s, s + L).
-        base_ptr = x.T + s;
-        T = base_ptr;
-        buffer_size = L;
+        m_base_ptr = x.m_base_ptr + s;
+        m_ptr = m_base_ptr;
+        m_buffer_size = L;
     }
     YM_FORCE_INLINE BigFloat(upL_t L, const BigFloat& x){
         //  Create BigFloat using the upper part of an existing BigFloat.
-        base_ptr = x.T + L;
-        T = base_ptr;
-        buffer_size = x.buffer_size - L - (x.T - x.base_ptr);
+        m_base_ptr = x.m_ptr + L;
+        m_ptr = m_base_ptr;
+        m_buffer_size = x.m_buffer_size - L - (x.m_ptr - x.m_base_ptr);
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Setters
 protected:
     YM_FORCE_INLINE void set_zero(){
-        L = 0;
-        sign = true;
+        m_len = 0;
+        m_sign = true;
     }
     YM_FORCE_INLINE void set_uW(wtype x){
-        T = base_ptr;
-        exp = 0;
-        L = 1;
-        T[0] = x;
-        sign = true;
-        if (x == 0)
-            L = 0;
+        m_ptr = m_base_ptr;
+        m_exp = 0;
+        m_len = 1;
+        m_ptr[0] = x;
+        m_sign = true;
+        if (x == 0){
+            m_len = 0;
+        }
     }
     void set_uL         (uiL_t x);
     void set_BasicInt   (const BasicInt<wtype>& x);
@@ -179,22 +180,24 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////
 //  Getters
 public:
-    YM_FORCE_INLINE const wtype* get_T() const{ return T; }
-    YM_FORCE_INLINE upL_t get_L() const{ return L; }
-    YM_FORCE_INLINE siL_t get_exp() const{ return exp; }
-    YM_FORCE_INLINE siL_t get_mag() const{ return exp + (siL_t)L; }
+    YM_FORCE_INLINE const wtype* get_T() const{ return m_ptr; }
+    YM_FORCE_INLINE upL_t get_L() const{ return m_len; }
+    YM_FORCE_INLINE siL_t get_exp() const{ return m_exp; }
+    YM_FORCE_INLINE siL_t get_mag() const{ return m_exp + (siL_t)m_len; }
     YM_FORCE_INLINE int get_sign() const{
-        if (!sign)
+        if (!m_sign){
             return -1;
-        if (L == 0)
+        }
+        if (m_len == 0){
             return 0;
+        }
         return 1;
     }
-    YM_FORCE_INLINE bool get_signbool() const{ return sign; }
-    YM_FORCE_INLINE upL_t get_buffersize() const{ return buffer_size; }
-    YM_FORCE_INLINE const wtype* get_baseptr() const{ return base_ptr; }
+    YM_FORCE_INLINE bool get_signbool() const{ return m_sign; }
+    YM_FORCE_INLINE upL_t get_buffersize() const{ return m_buffer_size; }
+    YM_FORCE_INLINE const wtype* get_baseptr() const{ return m_base_ptr; }
 protected:
-    YM_FORCE_INLINE wtype* get_baseptr(){ return base_ptr; }
+    YM_FORCE_INLINE wtype* get_baseptr(){ return m_base_ptr; }
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Debuggers
@@ -202,7 +205,7 @@ public:
     void print() const;
     void check_normalization() const;
     YM_FORCE_INLINE void assert_size(const char* location, upL_t size) const{
-        BufferTooSmallException::check(location, buffer_size, size);
+        BufferTooSmallException::check(location, m_buffer_size, size);
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -216,15 +219,17 @@ protected:
 //  Misc.
 public:
     YM_FORCE_INLINE bool is_zero() const{
-        return L == 0;
+        return m_len == 0;
     }
     wtype operator[](siL_t mag) const{
         //  Returns the word at the mag'th magnitude.
-        if (mag < exp)
+        if (mag < m_exp){
             return 0;
-        if (mag >= (siL_t)(exp + L))
+        }
+        if (mag >= (siL_t)(m_exp + m_len)){
             return 0;
-        return T[mag - exp];
+        }
+        return m_ptr[mag - m_exp];
     }
     void get_range(wtype* buffer, siL_t s, upL_t L) const;
     hash_t hash_compute() const;
@@ -264,9 +269,10 @@ private:
 //  Basic Arithmetic
 protected:
     YM_FORCE_INLINE void negate(){
-        if (L == 0)
+        if (m_len == 0){
             return;
-        sign = !sign;
+        }
+        m_sign = !m_sign;
     }
     void operator<<=(siL_t pow);
     void operator*=(wtype x);
@@ -380,12 +386,12 @@ public:
         : BigFloat<wtype>(x)
     {}
     YM_FORCE_INLINE BigFloatA(const BigInt<wtype>& x){
-        this->T = const_cast<wtype*>(x.get_T());
-        this->L = x.get_L();
-        this->exp = 0;
-        this->sign = x.get_signbool();
-        this->base_ptr = nullptr;
-        this->buffer_size = 0;
+        this->m_ptr = const_cast<wtype*>(x.get_T());
+        this->m_len = x.get_L();
+        this->m_exp = 0;
+        this->m_sign = x.get_signbool();
+        this->m_base_ptr = nullptr;
+        this->m_buffer_size = 0;
     }
 
 public:

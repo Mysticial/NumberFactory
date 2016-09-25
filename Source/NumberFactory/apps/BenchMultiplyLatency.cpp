@@ -13,7 +13,8 @@
 #include "PublicLibs/ConsoleIO/Label.h"
 #include "PublicLibs/Time/Benchmark.h"
 #include "PublicLibs/Environment/Environment.h"
-#include "PublicLibs/AlignedMalloc.h"
+#include "PublicLibs/Memory/SmartBuffer.h"
+//#include "PrivateLibs/ThreadScheduling/ThreadScheduling.h"
 #include "ymp/LowLevel.h"
 #include "ymp/Parallelism.h"
 
@@ -29,9 +30,9 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds = 1){
         return false;
 
     //  Allocate Operands
-    auto A_uptr = SmartPointer<wtype>::malloc_uptr(L);
-    auto B_uptr = SmartPointer<wtype>::malloc_uptr(L);
-    auto C_uptr = SmartPointer<wtype>::malloc_uptr(2*L);
+    auto A_uptr = make_trivial_array<wtype>(L);
+    auto B_uptr = make_trivial_array<wtype>(L);
+    auto C_uptr = make_trivial_array<wtype>(2*L);
     wtype* A = A_uptr.get();
     wtype* B = B_uptr.get();
     wtype* C = C_uptr.get();
@@ -48,7 +49,7 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds = 1){
         LookupTables::get_global_table<wtype>(2*L),
         tds, (upL_t)ML
     );
-    memset(mp.M, 0, (upL_t)ML); //  Force commit memory
+    memset(mp.m_M, 0, (upL_t)ML); //  Force commit memory
 
     Console::print("L = ");
     Console::print_marginr_commas(12, L);
@@ -69,7 +70,7 @@ void bench_sequential_multiply_latency(){
     Console::println("Enter a memory limit: (e.g. 768MB, 2.5GB, etc...)");
     upL_t bytes = (upL_t)Console::scan_label_bytes();
 
-    Environment::LockToCore();
+//    ThreadScheduling::set_core_affinity();
     Console::println();
     Console::println("Benchmarking: L x L -> 2L  (64-bit word multiply)");
     Console::println();

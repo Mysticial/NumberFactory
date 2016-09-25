@@ -14,26 +14,26 @@
 
 namespace NumberFactory{
 using namespace ymp;
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class Binomial_Session : public ComputeIntSession<wtype>{
-    wtype n;
-    wtype k;
-    wtype c;
+    wtype m_n;
+    wtype m_k;
+    wtype m_c;
 
 public:
     Binomial_Session(wtype n, wtype k)
-        : n(n)
-        , k(k)
-        , c(n - k)
+        : m_n(n)
+        , m_k(k)
+        , m_c(n - k)
     {
         this->name_short = "Binomial(" + std::to_string(n) + ", " + std::to_string(k) + ")";
         this->algorithm_long = "Binary Splitting";
 
         //  Optimization: Flip (c) and (n - c) if needed.
-        if (k <= n && k < c){
-            this->k = n - k;
-            this->c = k;
+        if (k <= n && k < m_c){
+            m_k = n - k;
+            m_c = k;
         }
 
         //  Estimate size and ensure table accordingly.
@@ -45,26 +45,26 @@ public:
         this->over_decompose = 2;
     }
     virtual BigIntO<wtype> compute() override{
-        if (k > n){
+        if (m_k > m_n){
             return BigIntO<wtype>();
         }
 
         Time::WallClock time0 = Time::WallClock::Now();
 
-        Console::println("Computing: " + std::to_string(n) + "! / " + std::to_string(k) + "!");
-        BigIntO<wtype> T = PartialFactorial<wtype>(k, n, tds);
+        Console::println("Computing: " + std::to_string(m_n) + "! / " + std::to_string(m_k) + "!");
+        BigIntO<wtype> T = PartialFactorial<wtype>(m_k, m_n, tds);
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
-        Console::println("Computing: " + std::to_string(c) + "!");
-        BigIntO<wtype> N = PartialFactorial<wtype>(0, c, tds);
+        Console::println("Computing: " + std::to_string(m_c) + "!");
+        BigIntO<wtype> N = PartialFactorial<wtype>(0, m_c, tds);
         Time::WallClock time2 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time2 - time1, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time2 - time1, 'T');
 
         Console::println("Division...");
         T = div(T, N, tds);
         Time::WallClock time3 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time3 - time2, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time3 - time2, 'T');
 
         return T;
     }

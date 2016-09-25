@@ -1,8 +1,8 @@
-/* Environment_Linux.ipp
+/* Environment_WindowsVista.ipp
  * 
  * Author           : Alexander J. Yee
  * Date Created     : 01/04/2015
- * Last Modified    : 01/04/2015
+ * Last Modified    : 08/27/2016
  * 
  */
 
@@ -11,16 +11,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-
-//  There are no header guards in cpuid.h.
-#ifndef cpuid_H
-#define cpuid_H
-#include <cpuid.h>
-#endif
-
-#include <unistd.h>
+#include <vector>
+#include <Windows.h>
 #include "PublicLibs/ConsoleIO/BasicIO.h"
-#include "PublicLibs/Time/Time.h"
+#include "PublicLibs/ConsoleIO/Label.h"
 #include "Environment.h"
 namespace ymp{
 namespace Environment{
@@ -29,26 +23,47 @@ namespace Environment{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 upL_t GetLogicalProcessors(){
-    return sysconf(_SC_NPROCESSORS_ONLN);
+    SYSTEM_INFO info;
+    GetSystemInfo(&info);
+    return (upL_t)info.dwNumberOfProcessors;
 }
 upL_t GetFreePhysicalMemory(){
-    uiL_t bytes = (uiL_t)sysconf(_SC_AVPHYS_PAGES) * sysconf(_SC_PAGE_SIZE);
+    uiL_t bytes;
 
-    if (bytes > MAX_MEMORY)
+    MEMORYSTATUSEX data;
+    data.dwLength = sizeof(data);
+    if (GlobalMemoryStatusEx(&data)){
+        bytes = (uiL_t)data.ullAvailPhys;
+    }else{
+        bytes = 0;
+    }
+
+    if (bytes > MAX_MEMORY){
         bytes = MAX_MEMORY;
+    }
     return static_cast<upL_t>(bytes);
 }
 uiL_t GetTotalPhysicalMemory(){
-    return (uiL_t)sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGE_SIZE);
+    MEMORYSTATUSEX data;
+    data.dwLength = sizeof(data);
+    if (GlobalMemoryStatusEx(&data)){
+        return (uiL_t)data.ullTotalPhys;
+    }else{
+        return 0;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 u64_t x86_rdtsc(){
-    unsigned int lo, hi;
-    __asm__ volatile ("rdtsc" : "=a" (lo), "=d" (hi));
-    return ((u64_t)hi << 32) | lo;
+    return __rdtsc();
 }
 void x86_cpuid(u32_t eabcdx[4], u32_t eax, u32_t ecx){
-    __cpuid_count(eax, ecx, eabcdx[0], eabcdx[1], eabcdx[2], eabcdx[3]);
+    int out[4];
+    __cpuidex(out, eax, ecx);
+    eabcdx[0] = out[0];
+    eabcdx[1] = out[1];
+    eabcdx[2] = out[2];
+    eabcdx[3] = out[3];
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

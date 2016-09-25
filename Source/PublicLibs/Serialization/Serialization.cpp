@@ -64,10 +64,10 @@ YM_NO_INLINE siL_t parse_siL(const char*& str){
 
     //  Parse sign
     siL_t x = 0;
-    int sign = 0;
+    bool sign = false;
     if (str[0] == '-'){
         str++;
-        sign = 1;
+        sign = true;
     }
 
     //  Parse number

@@ -16,7 +16,7 @@
 
 namespace NumberFactory{
 using namespace ymp;
-typedef u64_t wtype;
+using wtype = u64_t;
 
 //  log(2^64)
 const double LOG_WORD = 44.361419555836499802702855773323300356832008599056;
@@ -28,7 +28,7 @@ upL_t e_Basic_get_terms(upL_t p){
 
     //  The taylor series converges to log(x!) / log(10) decimal digits after
     //  x terms. So to find the number of terms needed to reach a precision of p
-    //  we need to solve this question for x:
+    //  we need to solve this equation for x:
     //      p = log(x!) / log(2^64)
 
     //  This function solves this equation via binary search.
@@ -78,15 +78,17 @@ void e_Basic_BSR(BigIntO<wtype>& P, BigIntO<wtype>& Q, upL_t a, upL_t b){
 class e_Basic_Session : public ComputeFloatSession<wtype>{
 public:
     e_Basic_Session(){
-        this->name_short = "e";
-        this->algorithm_short = "exp(1)";
-        this->algorithm_long = "Taylor Series of exp(1) - (Single-Threaded)";
+        m_name_short = "e";
+        m_algorithm_short = "exp(1)";
+        m_algorithm_long = "Taylor Series of exp(1) - (Single-Threaded)";
 
         //  Disable multi-threading for this implementation.
-        this->over_decompose = 0;
+        m_over_decompose = 0;
     }
     virtual BigFloatO<wtype> compute() override{
         Time::WallClock time0 = Time::WallClock::Now();
+
+        upL_t p = m_precision;
         upL_t terms = e_Basic_get_terms(p);
 
         Console::print("Summing Series...  ");
@@ -96,13 +98,13 @@ public:
         e_Basic_BSR(P, Q, 0, terms);
 
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         Console::println("Division...");
         BigFloatO<wtype> T = div(BigFloatO<wtype>(P), BigFloatO<wtype>(Q), p);
         T = add(T, BigFloatO<wtype>(1), p);
         Time::WallClock time2 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time2 - time1, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time2 - time1, 'T');
 
         return T;
     }

@@ -11,8 +11,8 @@
  */
 
 #pragma once
-#ifndef _ymp_GenericFloatRaw_H
-#define _ymp_GenericFloatRaw_H
+#ifndef ymp_GenericFloatRaw_H
+#define ymp_GenericFloatRaw_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -43,13 +43,13 @@ public:
     YM_FORCE_INLINE BigFloatR(BigFloatR&& x)
         : BigFloat<wtype>(x)
     {
-        x.base_ptr = nullptr;
-        x.T = nullptr;
+        x.m_base_ptr = nullptr;
+        x.m_ptr = nullptr;
     }
     YM_FORCE_INLINE void operator=(BigFloatR&& x){
         BigFloat<wtype>::operator=(x);
-        x.base_ptr = nullptr;
-        x.T = nullptr;
+        x.m_base_ptr = nullptr;
+        x.m_ptr = nullptr;
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,11 +60,11 @@ public:
     YM_FORCE_INLINE BigFloatR(const BigFloatR<wtype>& x, upL_t s, upL_t L) : BigFloat<wtype>(x, s, L) {}
     YM_FORCE_INLINE BigFloatR(upL_t L, const BigFloatR<wtype>& x) : BigFloat<wtype>(L, x) {}
     YM_FORCE_INLINE BigFloatR(wtype* ptr, upL_t size) : BigFloat<wtype>(size) {
-        this->base_ptr = ptr;
-        this->T = ptr;
+        this->m_base_ptr = ptr;
+        this->m_ptr = ptr;
     }
     //YM_FORCE_INLINE BigFloatR(wtype* ptr, upL_t L, siL_t exp) : BigFloat<wtype>(L) {
-    //    this->base_ptr = ptr;
+    //    this->m_base_ptr = ptr;
     //    this->T = ptr;
     //    this->L = L;
     //    this->exp = exp;
@@ -84,27 +84,27 @@ public:
 //  Replacers
 public:
     YM_FORCE_INLINE void replace(wtype* ptr, upL_t size){
-        this->base_ptr = ptr;
-        this->buffer_size = size;
-        this->T = ptr;
+        this->m_base_ptr = ptr;
+        this->m_buffer_size = size;
+        this->m_ptr = ptr;
     }
 
 #ifndef YMP_IMPORT
     void replace(BasicIntR<wtype>& A){
-        this->base_ptr = A.get_T();
-        this->buffer_size = A.get_buffersize();
-        this->T = this->base_ptr;
-        this->L = A.get_L();
-        this->exp = 0;
-        this->sign = true;
+        this->m_base_ptr = A.get_T();
+        this->m_buffer_size = A.get_buffersize();
+        this->m_ptr = this->m_base_ptr;
+        this->m_len = A.get_L();
+        this->m_exp = 0;
+        this->m_sign = true;
     }
     void replace(ExactFloatR<wtype>& A){
-        this->base_ptr = A.get_baseptr();
-        this->buffer_size = A.get_buffersize();
-        this->T = A.get_T();
-        this->L = A.get_L();
-        this->exp = A.get_exp();
-        this->sign = true;
+        this->m_base_ptr = A.get_baseptr();
+        this->m_buffer_size = A.get_buffersize();
+        this->m_ptr = A.get_T();
+        this->m_len = A.get_L();
+        this->m_exp = A.get_exp();
+        this->m_sign = true;
     }
 #endif
 

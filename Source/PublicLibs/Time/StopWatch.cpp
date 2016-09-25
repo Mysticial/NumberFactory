@@ -24,31 +24,31 @@ namespace Time{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 void StopWatch::Reset(){
-    total.reset();
-    is_running = false;
+    m_total.reset();
+    m_is_running = false;
 }
 void StopWatch::Start(){
-    if (is_running){
+    if (m_is_running){
         return;
     }
-    last = PerformanceTimeStamp::now();
-    is_running = true;
+    m_last = PerformanceTimeStamp::now();
+    m_is_running = true;
 }
 void StopWatch::Stop(){
-    if (!is_running){
+    if (!m_is_running){
         return;
     }
-    total += PerformanceTimeDuration::time_since(last);
-    is_running = false;
+    m_total += PerformanceTimeDuration::time_since(m_last);
+    m_is_running = false;
 }
 ////////////////////////////////////////////////////////////////////////////////
 double StopWatch::get_wall_time() const{
     return get_current().wall_time;
 }
 PerformanceTimeDuration StopWatch::get_current() const{
-    PerformanceTimeDuration out = total;
-    if (is_running){
-        out += PerformanceTimeDuration::time_since(last);
+    PerformanceTimeDuration out = m_total;
+    if (m_is_running){
+        out += PerformanceTimeDuration::time_since(m_last);
     }
     return out;
 }
@@ -73,7 +73,7 @@ void StopWatch::print() const{
         Console::println("", 'w');
         return;
     }
-    
+
     Console::print("CPU Utilization:        ", 'w');
     Console::print_marginr_fixed(MARGIN_USER, user_utilization, DIGITS, 'Y');
     Console::print(" %");
@@ -142,9 +142,9 @@ void StopWatch::Serialize(std::string& stream) const{
     Serialization::write_float(stream, "total.kernel_time :", stats.kernel_time);
 }
 void StopWatch::Deserialize(const char*& stream){
-    total.wall_time = Serialization::parse_float(stream);
-    total.user_time = Serialization::parse_float(stream);
-    total.kernel_time = Serialization::parse_float(stream);
+    m_total.wall_time = Serialization::parse_float(stream);
+    m_total.user_time = Serialization::parse_float(stream);
+    m_total.kernel_time = Serialization::parse_float(stream);
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

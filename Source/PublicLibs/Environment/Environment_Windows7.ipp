@@ -1,8 +1,8 @@
-/* cpu_x86_Linux.ipp
+/* Environment_Windows7.ipp
  * 
  * Author           : Alexander J. Yee
- * Date Created     : 04/12/2014
- * Last Modified    : 04/12/2014
+ * Date Created     : 01/04/2015
+ * Last Modified    : 08/27/2016
  * 
  */
 
@@ -11,37 +11,58 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-
-//  There are no header guards in cpuid.h.
-#ifndef cpuid_H
-#define cpuid_H
-#include <cpuid.h>
-#endif
-
-#include "cpu_x86.h"
+#include <Windows.h>
+#include "PublicLibs/ConsoleIO/BasicIO.h"
+#include "PublicLibs/ConsoleIO/Label.h"
+#include "Environment.h"
 namespace ymp{
+namespace Environment{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-void cpu_x86::cpuid(int32_t out[4], int32_t x){
-    __cpuid_count(x, 0, out[0], out[1], out[2], out[3]);
+upL_t GetLogicalProcessors(){
+    upL_t out = GetActiveProcessorCount(ALL_PROCESSOR_GROUPS);
+    return out == 0 ? 1 : out;
 }
-uint64_t xgetbv(unsigned int index){
-    uint32_t eax, edx;
-    __asm__ __volatile__("xgetbv" : "=a"(eax), "=d"(edx) : "c"(index));
-    return ((uint64_t)edx << 32) | eax;
+upL_t GetFreePhysicalMemory(){
+    uiL_t bytes;
+
+    MEMORYSTATUSEX data;
+    data.dwLength = sizeof(data);
+    if (GlobalMemoryStatusEx(&data))
+        bytes = (uiL_t)data.ullAvailPhys;
+    else
+        bytes = 0;
+
+    if (bytes > MAX_MEMORY)
+        bytes = MAX_MEMORY;
+    return static_cast<upL_t>(bytes);
 }
-#define _XCR_XFEATURE_ENABLED_MASK  0
+uiL_t GetTotalPhysicalMemory(){
+    MEMORYSTATUSEX data;
+    data.dwLength = sizeof(data);
+    if (GlobalMemoryStatusEx(&data))
+        return (uiL_t)data.ullTotalPhys;
+    else
+        return 0;
+}
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-//  Detect 64-bit
-bool cpu_x86::detect_OS_x64(){
-    //  We only support x64 on Linux.
-    return true;
+u64_t x86_rdtsc(){
+    return __rdtsc();
+}
+void x86_cpuid(u32_t eabcdx[4], u32_t eax, u32_t ecx){
+    int out[4];
+    __cpuidex(out, eax, ecx);
+    eabcdx[0] = out[0];
+    eabcdx[1] = out[1];
+    eabcdx[2] = out[2];
+    eabcdx[3] = out[3];
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+}
 }

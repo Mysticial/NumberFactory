@@ -7,8 +7,8 @@
  */
 
 #pragma once
-#ifndef _ymp_ExportSafeLibs_Pointer_H
-#define _ymp_ExportSafeLibs_Pointer_H
+#ifndef ymp_ExportSafeLibs_Pointer_H
+#define ymp_ExportSafeLibs_Pointer_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,63 +26,63 @@ static void local_ptr_deleter(type* ptr){
 ////////////////////////////////////////////////////////////////////////////////
 template <typename type>
 class dll_uptr{
-    type* ptr;
-    void (*deleter)(type*);
+    type* m_ptr;
+    void (*m_deleter)(type*);
 
 public:
     //  Rule of 5
     dll_uptr(const dll_uptr&) = delete;
     void operator=(const dll_uptr&) = delete;
     dll_uptr(dll_uptr&& x)
-        : ptr(x.ptr)
-        , deleter(x.deleter)
+        : m_ptr(x.m_ptr)
+        , m_deleter(x.m_deleter)
     {
-        x.ptr = nullptr;
+        x.m_ptr = nullptr;
     }
     void operator=(dll_uptr&& x){
         reset();
-        ptr = x.ptr;
-        deleter = x.deleter;
-        x.ptr = nullptr;
+        m_ptr = x.m_ptr;
+        m_deleter = x.m_deleter;
+        x.m_ptr = nullptr;
     }
     ~dll_uptr(){ reset(); }
 
 public:
     //  Constructors
-    dll_uptr() : ptr(nullptr) {}
+    dll_uptr() : m_ptr(nullptr) {}
     dll_uptr(type* ptr, void (*deleter)(type*) = &local_ptr_deleter)
-        : ptr(ptr)
-        , deleter(deleter)
+        : m_ptr(ptr)
+        , m_deleter(deleter)
     {}
     void reset(){
-        if (ptr != nullptr)
-            deleter(ptr);
+        if (m_ptr != nullptr)
+            m_deleter(m_ptr);
     }
     void reset(type* ptr, void (*deleter)(type*) = &local_ptr_deleter){
         reset();
-        this->ptr = ptr;
-        this->deleter = deleter;
+        m_ptr = ptr;
+        m_deleter = deleter;
     }
 
 public:
     //  Getters
     type* get(){
-        return ptr;
+        return m_ptr;
     }
     const type* get() const{
-        return ptr;
+        return m_ptr;
     }
     type* operator->(){
-        return ptr;
+        return m_ptr;
     }
     const type* operator->() const{
-        return ptr;
+        return m_ptr;
     }
     type& operator*(){
-        return *ptr;
+        return *m_ptr;
     }
     const type& operator*() const{
-        return *ptr;
+        return *m_ptr;
     }
 };
 ////////////////////////////////////////////////////////////////////////////////

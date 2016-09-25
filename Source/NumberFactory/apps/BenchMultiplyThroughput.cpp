@@ -24,7 +24,8 @@
 #include "PublicLibs/ConsoleIO/Label.h"
 #include "PublicLibs/Time/Benchmark.h"
 #include "PublicLibs/Environment/Environment.h"
-#include "PublicLibs/AlignedMalloc.h"
+#include "PublicLibs/Memory/SmartBuffer.h"
+//#include "PrivateLibs/ThreadScheduling/ThreadScheduling.h"
 #include "ymp/Parallelism.h"
 #include "ymp/LowLevel.h"
 
@@ -32,18 +33,16 @@ namespace NumberFactory{
 using namespace ymp;
 template <typename wtype>
 class BenchAction : public IndexAction{
-    const wtype* A;
-    const wtype* B;
-    wtype* C;
-    upL_t L;
-    upL_t CL;
-    void* M;
-    upL_t ML;
-    upL_t tds;
-
-public:
-    std::vector<double>& wall_time;
-    std::vector<uiL_t>& iterations;
+    const wtype* m_A;
+    const wtype* m_B;
+    wtype* m_C;
+    upL_t m_L;
+    upL_t m_CL;
+    void* m_M;
+    upL_t m_ML;
+    upL_t m_tds;
+    std::vector<double>& m_wall_time;
+    std::vector<uiL_t>& m_iterations;
 
 public:
     BenchAction(
@@ -53,30 +52,30 @@ public:
         upL_t L, upL_t CL,
         void* M, upL_t ML, upL_t tds
     )
-        : A(A), B(B), C(C)
-        , L(L), CL(CL)
-        , M(M), ML(ML), tds(tds)
-        , wall_time(wall_time), iterations(iterations)
+        : m_A(A), m_B(B), m_C(C)
+        , m_L(L), m_CL(CL)
+        , m_M(M), m_ML(ML), m_tds(tds)
+        , m_wall_time(wall_time), m_iterations(iterations)
     {}
 
     virtual void run(upL_t index) override{
-        wtype* current_C = C + CL * index;
-        void* current_M = (char*)M + ML * index;
+        wtype* current_C = m_C + m_CL * index;
+        void* current_M = (char*)m_M + m_ML * index;
 
         BasicParameters mp(
-            LookupTables::get_global_table<wtype>(CL),
-            (Parallelizer&)Parallelism::get_global_framework(), tds,
-            current_M, ML
+            LookupTables::get_global_table<wtype>(m_CL),
+            (Parallelizer&)Parallelism::get_global_framework(), m_tds,
+            current_M, m_ML
         );
 
         Time::IterationBenchmark bench;
         do{
-            LowLevel::mul(mp, current_C, A, L, B, L);
+            LowLevel::mul(mp, current_C, m_A, m_L, m_B, m_L);
             bench++;
         }while (bench.ShouldContinue());
 
-        wall_time[index] = bench.GetElapsed();
-        iterations[index] = bench.GetIterations();
+        m_wall_time[index] = bench.GetElapsed();
+        m_iterations[index] = bench.GetIterations();
     }
 };
 
@@ -96,9 +95,9 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds, upL_t instances){
         return false;
 
     //  Allocate Operands
-    auto A_uptr = SmartPointer<wtype>::malloc_uptr(L);
-    auto B_uptr = SmartPointer<wtype>::malloc_uptr(L);
-    auto C_uptr = SmartPointer<wtype>::malloc_uptr(CL * instances);
+    auto A_uptr = make_trivial_array<wtype>(L);
+    auto B_uptr = make_trivial_array<wtype>(L);
+    auto C_uptr = make_trivial_array<wtype>(CL * instances);
     wtype* A = A_uptr.get();
     wtype* B = B_uptr.get();
     wtype* C = C_uptr.get();
@@ -112,7 +111,7 @@ bool bench_multiply(upL_t memory_limit, upL_t L, upL_t tds, upL_t instances){
 
     //  Prepare Multiply Parameters
     LookupTables::get_global_table<wtype>(2*L);
-    auto M_uptr = SmartPointer<>::malloc_uptr((upL_t)ML * instances, DEFAULT_ALIGNMENT);
+    auto M_uptr = make_raw_buffer<DEFAULT_ALIGNMENT>((upL_t)ML * instances);
     void* M = M_uptr.get();
     memset(M, 0, (upL_t)ML * instances);    //  Force commit memory
 
@@ -150,7 +149,7 @@ void bench_parallel_multiply_throughput(){
     Console::println("Enter a memory limit: (e.g. 768MB, 2.5GB, etc...)");
     upL_t bytes = (upL_t)Console::scan_label_bytes();
 
-    Environment::LockToCore();
+//    ThreadScheduling::set_core_affinity();
     Console::println();
     Console::println("Benchmarking: L x L -> 2L  (64-bit word multiply)");
     Console::println();

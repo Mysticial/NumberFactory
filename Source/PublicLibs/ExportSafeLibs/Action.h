@@ -17,8 +17,8 @@
  */
 
 #pragma once
-#ifndef _ymp_ExportSafeLibs_Action_H
-#define _ymp_ExportSafeLibs_Action_H
+#ifndef ymp_ExportSafeLibs_Action_H
+#define ymp_ExportSafeLibs_Action_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -32,42 +32,42 @@ namespace ymp{
 ////////////////////////////////////////////////////////////////////////////////
 //  Wrap them on the client side.
 struct dll_BasicAction{
-    typedef void (*fp)(BasicAction* action);
+    using fp = void (*)(BasicAction* action);
     void operator=(const dll_BasicAction&) = delete;
 
     dll_BasicAction(BasicAction& action)
-        : fp_run(internal_run)
-        , action(&action)
+        : m_fp_run(internal_run)
+        , m_action(&action)
     {}
 
     void run(){
-        fp_run(action);
+        m_fp_run(m_action);
     }
 
 private:
-    fp fp_run;
-    BasicAction* action;
+    fp m_fp_run;
+    BasicAction* m_action;
 
     static void internal_run(BasicAction* action){
         action->run();
     }
 };
 struct dll_IndexAction{
-    typedef void (*fp)(IndexAction* action, upL_t index);
+    using fp = void (*)(IndexAction* action, upL_t index);
     void operator=(const dll_IndexAction&) = delete;
 
     dll_IndexAction(IndexAction& action)
-        : fp_run(internal_run)
-        , action(&action)
+        : m_fp_run(internal_run)
+        , m_action(&action)
     {}
 
     void run(upL_t index){
-        fp_run(action, index);
+        m_fp_run(m_action, index);
     }
 
 private:
-    fp fp_run;
-    IndexAction* action;
+    fp m_fp_run;
+    IndexAction* m_action;
 
     static void internal_run(IndexAction* action, upL_t index){
         action->run(index);
@@ -79,27 +79,27 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 //  Unwrap them on the DLL side.
 class dll_BasicActionWrapper : public BasicAction{
-    dll_BasicAction& action;
+    dll_BasicAction& m_action;
 
 public:
     dll_BasicActionWrapper(dll_BasicAction& action)
-        : action(action)
+        : m_action(action)
     {}
 
     virtual void run() override{
-        action.run();
+        m_action.run();
     }
 };
 class dll_IndexActionWrapper : public IndexAction{
-    dll_IndexAction& action;
+    dll_IndexAction& m_action;
 
 public:
     dll_IndexActionWrapper(dll_IndexAction& action)
-        : action(action)
+        : m_action(action)
     {}
 
     virtual void run(upL_t index) override{
-        action.run(index);
+        m_action.run(index);
     }
 };
 ////////////////////////////////////////////////////////////////////////////////

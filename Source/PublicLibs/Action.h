@@ -21,8 +21,8 @@
  */
 
 #pragma once
-#ifndef _ymp_Action_H
-#define _ymp_Action_H
+#ifndef ymp_Action_H
+#define ymp_Action_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ class IndexAction{
 public:
     virtual void run(upL_t index) = 0;
 
-    IndexAction(){}
+    IndexAction() = default;
     IndexAction(const IndexAction&) = delete;
     void operator=(const IndexAction&) = delete;
 };
@@ -61,7 +61,7 @@ public:
     //  resources in the range, [resource_s, resource_e).
     virtual void run_multi_resource(upL_t work_index, upL_t resource_s, upL_t resource_e) = 0;
 
-    ResourceAction(){}
+    ResourceAction() = default;
     ResourceAction(const ResourceAction&) = delete;
     void operator=(const ResourceAction&) = delete;
 };

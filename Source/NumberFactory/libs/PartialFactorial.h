@@ -30,17 +30,17 @@ BigIntO<wtype> Factorial_BSR(wtype a, wtype b, upL_t tds);
 
 template <typename wtype>
 class Factorial_Action : public BasicAction{
-    BigIntO<wtype>& P;
-    wtype a;
-    wtype b;
-    upL_t tds;
+    BigIntO<wtype>& m_P;
+    wtype m_a;
+    wtype m_b;
+    upL_t m_tds;
 
 public:
     Factorial_Action(BigIntO<wtype>& P, wtype a, wtype b, upL_t tds)
-        : P(P), a(a), b(b), tds(tds)
+        : m_P(P), m_a(a), m_b(b), m_tds(tds)
     {}
     virtual void run() override{
-        P = Factorial_BSR<wtype>(a, b, tds);
+        m_P = Factorial_BSR<wtype>(m_a, m_b, m_tds);
     }
 };
 

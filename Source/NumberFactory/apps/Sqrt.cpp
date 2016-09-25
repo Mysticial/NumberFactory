@@ -15,28 +15,30 @@
 namespace NumberFactory{
 using namespace ymp;
 
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class Sqrt_Native_Session : public ComputeFloatSession<wtype>{
-    wtype x;
+    wtype m_x;
 
 public:
     Sqrt_Native_Session(wtype x)
-        : x(x)
+        : m_x(x)
     {
-        this->name_short = "Sqrt(" + std::to_string(x) + ")";
-        this->algorithm_short = "Newton";
-        this->algorithm_long = "Newton's Method (native implementation)";
+        m_name_short = "Sqrt(" + std::to_string(x) + ")";
+        m_algorithm_short = "Newton";
+        m_algorithm_long = "Newton's Method (native implementation)";
     }
     virtual BigFloatO<wtype> compute() override{
         Console::println("InvSqrt...");
         Time::WallClock time0 = Time::WallClock::Now();
 
-        BigFloatO<wtype> T = invsqrt_uW(x, p, tds);
-        T *= x;
+        upL_t p = m_precision;
+
+        BigFloatO<wtype> T = invsqrt_uW(m_x, p, m_tds);
+        T *= m_x;
 
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         return T;
     }

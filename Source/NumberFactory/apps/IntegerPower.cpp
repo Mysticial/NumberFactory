@@ -14,7 +14,7 @@
 
 namespace NumberFactory{
 using namespace ymp;
-typedef u64_t wtype;
+using wtype = u64_t;
 
 template <typename wtype>
 BigIntO<wtype> pow(wtype a, wtype b, upL_t tds = 1){
@@ -46,13 +46,13 @@ BigIntO<wtype> pow(wtype a, wtype b, upL_t tds = 1){
 }
 
 class IntegerPower_Session : public ComputeIntSession<wtype>{
-    wtype base;
-    wtype power;
+    wtype m_base;
+    wtype m_power;
 
 public:
     IntegerPower_Session(wtype base, wtype power)
-        : base(base)
-        , power(power)
+        : m_base(base)
+        , m_power(power)
     {
         this->name_short = std::to_string(base) + "^" + std::to_string(power);
 //        this->table_cwordlen = (pow / WordTraits<wtype>::BITS) * 2 + 1;
@@ -61,10 +61,10 @@ public:
         Time::WallClock time0 = Time::WallClock::Now();
 
         Console::println("Powering...");
-        BigIntO<wtype> x = pow(base, power, tds);
+        BigIntO<wtype> x = pow(m_base, m_power, tds);
 
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         return x;
     }

@@ -14,7 +14,7 @@
 
 namespace NumberFactory{
 using namespace ymp;
-typedef u64_t wtype;
+using wtype = u64_t;
 
 //  log(2^64)
 const double LOG_WORD = 44.361419555836499802702855773323300356832008599056;
@@ -26,7 +26,7 @@ upL_t e_Taylor_get_terms(upL_t p){
 
     //  The taylor series converges to log(x!) / log(10) decimal digits after
     //  x terms. So to find the number of terms needed to reach a precision of p
-    //  we need to solve this question for x:
+    //  we need to solve this equation for x:
     //      p = log(x!) / log(2^64)
 
     //  This function solves this equation via binary search.
@@ -60,19 +60,18 @@ void e_Taylor_BSR(BigIntO<wtype>& P, BigIntO<wtype>& Q, upL_t a, upL_t b, upL_t 
 
 template <bool alternate>
 class e_Taylor_BSR_Action : public BasicAction{
-    BigIntO<wtype>& P;
-    BigIntO<wtype>& Q;
-    upL_t a;
-    upL_t b;
-    upL_t p;
-    upL_t tds;
+    BigIntO<wtype>& m_P;
+    BigIntO<wtype>& m_Q;
+    upL_t m_a;
+    upL_t m_b;
+    upL_t m_tds;
 
 public:
     e_Taylor_BSR_Action(BigIntO<wtype>& P, BigIntO<wtype>& Q, upL_t a, upL_t b, upL_t tds)
-        : P(P), Q(Q), a(a), b(b), tds(tds)
+        : m_P(P), m_Q(Q), m_a(a), m_b(b), m_tds(tds)
     {}
     virtual void run() override{
-        e_Taylor_BSR<alternate>(P, Q, a, b, tds);
+        e_Taylor_BSR<alternate>(m_P, m_Q, m_a, m_b, m_tds);
     }
 };
 
@@ -117,38 +116,40 @@ template <bool alternate>
 class e_Taylor_Session : public ComputeFloatSession<wtype>{
 public:
     e_Taylor_Session(){
-        this->name_short = "e";
+        m_name_short = "e";
         if (!alternate){
-            this->algorithm_short = "exp(1)";
-            this->algorithm_long = "Taylor Series of exp(1)";
+            m_algorithm_short = "exp(1)";
+            m_algorithm_long = "Taylor Series of exp(1)";
         }else{
-            this->algorithm_short = "exp(-1)";
-            this->algorithm_long = "Taylor Series of exp(-1)";
+            m_algorithm_short = "exp(-1)";
+            m_algorithm_long = "Taylor Series of exp(-1)";
         }
-        this->over_decompose = 2;
+        m_over_decompose = 2;
     }
     virtual BigFloatO<wtype> compute() override{
         Time::WallClock time0 = Time::WallClock::Now();
+
+        upL_t p = m_precision;
         upL_t terms = e_Taylor_get_terms(p);
 
         Console::print("Summing Series...  ");
         Console::print_commas(terms);
         Console::println(" terms");
         BigIntO<wtype> P, Q;
-        e_Taylor_BSR<alternate>(P, Q, 1, terms, tds);
+        e_Taylor_BSR<alternate>(P, Q, 1, terms, m_tds);
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         Console::println("Division...");
         BigFloatO<wtype> T;
         if (!alternate){
-            T = div(BigFloatO<wtype>(P), BigFloatO<wtype>(Q), p, tds);
+            T = div(BigFloatO<wtype>(P), BigFloatO<wtype>(Q), p, m_tds);
             T = add(T, BigFloatO<wtype>(2), p);
         }else{
-            T = div(BigFloatO<wtype>(Q), BigFloatO<wtype>(P), p, tds);
+            T = div(BigFloatO<wtype>(Q), BigFloatO<wtype>(P), p, m_tds);
         }
         Time::WallClock time2 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time2 - time1, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time2 - time1, 'T');
 
         return T;
     }

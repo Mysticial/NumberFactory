@@ -30,13 +30,15 @@ using namespace NumberFactory;
 
 
 int main(){
-    //  Use Cilk Plus instead of Windows Thread Pools.
-    //  Only available for AVX and AVX2.
-//    auto framework = Parallelism::make_framework_by_name("cilk");
-//    Parallelism::set_global_framework(*framework);
-
     //  Run the main Number Factory app.
     NumberFactory::MainMenu();
+
+    //  Sandbox: Force twiddle tables to their maximum sizes.
+//    ensure_global_table_bits();
+
+
+
+
 
 
     system("pause");

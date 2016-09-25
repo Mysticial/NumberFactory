@@ -60,7 +60,7 @@ YM_NO_INLINE void Warning(std::string str, bool sticky){
     if (!sticky)
         SetColor('w');
 }
-YM_NO_INLINE void Quit(int code){
+[[noreturn]] YM_NO_INLINE void Quit(int code){
     SetColorDefault();
     Pause();
     exit(code);
@@ -156,7 +156,7 @@ YM_NO_INLINE siL_t scan_siL_suffix(char color){
         if ('0' > ch || ch > '9'){
             break;
         }
-    
+
         x *= 10;
         x += ch - '0';
     }while (true);

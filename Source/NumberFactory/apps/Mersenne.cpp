@@ -13,14 +13,14 @@
 
 namespace NumberFactory{
 using namespace ymp;
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class MersenneNumber : public ComputeIntSession<wtype>{
-    wtype pow;
+    wtype m_pow;
 
 public:
     MersenneNumber(wtype pow)
-        : pow(pow)
+        : m_pow(pow)
     {
         this->name_short = "M" + std::to_string(pow);
         this->name_long = "Mersenne Number: " + std::string("2^") + std::to_string(pow) + " - 1";
@@ -31,11 +31,11 @@ public:
 
         Console::println("Computing...");
         BigIntO<wtype> x(1);
-        x <<= (upL_t)pow;
+        x <<= (upL_t)m_pow;
         x -= BigIntO<wtype>(1);
 
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         return x;
     }

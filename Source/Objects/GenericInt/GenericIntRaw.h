@@ -11,8 +11,8 @@
  */
 
 #pragma once
-#ifndef _ymp_GenericIntRaw_H
-#define _ymp_GenericIntRaw_H
+#ifndef ymp_GenericIntRaw_H
+#define ymp_GenericIntRaw_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 //  Constructors
 public:
-    BigIntR(){}
+    BigIntR() = default;
     YM_FORCE_INLINE BigIntR(const BigIntR<wtype>& x, upL_t L) : BigInt<wtype>(x, L) {}
     YM_FORCE_INLINE BigIntR(const BigIntR<wtype>& x, upL_t s, upL_t L) : BigInt<wtype>(x, s, L) {}
     YM_FORCE_INLINE BigIntR(upL_t L, const BigIntR<wtype>& x) : BigInt<wtype>(L, x) {}

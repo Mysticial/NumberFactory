@@ -7,8 +7,8 @@
  */
 
 #pragma once
-#ifndef _ymp_ExportSafeLibs_Array_H
-#define _ymp_ExportSafeLibs_Array_H
+#ifndef ymp_ExportSafeLibs_Array_H
+#define ymp_ExportSafeLibs_Array_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,52 +25,52 @@ static void local_arr_deleter(type* ptr){
 ////////////////////////////////////////////////////////////////////////////////
 template <typename type>
 class dll_uarr{
-    type* ptr;
-    void (*deleter)(type*);
+    type* m_ptr;
+    void (*m_deleter)(type*);
 
 public:
     //  Rule of 5
     dll_uarr(const dll_uarr&) = delete;
     void operator=(const dll_uarr&) = delete;
     dll_uarr(dll_uarr&& x)
-        : ptr(x.ptr)
-        , deleter(x.deleter)
+        : m_ptr(x.m_ptr)
+        , m_deleter(x.m_deleter)
     {
-        x.ptr = nullptr;
+        x.m_ptr = nullptr;
     }
     void operator=(dll_uarr&& x){
         reset();
-        ptr = x.ptr;
-        deleter = x.deleter;
-        x.ptr = nullptr;
+        m_ptr = x.m_ptr;
+        m_deleter = x.m_deleter;
+        x.m_ptr = nullptr;
     }
     ~dll_uarr(){ reset(); }
 
 public:
     //  Constructors
-    dll_uarr() : ptr(nullptr) {}
+    dll_uarr() : m_ptr(nullptr) {}
     dll_uarr(type* ptr, void (*deleter)(type*) = &local_arr_deleter)
-        : ptr(ptr)
-        , deleter(deleter)
+        : m_ptr(ptr)
+        , m_deleter(deleter)
     {}
     void reset(){
-        if (ptr != nullptr)
-            deleter(ptr);
+        if (m_ptr != nullptr)
+            m_deleter(m_ptr);
     }
 
 public:
     //  Getters
     type* get(){
-        return ptr;
+        return m_ptr;
     }
     const type* get() const{
-        return ptr;
+        return m_ptr;
     }
     type& operator[](size_t index){
-        return ptr[index];
+        return m_ptr[index];
     }
     const type& operator[](size_t index) const{
-        return ptr[index];
+        return m_ptr[index];
     }
 };
 ////////////////////////////////////////////////////////////////////////////////

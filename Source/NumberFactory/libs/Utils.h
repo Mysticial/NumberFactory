@@ -65,7 +65,7 @@ void to_file_dec(const BigInt<wtype>& x, const std::string& path, upL_t tds = 1,
     Time::WallClock time0 = Time::WallClock::Now();
     auto str = to_string_dec(x, tds);
     Time::WallClock time1 = Time::WallClock::Now();
-    Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+    Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
     Console::println();
 
     if (watch != nullptr)
@@ -96,7 +96,7 @@ void to_file_dec(const BigFloat<wtype>& x, const std::string& path, upL_t digits
     Time::WallClock time0 = Time::WallClock::Now();
     auto str = to_string_dec(x, digits, tds);
     Time::WallClock time1 = Time::WallClock::Now();
-    Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+    Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
     Console::println();
 
     if (watch != nullptr)

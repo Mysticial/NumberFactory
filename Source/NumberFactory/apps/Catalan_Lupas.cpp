@@ -14,7 +14,7 @@
 #include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class Catalan_Lupas_BSR final : public BSR_Type0<wtype>{
 public:
@@ -52,35 +52,37 @@ public:
 class Catalan_Lupas_Session : public ComputeFloatSession<wtype>{
 public:
     Catalan_Lupas_Session(){
-        this->name_short = "Catalan";
-        this->name_long = "Catalan's Constant";
-        this->algorithm_short = "Lupas";
-        this->algorithm_long = "Lupas Formula";
-        this->over_decompose = 2;
+        m_name_short = "Catalan";
+        m_name_long = "Catalan's Constant";
+        m_algorithm_short = "Lupas";
+        m_algorithm_long = "Lupas Formula";
+        m_over_decompose = 2;
     }
     virtual BigFloatO<wtype> compute() override{
         Time::WallClock time0 = Time::WallClock::Now();
         const double LOG_RATIO = 0.5;   //  log(2)/log(4)
         const double TERM_RATIO = LOG_RATIO * CHAR_BIT * sizeof(wtype);
+
+        upL_t p = m_precision;
         upL_t terms = (upL_t)((double)p * TERM_RATIO + 1);
 
         Console::print("Summing Series...  ");
         Console::print_commas(terms);
         Console::println(" terms");
         BigFloatO<wtype> P, Q, tmp;
-        Catalan_Lupas_BSR().run(P, Q, terms, p, tds);
+        Catalan_Lupas_BSR().run(P, Q, terms, p, m_tds);
 
         tmp = Q;
         tmp *= 19;
         P = add(P, tmp, p);
         Q *= 18;
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         Console::println("Division...");
-        P = div(P, Q, p, tds);
+        P = div(P, Q, p, m_tds);
         Time::WallClock time2 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time2 - time1, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time2 - time1, 'T');
 
         return P;
     }

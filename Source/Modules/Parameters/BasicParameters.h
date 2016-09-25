@@ -11,8 +11,8 @@
  */
 
 #pragma once
-#ifndef _ymp_BasicParameters_H
-#define _ymp_BasicParameters_H
+#ifndef ymp_BasicParameters_H
+#define ymp_BasicParameters_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,23 +29,23 @@ namespace ymp{
 ////////////////////////////////////////////////////////////////////////////////
 struct BasicParameters{
     //  Statics
-    const LookupTable& tw;
-    Parallelizer& parallelizer;
+    const LookupTable& m_tw;
+    Parallelizer& m_parallelizer;
 
-    upL_t tds = 1;      //  Task Decomposition
-    void* M = nullptr;  //  Scratch Memory
-    upL_t ML = 0;       //  Scratch Memory (Size in bytes)
+    upL_t m_tds = 1;        //  Task Decomposition
+    void* m_M = nullptr;    //  Scratch Memory
+    upL_t m_ML = 0;         //  Scratch Memory (Size in bytes)
 
     BasicParameters(
         const LookupTable& tw,
         Parallelizer& parallelizer,
         upL_t tds
     )
-        : tw(tw)
-        , parallelizer(parallelizer)
-        , tds(tds)
-        , M(nullptr)
-        , ML((upL_t)0 - 1)
+        : m_tw(tw)
+        , m_parallelizer(parallelizer)
+        , m_tds(tds)
+        , m_M(nullptr)
+        , m_ML((upL_t)0 - 1)
     {}
     BasicParameters(
         const LookupTable& tw,
@@ -53,22 +53,22 @@ struct BasicParameters{
         upL_t tds,
         void* M, upL_t ML
     )
-        : tw(tw)
-        , parallelizer(parallelizer)
-        , tds(tds)
-        , M(M)
-        , ML(ML)
+        : m_tw(tw)
+        , m_parallelizer(parallelizer)
+        , m_tds(tds)
+        , m_M(M)
+        , m_ML(ML)
     {}
 
     BasicParameters edit_tds(upL_t tds) const{
         BasicParameters out = *this;
-        out.tds = tds;
+        out.m_tds = tds;
         return out;
     }
     BasicParameters edit_mem(void* M, upL_t ML) const{
         BasicParameters out = *this;
-        out.M = M;
-        out.ML = ML;
+        out.m_M = M;
+        out.m_ML = ML;
         return out;
     }
 

@@ -39,10 +39,10 @@ class BSR_BBP{
 protected:
     //  To prevent memory from blowing up, don't start threading until the
     //  recursion is this deep.
-    ukL_t thread_depth;
+    ukL_t m_thread_depth;
 
 public:
-    BSR_BBP(ukL_t thread_depth = 0) : thread_depth(thread_depth) {}
+    BSR_BBP(ukL_t thread_depth = 0) : m_thread_depth(thread_depth) {}
 
 public:
     //  Computes the following using the recursion specified above.
@@ -71,14 +71,14 @@ private:
 //  Parallel Helper Object
 template <typename wtype>
 class BSR_BBP_Action : public BasicAction{
-    const BSR_BBP<wtype>& BSR;
-    BigFloatO<wtype>& P;
-    BigFloatO<wtype>& Q;
-    upL_t a;
-    upL_t b;
-    ukL_t recursion_depth;
-    upL_t p;
-    upL_t tds;
+    const BSR_BBP<wtype>& m_BSR;
+    BigFloatO<wtype>& m_P;
+    BigFloatO<wtype>& m_Q;
+    upL_t m_a;
+    upL_t m_b;
+    ukL_t m_recursion_depth;
+    upL_t m_p;
+    upL_t m_tds;
 
 public:
     BSR_BBP_Action(
@@ -87,12 +87,12 @@ public:
         upL_t a, upL_t b,ukL_t recursion_depth,
         upL_t p, upL_t tds
     )
-        : BSR(BSR), P(P), Q(Q)
-        , a(a), b(b), recursion_depth(recursion_depth)
-        , p(p), tds(tds)
+        : m_BSR(BSR), m_P(P), m_Q(Q)
+        , m_a(a), m_b(b), m_recursion_depth(recursion_depth)
+        , m_p(p), m_tds(tds)
     {}
     virtual void run() override{
-        BSR.BSR(P, Q, a, b, recursion_depth, p, tds);
+        m_BSR.BSR(m_P, m_Q, m_a, m_b, m_recursion_depth, m_p, m_tds);
     }
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +110,7 @@ void BSR_BBP<wtype>::BSR(
         return;
     }
 
-    if (recursion_depth == thread_depth){
+    if (recursion_depth == m_thread_depth){
         Console::print("Summing: ( ");
         Console::print_commas(a);
         Console::print(" : ");
@@ -123,7 +123,7 @@ void BSR_BBP<wtype>::BSR(
 
     //  Perform sub-recursions.
     BigFloatO<wtype> P0, Q0, P1, Q1;
-    if (tds <= 1 || b - a < 1000 || recursion_depth < thread_depth){
+    if (tds <= 1 || b - a < 1000 || recursion_depth < m_thread_depth){
         //  Don't Parallelize
         recursion_depth++;
         BSR(P0, Q0, a, m, recursion_depth, p, tds);
@@ -158,30 +158,32 @@ void BSR_BBP<wtype>::BSR(
 //  Series Wrappers
 template <typename wtype, ukL_t d_pow, bool alternate>
 class Standard_BBP_BSR : public BSR_BBP<wtype>{
-    siL_t g_pow;    //  Geometric Power
-    wtype d0;
-    wtype d1;
+    siL_t m_g_pow;  //  Geometric Power
+    wtype m_d0;
+    wtype m_d1;
 
 public:
     Standard_BBP_BSR(siL_t g_pow, wtype d0, wtype d1)
-        : g_pow(g_pow), d0(d0), d1(d1)
+        : m_g_pow(g_pow), m_d0(d0), m_d1(d1)
     {
         //  Determine the threading depth using this heuristic.
         double depth = std::log2((double)d_pow / -g_pow) + 4.0;
-        if (depth < 0)
+        if (depth < 0){
             depth = 0;
-        this->thread_depth = (ukL_t)depth;
+        }
+        this->m_thread_depth = (ukL_t)depth;
     }
 
     virtual void BSR_End(BigFloatO<wtype>& P, BigFloatO<wtype>& Q, upL_t b, upL_t p) const override{
         //  P = 2^(g_pow * b)
         P = BigFloatO<wtype>(1);
-        P <<= g_pow * b;
-        if (alternate && (b % 2 == 1))
+        P <<= m_g_pow * b;
+        if (alternate && (b % 2 == 1)){
             P.negate();
+        }
 
         //  Q = (d1 * b + d0)^d_pow
-        wtype factor = d0 + d1 * b;
+        wtype factor = m_d0 + m_d1 * b;
         Q = BigFloatO<wtype>(factor);
         for (ukL_t c = 1; c < d_pow; c++){
             Q *= factor;
@@ -236,7 +238,7 @@ BigFloatO<wtype> Standard_BBP_Series(
     P = div(P, Q, p, tds);
 
     Time::WallClock time1 = Time::WallClock::Now();
-    Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+    Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
     Console::println();
 
     return P;

@@ -31,15 +31,15 @@ void CompileOptions(){
 ////////////////////////////////////////////////////////////////////////////////
 YM_NO_INLINE WallClock WallClock::Now(){
     WallClock out;
-    if (gettimeofday(&out.time, NULL)){
+    if (gettimeofday(&out.m_time, NULL)){
         Console::Warning("Unable to access gettimeofday().");
         Console::Quit(1);
     }
     return out;
 }
 double WallClock::operator-(const WallClock& x) const{
-    u64_t isec = (u64_t)time.tv_sec - (u64_t)x.time.tv_sec;
-    s32_t usec = time.tv_usec - x.time.tv_usec;
+    u64_t isec = (u64_t)m_time.tv_sec - (u64_t)x.m_time.tv_sec;
+    s32_t usec = m_time.tv_usec - x.m_time.tv_usec;
     if (usec < 0){
         usec += 1000000;
         isec--;

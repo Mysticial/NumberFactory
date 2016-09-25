@@ -40,11 +40,11 @@
     <Filter Include="Source\PublicLibs\ExportSafeLibs">
       <UniqueIdentifier>{95a97c6c-82ae-459a-9ba5-0e2c1c64c1cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\PublicLibs\Memory">
+      <UniqueIdentifier>{61c526f7-9142-42f5-a9e8-551ed06660ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\PublicLibs\AlignedMalloc.h">
-      <Filter>Source\PublicLibs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\PublicLibs\CompilerSettings.h">
       <Filter>Source\PublicLibs</Filter>
     </ClInclude>
@@ -159,6 +159,15 @@
     <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\String.h">
       <Filter>Source\PublicLibs\ExportSafeLibs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Memory\SmartBuffer.h">
+      <Filter>Source\PublicLibs\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Memory\SmartPointer.h">
+      <Filter>Source\PublicLibs\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PublicLibs\Memory\AlignedMalloc.h">
+      <Filter>Source\PublicLibs\Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\NumberFactory\libs\ComputeFloatSession.cpp">
@@ -271,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\PublicLibs\StringTools\Unicode.cpp">
       <Filter>Source\PublicLibs\StringTools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PublicLibs\Memory\AlignedMalloc.cpp">
+      <Filter>Source\PublicLibs\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

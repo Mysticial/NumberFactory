@@ -103,7 +103,7 @@ std::vector<Option> OPTIONS{
 };
 
 void MainMenu(){
-    Console::println("Number Factory v1.0.1 (YMP 1.1)", 'G');
+    Console::println("Number Factory v1.0.2 (YMP 1.1)", 'G');
     Console::println();
     Console::SetColor('w');
 

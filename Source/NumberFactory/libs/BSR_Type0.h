@@ -39,10 +39,10 @@ class BSR_Type0{
 protected:
     //  To prevent memory from blowing up, don't start threading until the
     //  recursion is this deep.
-    ukL_t thread_depth;
+    ukL_t m_thread_depth;
 
 public:
-    BSR_Type0(ukL_t thread_depth = 0) : thread_depth(thread_depth) {}
+    BSR_Type0(ukL_t thread_depth = 0) : m_thread_depth(thread_depth) {}
 
     //  Computes the following using the recursion specified above.
     //      P(0, index)
@@ -71,15 +71,15 @@ private:
 //  Parallel Helper Object
 template <typename wtype>
 class BSR_Type0_Action : public BasicAction{
-    const BSR_Type0<wtype>& BSR;
-    BigFloatO<wtype>& P;
-    BigFloatO<wtype>& Q;
-    BigFloatO<wtype>* R;
-    upL_t a;
-    upL_t b;
-    ukL_t recursion_depth;
-    upL_t p;
-    upL_t tds;
+    const BSR_Type0<wtype>& m_BSR;
+    BigFloatO<wtype>& m_P;
+    BigFloatO<wtype>& m_Q;
+    BigFloatO<wtype>* m_R;
+    upL_t m_a;
+    upL_t m_b;
+    ukL_t m_recursion_depth;
+    upL_t m_p;
+    upL_t m_tds;
 
 public:
     BSR_Type0_Action(
@@ -88,13 +88,13 @@ public:
         upL_t a, upL_t b, ukL_t recursion_depth,
         upL_t p, upL_t tds
     )
-        : BSR(BSR)
-        , P(P), Q(Q), R(R)
-        , a(a), b(b), recursion_depth(recursion_depth)
-        , p(p), tds(tds)
+        : m_BSR(BSR)
+        , m_P(P), m_Q(Q), m_R(R)
+        , m_a(a), m_b(b), m_recursion_depth(recursion_depth)
+        , m_p(p), m_tds(tds)
     {}
     virtual void run() override{
-        BSR.BSR(P, Q, R, a, b, recursion_depth, p, tds);
+        m_BSR.BSR(m_P, m_Q, m_R, m_a, m_b, m_recursion_depth, m_p, m_tds);
 
     }
 };
@@ -113,7 +113,7 @@ void BSR_Type0<wtype>::BSR(
         return;
     }
 
-    if (recursion_depth == thread_depth){
+    if (recursion_depth == m_thread_depth){
         Console::print("Summing: ( ");
         Console::print_commas(a);
         Console::print(" : ");
@@ -127,7 +127,7 @@ void BSR_Type0<wtype>::BSR(
     //  Perform sub-recursions.
     BigFloatO<wtype> P0, Q0, R0, P1, Q1, R1;
 
-    if (tds <= 1 || b - a < 1000 || recursion_depth < thread_depth){
+    if (tds <= 1 || b - a < 1000 || recursion_depth < m_thread_depth){
         //  Don't Parallelize
         recursion_depth++;
         BSR(P0, Q0, &R0, a, m, recursion_depth, p, tds);

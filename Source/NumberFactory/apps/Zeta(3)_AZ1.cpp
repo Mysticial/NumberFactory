@@ -14,7 +14,7 @@
 #include "NumberFactory/libs/ComputeFloatSession.h"
 
 namespace NumberFactory{
-typedef u64_t wtype;
+using wtype = u64_t;
 
 class Zeta3_AZ1_BSR final : public BSR_Type0<wtype>{
 public:
@@ -55,35 +55,37 @@ public:
 class Zeta3_AZ1_Session : public ComputeFloatSession<wtype>{
 public:
     Zeta3_AZ1_Session(){
-        this->name_short = "Zeta(3)";
-        this->name_long = "Zeta(3) - Apery's Constant";
-        this->algorithm_short = "AZ1";
-        this->algorithm_long = "Amdeberhan-Zeilberger Formula 1";
-        this->over_decompose = 2;
+        m_name_short = "Zeta(3)";
+        m_name_long = "Zeta(3) - Apery's Constant";
+        m_algorithm_short = "AZ1";
+        m_algorithm_long = "Amdeberhan-Zeilberger Formula 1";
+        m_over_decompose = 2;
     }
     virtual BigFloatO<wtype> compute() override{
         Time::WallClock time0 = Time::WallClock::Now();
         const double LOG_RATIO = 0.10000000000000000000000000000000000000000000000000;  //  log(2)/log(1024)
         const double TERM_RATIO = LOG_RATIO * CHAR_BIT * sizeof(wtype);
+
+        upL_t p = m_precision;
         upL_t terms = (upL_t)((double)p * TERM_RATIO + 1);
 
         Console::print("Summing Series...  ");
         Console::print_commas(terms);
         Console::println(" terms");
         BigFloatO<wtype> P, Q, tmp;
-        Zeta3_AZ1_BSR().run(P, Q, terms, p, tds);
+        Zeta3_AZ1_BSR().run(P, Q, terms, p, m_tds);
 
         tmp = Q;
         tmp *= 77;
         P = add(P, tmp, p);
         Q *= 64;
         Time::WallClock time1 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time1 - time0, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time1 - time0, 'T');
 
         Console::println("Division...");
-        P = div(P, Q, p, tds);
+        P = div(P, Q, p, m_tds);
         Time::WallClock time2 = Time::WallClock::Now();
-        Console::print("Time:    "); Time::println_secs_hrs(time2 - time1, 'T');
+        Console::print("Time:    "); Time::println_time_smart(time2 - time1, 'T');
 
         return P;
     }

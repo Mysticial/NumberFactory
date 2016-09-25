@@ -7,8 +7,13 @@
  */
 
 #ifdef _WIN32
-#include "Environment_Windows.ipp"
+#if _WIN32_WINNT >= 0x0601
+#include "Environment_Windows7.ipp"
+#else
+#include "Environment_WindowsVista.ipp"
 #endif
+#endif
+
 #ifdef __linux
 #include "Environment_Linux.ipp"
 #endif

@@ -7,14 +7,14 @@
  */
 
 #pragma once
-#ifndef _ymp_BasicParametersOwner_H
-#define _ymp_BasicParametersOwner_H
+#ifndef ymp_BasicParametersOwner_H
+#define ymp_BasicParametersOwner_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //  Dependencies
-#include "PublicLibs/AlignedMalloc.h"
+#include "PublicLibs/Memory/SmartBuffer.h"
 #include "BasicParameters.h"
 #include "GlobalLookupTable.h"
 #include "GlobalParallelFramework.h"
@@ -27,10 +27,10 @@ namespace ymp{
 class BasicParametersO : public BasicParameters{
     //  Small Buffer optimization.
     static const upL_t SMALL_BUFFER_SIZE = 256;
-    YM_ALIGN(64) char small_buffer[256];
+    YM_ALIGN(64) char small_buffer[SMALL_BUFFER_SIZE];
 
     //  Smart pointer for larger buffers.
-    SmartPointer<>::type uptr;
+    SmartBuffer<void> m_uptr;
 
 public:
     BasicParametersO(
@@ -42,11 +42,11 @@ public:
         : BasicParameters(tw, parallelizer, tds, nullptr, ML)
     {
         if (ML <= SMALL_BUFFER_SIZE){
-            M = small_buffer;
+            m_M = small_buffer;
         }else{
-            uptr = SmartPointer<>::malloc_uptr(ML, DEFAULT_ALIGNMENT);
-            M = uptr.get();
-            if (M == nullptr)
+            m_uptr = make_raw_buffer<DEFAULT_ALIGNMENT>(ML);
+            m_M = m_uptr.get();
+            if (m_M == nullptr)
                 throw std::bad_alloc();
         }
     }

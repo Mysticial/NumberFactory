@@ -35,7 +35,7 @@ YM_NO_INLINE WallClock WallClock::Now(){
         Console::Quit(1);
     }
     WallClock out;
-    out.ticks = x.QuadPart;
+    out.m_ticks = x.QuadPart;
     return out;
 }
 YM_NO_INLINE double WallClock::operator-(const WallClock& x) const{
@@ -44,7 +44,7 @@ YM_NO_INLINE double WallClock::operator-(const WallClock& x) const{
         Console::Warning("Unable to access performance counter.");
         Console::Quit(1);
     }
-    return (double)(ticks - x.ticks) / freqency.QuadPart;
+    return (double)(m_ticks - x.m_ticks) / freqency.QuadPart;
 }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

@@ -438,7 +438,6 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClInclude Include="..\..\Source\NumberFactory\libs\PartialFactorial.h" />
     <ClInclude Include="..\..\Source\NumberFactory\libs\Utils.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Action.h" />
-    <ClInclude Include="..\..\Source\PublicLibs\AlignedMalloc.h" />
     <ClInclude Include="..\..\Source\PublicLibs\CompilerSettings.h" />
     <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\Array.h" />
     <ClInclude Include="..\..\Source\PublicLibs\ConsoleIO\BasicIO.h" />
@@ -453,6 +452,9 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClInclude Include="..\..\Source\PublicLibs\ExportSafeLibs\String.h" />
     <ClInclude Include="..\..\Source\PublicLibs\FileIO\BasicFile.h" />
     <ClInclude Include="..\..\Source\PublicLibs\FileIO\FileIO.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Memory\AlignedMalloc.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Memory\SmartBuffer.h" />
+    <ClInclude Include="..\..\Source\PublicLibs\Memory\SmartPointer.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Serialization\ParseException.h" />
     <ClInclude Include="..\..\Source\PublicLibs\Serialization\Serialization.h" />
     <ClInclude Include="..\..\Source\PublicLibs\StringTools\ToString.h" />
@@ -503,6 +505,7 @@ xcopy "$(SolutionDir)libs\$(Configuration)\*.dll" "$(SolutionDir)$(Platform)\$(C
     <ClCompile Include="..\..\Source\PublicLibs\Environment\Environment.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\FileIO\BasicFile.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\FileIO\FileIO.cpp" />
+    <ClCompile Include="..\..\Source\PublicLibs\Memory\AlignedMalloc.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\Serialization\Serialization.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\StringTools\ToString.cpp" />
     <ClCompile Include="..\..\Source\PublicLibs\StringTools\Unicode.cpp" />

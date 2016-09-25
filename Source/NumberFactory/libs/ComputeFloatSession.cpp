@@ -35,45 +35,48 @@ void ComputeFloatSession<wtype>::run(){
     print_header();
     ensure_tables();
 
-    start_time = Time::WallClock::Now();
-    watch.Start();
+    m_start_time = Time::WallClock::Now();
+    m_watch.Start();
     BigFloatO<wtype> x = compute();
-    watch.Stop();
+    m_watch.Stop();
     Console::println();
 
-    write_digits(x, name_short, algorithm_short);
+    write_digits(x, m_name_short, m_algorithm_short);
     print_stats();
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::setup(){
-    dec = Console::scan_label_upL_suffix_range("Decimal Digits: ");
-    hex = (upL_t)(dec * 0.83048202372184058696757985737234754396620784825615) + 1;
-    p = get_p<wtype>(dec);
+    m_dec = Console::scan_label_upL_suffix_range("Decimal Digits: ");
+    m_hex = (upL_t)(m_dec * 0.83048202372184058696757985737234754396620784825615) + 1;
+    m_precision = get_p<wtype>(m_dec);
 
     //  Get the parallel task decomposition.
-    tds = Environment::GetLogicalProcessors();
-    tds *= over_decompose;
-    if (tds == 0)
-        tds = 1;
+    m_tds = Environment::GetLogicalProcessors();
+    m_tds *= m_over_decompose;
+    if (m_tds == 0){
+        m_tds = 1;
+    }
 
-    if (name_long.empty())
-        name_long = name_short;
-    if (algorithm_long.empty())
-        algorithm_long = algorithm_short;
+    if (m_name_long.empty()){
+        m_name_long = m_name_short;
+    }
+    if (m_algorithm_long.empty()){
+        m_algorithm_long = m_algorithm_short;
+    }
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::print_header() const{
     Console::println();
     Console::println();
 
-    Console::println_labelc("Computing", name_long, 'G');
-    Console::println_labelc("Algorithm", algorithm_long, 'Y');
+    Console::println_labelc("Computing", m_name_long, 'G');
+    Console::println_labelc("Algorithm", m_algorithm_long, 'Y');
     Console::println();
 
-    Console::println_labelm_commas(30, "Target Precision (digits):", dec, 'G');
-    Console::println_labelm_commas(30, "Working Precision (words):", p, 'G');
+    Console::println_labelm_commas(30, "Target Precision (digits):", m_dec, 'G');
+    Console::println_labelm_commas(30, "Working Precision (words):", m_precision, 'G');
     Console::print_labelm(30, "Threading Mode:", "");
-    Parallelism::framework_print_details(Parallelism::get_global_framework(), tds);
+    Parallelism::framework_print_details(Parallelism::get_global_framework(), m_tds);
 //    Console::println_labelm_commas(30, "Parallel Task Decomposition:", tds, 'G');
     Console::println();
 }
@@ -81,7 +84,7 @@ template <typename wtype>
 void ComputeFloatSession<wtype>::ensure_tables(){
     Console::println("Constructing Twiddle Tables...");
     Console::println();
-    LookupTables::get_global_table<wtype>(2*p);
+    LookupTables::get_global_table<wtype>(2*m_precision);
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const std::string& name, const std::string& algorithm){
@@ -98,8 +101,8 @@ void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const st
     //  front of the decimal place. This keeps the behavior consistent with
     //  y-cruncher and other Pi programs that start counting digits after the
     //  decimal place.
-    upL_t dec_digits = dec;
-    upL_t hex_digits = hex;
+    upL_t dec_digits = m_dec;
+    upL_t hex_digits = m_hex;
     if (x.get_mag() == 1){
         wtype top_word = x[0];
         dec_digits += std::to_string(top_word).size();
@@ -109,18 +112,18 @@ void ComputeFloatSession<wtype>::write_digits(const BigFloat<wtype>& x, const st
         }
     }
 
-    to_file_dec(x, dec_name, dec_digits, tds, &watch);
+    to_file_dec(x, dec_name, dec_digits, m_tds, &m_watch);
     to_file_hex(x, hex_name, hex_digits);
     Console::println();
 }
 template <typename wtype>
 void ComputeFloatSession<wtype>::print_stats() const{
     Time::WallClock end_time = Time::WallClock::Now();
-    Console::print("Compute Time:  "); Time::println_secs_hrs(watch.get_wall_time(), 'G');
-    Console::print("Total Time:    "); Time::println_secs_hrs(end_time - start_time, 'G');
+    Console::print("Compute Time:  "); Time::println_time_smart(m_watch.get_wall_time(), 'G');
+    Console::print("Total Time:    "); Time::println_time_smart(end_time - m_start_time, 'G');
     Console::println();
 
-    watch.print();
+    m_watch.print();
     Console::println();
 }
 ////////////////////////////////////////////////////////////////////////////////

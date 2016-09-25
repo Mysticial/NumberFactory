@@ -13,8 +13,8 @@
  */
 
 #pragma once
-#ifndef _ymp_GenericIntOwner_H
-#define _ymp_GenericIntOwner_H
+#ifndef ymp_GenericIntOwner_H
+#define ymp_GenericIntOwner_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ namespace ymp{
 //  Headers
 template <typename wtype>
 class BigIntO : public BigInt<wtype>{
-    std::unique_ptr<wtype[]> uptr;
+    std::unique_ptr<wtype[]> m_uptr;
 
 #ifdef YMP_ENABLE_SMALL_NUM_OPTIMIZATION
     wtype local_buffer[OBJ_SMALL_NUM_BUFFER];
@@ -45,21 +45,21 @@ public:
         operator=(std::move(x));
     }
     void operator=(BigIntO&& x){
-        this->L = x.L;
-        this->sign = x.sign;
-        this->buffer_size = x.buffer_size;
+        this->m_len = x.m_len;
+        this->m_sign = x.m_sign;
+        this->m_buffer_size = x.m_buffer_size;
 
 #ifdef YMP_ENABLE_SMALL_NUM_OPTIMIZATION
-        if (x.uptr.get() != x.base_ptr){
+        if (x.m_uptr.get() != x.m_base_ptr){
             transfer_local_buffer(x);
             x.clear();
             return;
         }
 #endif
 
-        uptr = std::move(x.uptr);
-        this->base_ptr = x.base_ptr;
-        this->T = x.T;
+        m_uptr = std::move(x.m_uptr);
+        this->m_base_ptr = x.m_base_ptr;
+        this->m_ptr = x.m_ptr;
 
         x.clear();
     }
@@ -67,23 +67,23 @@ public:
         operator=(x);
     }
     void operator=(const BigIntO& x){
-        this->L = x.L;
-        this->sign = x.sign;
+        this->m_len = x.m_len;
+        this->m_sign = x.m_sign;
 
 #ifdef YMP_ENABLE_SMALL_NUM_OPTIMIZATION
-        if (x.uptr.get() != x.base_ptr){
-            this->buffer_size = OBJ_SMALL_NUM_BUFFER;
+        if (x.m_uptr.get() != x.m_base_ptr){
+            this->m_buffer_size = OBJ_SMALL_NUM_BUFFER;
             transfer_local_buffer(x);
             return;
         }
 #endif
 
-        this->buffer_size = this->L + OBJ_ALLOCATE_EXTRA;
-        uptr = std::unique_ptr<wtype[]>(new wtype[this->buffer_size]);
-        this->base_ptr = uptr.get();
-        this->T = this->base_ptr;
+        this->m_buffer_size = this->m_len + OBJ_ALLOCATE_EXTRA;
+        m_uptr = std::unique_ptr<wtype[]>(new wtype[this->m_buffer_size]);
+        this->m_base_ptr = m_uptr.get();
+        this->m_ptr = this->m_base_ptr;
 
-        memcpy(this->T, x.T, this->L * sizeof(wtype));
+        memcpy(this->m_ptr, x.m_ptr, this->m_len * sizeof(wtype));
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ public:
     BigIntO()
         : BigInt<wtype>(0)
     {
-        this->base_ptr = nullptr;
+        this->m_base_ptr = nullptr;
         this->set_zero();
     }
     BigIntO(u32_t x){
@@ -105,7 +105,7 @@ public:
             this->set_uW(x);
         }else{
             this->set_uW(-x);
-            this->sign = false;
+            this->m_sign = false;
         }
     }
     BigIntO(uiL_t x){
@@ -118,7 +118,7 @@ public:
             this->set_uL(x);
         }else{
             this->set_uL(-x);
-            this->sign = false;
+            this->m_sign = false;
         }
     }
     explicit BigIntO(const BigFloat<wtype>& x){
@@ -126,8 +126,8 @@ public:
     }
 
     void operator=(const BigInt<wtype>& x){
-        if (this->buffer_size < x.L){
-            resize_and_zero(x.L);
+        if (this->m_buffer_size < x.m_len){
+            resize_and_zero(x.m_len);
         }
         this->set_BigInt(x);
     }
@@ -137,7 +137,7 @@ public:
 public:
     using BigInt<wtype>::set_zero;
     void set_uWs(const wtype* A, upL_t L){
-        if (this->buffer_size < L){
+        if (this->m_buffer_size < L){
             resize_and_zero(L);
         }
         BigInt<wtype>::set_uWs(A, L);
@@ -148,7 +148,7 @@ public:
             set_zero();
             return;
         }
-        if (this->buffer_size < (upL_t)mag){
+        if (this->m_buffer_size < (upL_t)mag){
             resize_and_zero((upL_t)mag);
         }
         BigInt<wtype>::set_BigFloat(x);
@@ -159,36 +159,36 @@ public:
 public:
     //  Sets the object to zero and releases whatever resources it holds.
     void clear(){
-        uptr.reset();
-        this->buffer_size = OBJ_SMALL_NUM_BUFFER;
+        m_uptr.reset();
+        this->m_buffer_size = OBJ_SMALL_NUM_BUFFER;
 #ifdef YMP_ENABLE_SMALL_NUM_OPTIMIZATION
-        this->base_ptr = local_buffer;
+        this->m_base_ptr = local_buffer;
 #else
-        this->base_ptr = nullptr;
+        this->m_base_ptr = nullptr;
 #endif
-        this->T = this->base_ptr;
-        this->L = 0;
-        this->sign = true;
+        this->m_ptr = this->m_base_ptr;
+        this->m_len = 0;
+        this->m_sign = true;
     }
 
     //  Set the object to zero and resize the buffer.
     void resize_and_zero(upL_t buffer_size){
 #ifdef YMP_ENABLE_SMALL_NUM_OPTIMIZATION
         if (buffer_size <= OBJ_SMALL_NUM_BUFFER){
-            uptr.reset();
-            this->buffer_size = OBJ_SMALL_NUM_BUFFER;
-            this->base_ptr = local_buffer;
+            m_uptr.reset();
+            this->m_buffer_size = OBJ_SMALL_NUM_BUFFER;
+            this->m_base_ptr = local_buffer;
         }else
 #endif
         {
             buffer_size += OBJ_ALLOCATE_EXTRA;
-            uptr = std::unique_ptr<wtype[]>(new wtype[buffer_size]);
-            this->buffer_size = buffer_size;
-            this->base_ptr = uptr.get();
+            m_uptr = std::unique_ptr<wtype[]>(new wtype[buffer_size]);
+            this->m_buffer_size = buffer_size;
+            this->m_base_ptr = m_uptr.get();
         }
 
-        this->T = this->base_ptr;
-        this->L = 0;
+        this->m_ptr = this->m_base_ptr;
+        this->m_len = 0;
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -198,26 +198,27 @@ public:
     using BigInt<wtype>::operator>>=;
 
     void operator<<=(upL_t bits){
-        if (this->L == 0 || bits == 0)
+        if (this->m_len == 0 || bits == 0){
             return;
+        }
 
         const ukL_t BIT_SHIFT = WordTraits<wtype>::MAG;
         upL_t lp = bits >> BIT_SHIFT;
 
-        if (this->buffer_size <= this->T - this->base_ptr + this->L + lp + 1){
+        if (this->m_buffer_size <= this->m_ptr - this->m_base_ptr + this->m_len + lp + 1){
             //  Buffer is not large enough. Resize it.
             BigIntO<wtype> tmp;
-            tmp.resize_and_zero(this->L + lp + 1);
+            tmp.resize_and_zero(this->m_len + lp + 1);
             tmp.set_BigInt(*this);
             operator=(std::move(tmp));
         }
         BigInt<wtype>::operator<<=(bits);
     }
     void operator*=(wtype x){
-        if (this->buffer_size <= this->T - this->base_ptr + this->L){
+        if (this->m_buffer_size <= this->m_ptr - this->m_base_ptr + this->m_len){
             //  Buffer is not large enough. Do out-of-place multiply.
             BigIntO<wtype> tmp;
-            tmp.resize_and_zero(this->L + 1);
+            tmp.resize_and_zero(this->m_len + 1);
             tmp.set_mul_uW(*this, x);
             operator=(std::move(tmp));
         }else{
@@ -230,51 +231,51 @@ public:
 //  Setter Arithmetic
 public:
     void set_add(const BigInt<wtype>& A, const BigInt<wtype>& B){
-        upL_t TL = A.L > B.L ? A.L : B.L;
-        if (this->buffer_size <= TL){
+        upL_t TL = A.m_len > B.m_len ? A.m_len : B.m_len;
+        if (this->m_buffer_size <= TL){
             resize_and_zero(TL + 1);
         }
         BigInt<wtype>::set_add(A, B);
     }
     void set_sub(const BigInt<wtype>& A, const BigInt<wtype>& B){
-        upL_t TL = A.L > B.L ? A.L : B.L;
-        if (this->buffer_size <= TL){
+        upL_t TL = A.m_len > B.m_len ? A.m_len : B.m_len;
+        if (this->m_buffer_size <= TL){
             resize_and_zero(TL + 1);
         }
         BigInt<wtype>::set_sub(A, B);
     }
     void set_sqr(const BasicParameters& mp, const BigInt<wtype>& A){
-        upL_t TL = A.L + A.L;
-        if (this->buffer_size < TL){
+        upL_t TL = A.m_len + A.m_len;
+        if (this->m_buffer_size < TL){
             resize_and_zero(TL);
         }
         BigInt<wtype>::set_sqr(mp, A);
     }
     void set_mul(const BasicParameters& mp, const BigInt<wtype>& A, const BigInt<wtype>& B){
-        upL_t TL = A.L + B.L;
-        if (this->buffer_size < TL){
+        upL_t TL = A.m_len + B.m_len;
+        if (this->m_buffer_size < TL){
             resize_and_zero(TL);
         }
         BigInt<wtype>::set_mul(mp, A, B);
     }
 
     void set_sqr(const BigInt<wtype>& A, upL_t tds = 1){
-        upL_t TL = A.L + A.L;
-        if (this->buffer_size < TL){
+        upL_t TL = A.m_len + A.m_len;
+        if (this->m_buffer_size < TL){
             resize_and_zero(TL);
         }
-        upL_t ML = (upL_t)BigInt<wtype>::mul_Psize(A.L, A.L, tds);
-        const LookupTable& tw = LookupTables::get_global_table<wtype>(A.L + A.L);
+        upL_t ML = (upL_t)BigInt<wtype>::mul_Psize(A.m_len, A.m_len, tds);
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(A.m_len + A.m_len);
         BasicParametersO mp(tw, tds, ML);
         BigInt<wtype>::set_sqr(mp, A);
     }
     void set_mul(const BigInt<wtype>& A, const BigInt<wtype>& B, upL_t tds = 1){
-        upL_t TL = A.L + B.L;
-        if (this->buffer_size < TL){
+        upL_t TL = A.m_len + B.m_len;
+        if (this->m_buffer_size < TL){
             resize_and_zero(TL);
         }
-        upL_t ML = (upL_t)BigInt<wtype>::mul_Psize(A.L, B.L, tds);
-        const LookupTable& tw = LookupTables::get_global_table<wtype>(A.L + B.L);
+        upL_t ML = (upL_t)BigInt<wtype>::mul_Psize(A.m_len, B.m_len, tds);
+        const LookupTable& tw = LookupTables::get_global_table<wtype>(A.m_len + B.m_len);
         BasicParametersO mp(tw, tds, ML);
         BigInt<wtype>::set_mul(mp, A, B);
     }
@@ -327,9 +328,9 @@ public:
 private:
 #ifdef YMP_ENABLE_SMALL_NUM_OPTIMIZATION
     YM_FORCE_INLINE void transfer_local_buffer(const BigIntO& x){
-        uptr.reset();
-        this->base_ptr = local_buffer;
-        this->T = local_buffer + (x.T - x.base_ptr);
+        m_uptr.reset();
+        this->m_base_ptr = local_buffer;
+        this->m_ptr = local_buffer + (x.m_ptr - x.m_base_ptr);
         memcpy(local_buffer, x.local_buffer, sizeof(local_buffer));
     }
 #endif

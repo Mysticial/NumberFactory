@@ -7,8 +7,8 @@
  */
 
 #pragma once
-#ifndef _ymp_Serialization_ParseException_H
-#define _ymp_Serialization_ParseException_H
+#ifndef ymp_Serialization_ParseException_H
+#define ymp_Serialization_ParseException_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,14 +33,14 @@ class ParseException : public ym_exception{
 
 public:
     ParseException(const char* message){
-        level = YMC_EXCEPTION_PARSE;
-        this->code = 1;
-        this->message = message;
+        m_level = YMC_EXCEPTION_PARSE;
+        m_code = 1;
+        m_message = message;
     }
     ParseException(const char* message, int code){
-        level = YMC_EXCEPTION_PARSE;
-        this->code = code;
-        this->message = message;
+        m_level = YMC_EXCEPTION_PARSE;
+        m_code = code;
+        m_message = message;
     }
 };
 ////////////////////////////////////////////////////////////////////////////////

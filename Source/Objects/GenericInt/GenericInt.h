@@ -16,8 +16,8 @@
  */
 
 #pragma once
-#ifndef _ymp_GenericInt_H
-#define _ymp_GenericInt_H
+#ifndef ymp_GenericInt_H
+#define ymp_GenericInt_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -86,12 +86,12 @@ class BigInt{
 protected:
     static const ukL_t WORD_BITS = WordTraits<wtype>::BITS;
 
-    wtype* T;   //  Logical Pointer
-    upL_t L;    //  Length
-    bool sign;  //  Sign: true = positive or zero, false = negative
+    wtype*  m_ptr;      //  Logical Pointer
+    upL_t   m_len;      //  Length
+    bool    m_sign;     //  Sign: true = positive or zero, false = negative
 
-    wtype* base_ptr;
-    upL_t buffer_size;
+    wtype*  m_base_ptr;
+    upL_t   m_buffer_size;
 
     template <typename> friend class BigIntR;
     template <typename> friend class BigIntO;
@@ -100,7 +100,7 @@ protected:
 //  Rule of 5
 protected:
     //  Prevent this class from being directly used.
-    BigInt(){}
+    BigInt() = default;
     ~BigInt(){}
     YM_FORCE_INLINE BigInt(const BigInt& x) = default;
     YM_FORCE_INLINE BigInt& operator=(const BigInt& x) = default;
@@ -108,40 +108,41 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////
 //  Constructors
 protected:
-    BigInt(upL_t buffer_size) : buffer_size(buffer_size) {}
+    BigInt(upL_t buffer_size) : m_buffer_size(buffer_size) {}
     YM_FORCE_INLINE BigInt(const BigInt& x, upL_t L){
         //  Create BigInt using the bottom part of an existing BigInt.
-        base_ptr = x.T;
-        T = base_ptr;
-        buffer_size = L;
+        m_base_ptr = x.m_base_ptr;
+        m_ptr = m_base_ptr;
+        m_buffer_size = L;
     }
     YM_FORCE_INLINE BigInt(const BigInt& x, upL_t s, upL_t L){
         //  Create BigInt using the range [s, s + L).
-        base_ptr = x.T + s;
-        T = base_ptr;
-        buffer_size = L;
+        m_base_ptr = x.m_base_ptr + s;
+        m_ptr = m_base_ptr;
+        m_buffer_size = L;
     }
     YM_FORCE_INLINE BigInt(upL_t L, const BigInt& x){
         //  Create BigInt using the upper part of an existing BigInt.
-        base_ptr = x.T + L;
-        T = base_ptr;
-        buffer_size = x.buffer_size - L - (x.T - x.base_ptr);
+        m_base_ptr = x.m_ptr + L;
+        m_ptr = m_base_ptr;
+        m_buffer_size = x.m_buffer_size - L - (x.m_ptr - x.m_base_ptr);
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Setters
 protected:
     YM_FORCE_INLINE void set_zero(){
-        L = 0;
-        sign = true;
+        m_len = 0;
+        m_sign = true;
     }
     YM_FORCE_INLINE void set_uW(wtype x){
-        T = base_ptr;
-        L = 1;
-        T[0] = x;
-        sign = true;
-        if (x == 0)
-            L = 0;
+        m_ptr = m_base_ptr;
+        m_len = 1;
+        m_ptr[0] = x;
+        m_sign = true;
+        if (x == 0){
+            m_len = 0;
+        }
     }
     void set_uL(uiL_t x);
     void set_uWs(const wtype* A, upL_t L);
@@ -152,20 +153,22 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////
 //  Getters
 public:
-    YM_FORCE_INLINE const wtype* get_T() const{ return T; }
-    YM_FORCE_INLINE upL_t get_L() const{ return L; }
+    YM_FORCE_INLINE const wtype* get_T() const{ return m_ptr; }
+    YM_FORCE_INLINE upL_t get_L() const{ return m_len; }
     YM_FORCE_INLINE int get_sign() const{
-        if (!sign)
+        if (!m_sign){
             return -1;
-        if (L == 0)
+        }
+        if (m_len == 0){
             return 0;
+        }
         return 1;
     }
-    YM_FORCE_INLINE bool get_signbool() const{ return sign; }
-    YM_FORCE_INLINE const wtype* get_baseptr() const{ return base_ptr; }
-    YM_FORCE_INLINE upL_t get_buffersize() const{ return buffer_size; }
+    YM_FORCE_INLINE bool get_signbool() const{ return m_sign; }
+    YM_FORCE_INLINE const wtype* get_baseptr() const{ return m_base_ptr; }
+    YM_FORCE_INLINE upL_t get_buffersize() const{ return m_buffer_size; }
 protected:
-    YM_FORCE_INLINE wtype* get_baseptr(){ return base_ptr; }
+    YM_FORCE_INLINE wtype* get_baseptr(){ return m_base_ptr; }
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Debuggers
@@ -173,20 +176,21 @@ public:
     void print() const;
     void check_normalization() const;
     YM_FORCE_INLINE void assert_size(const char* location, upL_t size) const{
-        BufferTooSmallException::check(location, buffer_size, size);
+        BufferTooSmallException::check(location, m_buffer_size, size);
     }
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Misc.
 public:
     YM_FORCE_INLINE bool is_zero() const{
-        return L == 0;
+        return m_len == 0;
     }
     wtype operator[](upL_t mag) const{
         //  Returns the word at the mag'th magnitude.
-        if (mag >= L)
+        if (mag >= m_len){
             return 0;
-        return T[mag];
+        }
+        return m_ptr[mag];
     }
     void get_range(wtype* buffer, upL_t s, upL_t L) const;
     hash_t hash_compute() const;
@@ -219,9 +223,10 @@ private:
 //  Basic Arithmetic
 protected:
     YM_FORCE_INLINE void negate(){
-        if (L == 0)
+        if (m_len == 0){
             return;
-        sign = !sign;
+        }
+        m_sign = !m_sign;
     }
     void operator<<=(upL_t bits);
     void operator>>=(upL_t bits);

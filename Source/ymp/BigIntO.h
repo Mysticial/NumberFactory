@@ -9,8 +9,8 @@
  */
 
 #pragma once
-#ifndef _ymp_BigIntO_H
-#define _ymp_BigIntO_H
+#ifndef ymp_BigIntO_H
+#define ymp_BigIntO_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@
 //  Dependencies
 #include <string>
 #include <ostream>
-#include "PublicLibs/AlignedMalloc.h"
+#include "PublicLibs/Memory/AlignedMalloc.h"
 #include "Objects/GenericInt/GenericIntOwner.h"
 #include "Functions_dll.h"
 #include "BigIntR.h"
@@ -32,14 +32,14 @@ namespace ymp{
 template <typename wtype>
 inline std::string to_string_hex(const BigInt<wtype>& x){
     upL_t Bsize = (upL_t)BigInt_to_string_hex_sizes<wtype>(x.get_L());
-    auto buffer = SmartPointer<char>::malloc_uptr(Bsize, DEFAULT_ALIGNMENT);
+    auto buffer = make_trivial_array<char, DEFAULT_ALIGNMENT>(Bsize);
     return to_string_hex(buffer.get(), x);
 }
 template <typename wtype>
 inline std::string to_string_dec(const BigInt<wtype>& x, upL_t tds = 1){
     uiL_t Msize;
     upL_t Bsize = (upL_t)BigInt_to_string_dec_sizes<wtype>(Msize, x.get_L(), tds);
-    auto buffer = SmartPointer<char>::malloc_uptr(Bsize, DEFAULT_ALIGNMENT);
+    auto buffer = make_trivial_array<char, DEFAULT_ALIGNMENT>(Bsize);
     const char* str;
     {
         const LookupTable& tw = LookupTables::get_global_table<wtype>(x.get_L() * 2);

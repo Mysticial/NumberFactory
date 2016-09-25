@@ -7,8 +7,8 @@
  */
 
 #pragma once
-#ifndef _ymp_ExportSafeLibs_Exceptions_H
-#define _ymp_ExportSafeLibs_Exceptions_H
+#ifndef ymp_ExportSafeLibs_Exceptions_H
+#define ymp_ExportSafeLibs_Exceptions_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -53,19 +53,19 @@ public:
     };
 
     ExceptionWrapper(Type type, const char* str, void (*deleter)(ExceptionWrapper*) = &local_ptr_deleter)
-        : type(type)
-        , deleter(deleter)
-        , data(str)
+        : m_type(type)
+        , m_deleter(deleter)
+        , m_data(str)
     {}
     void Rethrow(){
-        dll_uptr<ExceptionWrapper> uptr(this, deleter);
-        throw std::string(data);
+        dll_uptr<ExceptionWrapper> uptr(this, m_deleter);
+        throw std::string(m_data);
     }
 
 private:
-    Type type;
-    void (*deleter)(ExceptionWrapper*);
-    dll_astr data;
+    Type m_type;
+    void (*m_deleter)(ExceptionWrapper*);
+    dll_astr m_data;
 };
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

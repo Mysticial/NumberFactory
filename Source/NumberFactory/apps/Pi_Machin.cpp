@@ -11,7 +11,7 @@
 #include "NumberFactory/libs/ArcCot.h"
 
 namespace NumberFactory{
-typedef u64_t wtype;
+using wtype = u64_t;
 
 void Pi_Machin_Original(){
     MachinFormula<wtype> formula{

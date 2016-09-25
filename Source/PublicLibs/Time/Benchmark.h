@@ -9,8 +9,8 @@
  */
 
 #pragma once
-#ifndef _ymp_Time_Benchmark_H
-#define _ymp_Time_Benchmark_H
+#ifndef ymp_Time_Benchmark_H
+#define ymp_Time_Benchmark_H
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,53 +26,53 @@ namespace Time{
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 class IterationBenchmark{
-    const char* units;
-    uiL_t iterations;
-    double seconds;
-    WallClock start;
+    const char* m_units;
+    uiL_t m_iterations;
+    double m_seconds;
+    WallClock m_start;
 
 public:
     IterationBenchmark(const char* units, double seconds = 4.0)
-        : units(units)
-        , iterations(0)
-        , seconds(seconds)
-        , start(WallClock::Now())
+        : m_units(units)
+        , m_iterations(0)
+        , m_seconds(seconds)
+        , m_start(WallClock::Now())
     {}
     IterationBenchmark(double seconds = 4.0)
-        : units(nullptr)
-        , iterations(0)
-        , seconds(seconds)
-        , start(WallClock::Now())
+        : m_units(nullptr)
+        , m_iterations(0)
+        , m_seconds(seconds)
+        , m_start(WallClock::Now())
     {}
     ~IterationBenchmark(){
-        if (units != nullptr)
-            Console::println_unitl_float(units, GetThroughput());
+        if (m_units != nullptr)
+            Console::println_unitl_float(m_units, GetThroughput());
     }
 
 public:
     void operator++(int){
-        iterations++;
+        m_iterations++;
     }
     void operator+=(uiL_t new_iterations){
-        iterations += new_iterations;
+        m_iterations += new_iterations;
     }
     bool ShouldContinue() const{
-        auto elapsed = start.SecondsElapsed();
-        return elapsed < seconds;
+        auto elapsed = m_start.SecondsElapsed();
+        return elapsed < m_seconds;
     }
 
 public:
     double GetElapsed() const{
-        return start.SecondsElapsed();
+        return m_start.SecondsElapsed();
     }
     uiL_t GetIterations() const{
-        return iterations;
+        return m_iterations;
     }
     double GetLatency() const{
-        return start.SecondsElapsed() / iterations;
+        return m_start.SecondsElapsed() / m_iterations;
     }
     double GetThroughput() const{
-        return iterations / start.SecondsElapsed();
+        return m_iterations / m_start.SecondsElapsed();
     }
 };
 ////////////////////////////////////////////////////////////////////////////////
